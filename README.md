@@ -1,6 +1,6 @@
 # Interactive Globe · 
 
-This is a 3-D atlas with live analysis tools. Functions in any browser, with no server and no internet connection required when analysing downloaded geospatial data (NetCDF and GRIB2)
+This is a 3-D atlas with data exploration and analysis tools. Functions in any browser, with no server and no internet connection required when analysing downloaded geospatial data (NetCDF and GRIB2)
 
 ## Features
 
@@ -20,7 +20,7 @@ This functions as a geospatial data exploration environment:
 dist/interactive-globe.html   ←  double-click, or open in any modern browser
 ```
 
-Everything below is for who wish to modify or rebuild the app.
+Everything below is for those who wish to modify or rebuild the app.
 
 ---
 
