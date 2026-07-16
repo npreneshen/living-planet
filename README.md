@@ -21,6 +21,9 @@ This functions as a geospatial data exploration environment:
 
 [**Download Living Planet** (single HTML file, ~8 MB)](https://github.com/npreneshen/living-planet/releases/download/v1.1.0/living.planet.html)
 
+**[Try it in your browser →](https://living-planet.pages.dev)**
+> Works best on a modern desktop or laptop browser (Chrome, Edge, Firefox, Safari 16+). On mobile, a recent flagship-class device is recommended — older or lower-end phones may struggle with the GPU rendering.
+
 ## Quick start
 
 ```
