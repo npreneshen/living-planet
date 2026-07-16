@@ -14,6 +14,13 @@ This functions as a geospatial data exploration environment:
 - **GPU particle flows from reanalysis data** — surface currents (ORAS5/CMEMS), ERA5 10 m winds and 300 hPa jet stream rendered as animated particle fields via a WebGPU → WebGL2 → CPU fallback chain alongside gyres, upwelling zones, traced shipping lanes, and seasonal ITCZ.
 - **Hovmöller diagrams, zonal means, histograms** — built-in time–latitude and time–longitude cross-sections, meridional/zonal averages, and robust histograms with automatic outlier-spike detection. Export to CSV or PNG.
 
+
+## Download
+
+[![Download](https://img.shields.io/github/downloads/npreneshen/living-planet/total?label=Downloads&style=flat-square)](https://github.com/npreneshen/living-planet/releases/download/v1.1.0/living.planet.html)
+
+[**Download Living Planet** (single HTML file, ~8 MB)](https://github.com/npreneshen/living-planet/releases/download/v1.1.0/living.planet.html)
+
 ## Quick start
 
 ```
