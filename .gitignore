@@ -1,0 +1,12 @@
+# large source data + reproducible intermediates for extraction/ (see its README)
+*.nc
+*_b64.txt
+*_field.json
+
+# python
+__pycache__/
+*.pyc
+
+# OS noise
+.DS_Store
+Thumbs.db

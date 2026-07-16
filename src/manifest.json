@@ -1,0 +1,204 @@
+[
+  {
+    "type": "raw",
+    "path": "src/html/00-raw.html"
+  },
+  {
+    "type": "style",
+    "path": "src/css/base.css",
+    "open": "<style>"
+  },
+  {
+    "type": "raw",
+    "path": "src/html/01-raw.html"
+  },
+  {
+    "type": "style",
+    "path": "src/css/nomads-ui.css",
+    "open": "<style>"
+  },
+  {
+    "type": "raw",
+    "path": "src/html/02-raw.html"
+  },
+  {
+    "type": "script",
+    "path": "src/js/ctrl-top-sync.js",
+    "open": "<script>"
+  },
+  {
+    "type": "raw",
+    "path": "src/html/03-raw.html"
+  },
+  {
+    "type": "script",
+    "path": "src/data/atlas-data.js",
+    "open": "<script>"
+  },
+  {
+    "type": "raw",
+    "path": "src/html/04-raw.html"
+  },
+  {
+    "type": "script",
+    "path": "src/data/countries-50m.js",
+    "open": "<script>"
+  },
+  {
+    "type": "raw",
+    "path": "src/html/05-raw.html"
+  },
+  {
+    "type": "script",
+    "path": "src/vendor/d3.js",
+    "open": "<script>"
+  },
+  {
+    "type": "raw",
+    "path": "src/html/06-raw.html"
+  },
+  {
+    "type": "script",
+    "path": "src/vendor/topojson.js",
+    "open": "<script>"
+  },
+  {
+    "type": "raw",
+    "path": "src/html/07-raw.html"
+  },
+  {
+    "type": "script",
+    "path": "src/vendor/netcdfjs.js",
+    "open": "<script>"
+  },
+  {
+    "type": "raw",
+    "path": "src/html/08-raw.html"
+  },
+  {
+    "type": "script",
+    "path": "src/vendor/h5wasm.js",
+    "open": "<script>"
+  },
+  {
+    "type": "raw",
+    "path": "src/html/09-raw.html"
+  },
+  {
+    "type": "script",
+    "path": "src/js/atlas-core.js",
+    "open": "<script>"
+  },
+  {
+    "type": "raw",
+    "path": "src/html/10-raw.html"
+  },
+  {
+    "type": "script",
+    "path": "src/js/globe-info.js",
+    "open": "<script>"
+  },
+  {
+    "type": "raw",
+    "path": "src/html/11-raw.html"
+  },
+  {
+    "type": "script",
+    "path": "src/js/globe-tl.js",
+    "open": "<script>"
+  },
+  {
+    "type": "raw",
+    "path": "src/html/12-raw.html"
+  },
+  {
+    "type": "script",
+    "path": "src/js/globe-features.js",
+    "open": "<script>"
+  },
+  {
+    "type": "raw",
+    "path": "src/html/13-raw.html"
+  },
+  {
+    "type": "script",
+    "path": "src/js/globe-adv.js",
+    "open": "<script>"
+  },
+  {
+    "type": "raw",
+    "path": "src/html/14-raw.html"
+  },
+  {
+    "type": "script",
+    "path": "src/vendor/jpx.js",
+    "open": "<script data-grib=\"jpx\">"
+  },
+  {
+    "type": "raw",
+    "path": "src/html/15-raw.html"
+  },
+  {
+    "type": "script",
+    "path": "src/vendor/grib2.js",
+    "open": "<script data-grib=\"core\">"
+  },
+  {
+    "type": "raw",
+    "path": "src/html/16-raw.html"
+  },
+  {
+    "type": "script",
+    "path": "src/js/globe-nc.js",
+    "open": "<script>"
+  },
+  {
+    "type": "raw",
+    "path": "src/html/17-raw.html"
+  },
+  {
+    "type": "script",
+    "path": "src/js/globe-ann.js",
+    "open": "<script>"
+  },
+  {
+    "type": "raw",
+    "path": "src/html/18-raw.html"
+  },
+  {
+    "type": "script",
+    "path": "src/js/globe-rgn.js",
+    "open": "<script>"
+  },
+  {
+    "type": "raw",
+    "path": "src/html/19-raw.html"
+  },
+  {
+    "type": "script",
+    "path": "src/js/globe.js",
+    "open": "<script>"
+  },
+  {
+    "type": "raw",
+    "path": "src/html/20-raw.html"
+  },
+  {
+    "type": "script",
+    "path": "src/js/globe-live-feeds-bundle.js",
+    "open": "<script>"
+  },
+  {
+    "type": "raw",
+    "path": "src/html/21-raw.html"
+  },
+  {
+    "type": "script",
+    "path": "src/js/nomads-ui.js",
+    "open": "<script>"
+  },
+  {
+    "type": "raw",
+    "path": "src/html/22-raw.html"
+  }
+]

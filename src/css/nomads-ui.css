@@ -1,0 +1,82 @@
+
+.nomads-btn{pointer-events:auto;display:inline-flex;align-items:center;gap:6px;margin-top:10px;
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--acc);background:rgba(127,208,255,0.08);border:1px solid rgba(127,208,255,0.32);
+  padding:7px 13px;border-radius:20px;cursor:pointer;transition:background .2s,border-color .2s;}
+.nomads-btn:hover{background:rgba(127,208,255,0.18);border-color:rgba(127,208,255,0.55);}
+#nomads-modal{display:none;position:fixed;inset:0;z-index:900;background:rgba(3,8,14,0.82);
+  align-items:center;justify-content:center;}
+#nomads-modal.show{display:flex;}
+#nomads-modal .nomads-modal-card{position:relative;width:min(1180px,96vw);height:min(880px,92vh);
+  background:#06111c;border:1px solid rgba(127,208,255,0.35);border-radius:12px;overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,0.55);}
+#nomads-modal-close{position:absolute;top:10px;right:10px;z-index:2;width:30px;height:30px;
+  border-radius:8px;border:1px solid rgba(127,208,255,0.35);background:#0d1f30;color:#d8e8f4;
+  cursor:pointer;font-size:15px;line-height:1;}
+#nomads-modal-close:hover{border-color:rgba(127,208,255,0.7);}
+#nomads-modal-frame{width:100%;height:100%;border:0;background:#06111c;}
+#ndl-root{width:100%;height:100%;overflow:auto;padding:20px 22px;box-sizing:border-box;
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#cfe3f2;}
+.ndl-head{font-size:15.5px;letter-spacing:0.08em;color:#eaf4fb;margin-bottom:6px;}
+.ndl-sub{font-size:11.5px;color:#8aa8be;line-height:1.5;margin-bottom:14px;max-width:760px;}
+.ndl-row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;margin-bottom:10px;}
+.ndl-row label{display:flex;flex-direction:column;gap:4px;font-size:11px;color:#8aa8be;}
+.ndl-row input,.ndl-row select{background:#081722;border:1px solid rgba(127,208,255,0.25);border-radius:6px;
+  color:#d8e8f4;padding:6px 8px;font:inherit;min-width:70px;}
+.ndl-row input[type="number"]{width:80px;}
+.ndl-btn{background:#102436;border:1px solid rgba(127,208,255,0.3);border-radius:6px;color:#d8e8f4;
+  padding:7px 12px;cursor:pointer;font:inherit;}
+.ndl-btn:hover{border-color:rgba(127,208,255,0.6);}
+.ndl-primary{background:linear-gradient(180deg,#1a4f72,#123a56);border-color:rgba(127,208,255,0.45);}
+.ndl-status{min-height:16px;font-size:11px;color:#8fd0ae;margin:4px 0 10px;}
+.ndl-status.err{color:#ff8f8f;}
+.ndl-pick{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.ndl-col-head{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#7fd0ff;
+  text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;}
+.ndl-col-head input{background:#081722;border:1px solid rgba(127,208,255,0.25);border-radius:5px;
+  color:#d8e8f4;padding:3px 7px;font:inherit;font-size:11px;width:120px;}
+.ndl-list{border:1px solid rgba(127,208,255,0.2);border-radius:8px;background:#081722;
+  max-height:300px;overflow:auto;padding:6px 8px;}
+.ndl-list label{display:flex;gap:7px;align-items:baseline;padding:3px 0;cursor:pointer;font-size:12px;}
+.ndl-list input{accent-color:#7fd0ff;}
+.ndl-list code{color:#7fd0ff;font-size:10.5px;}
+.ndl-list .cnt{color:#5f7d93;font-size:10px;margin-left:auto;}
+.ndl-foot{display:flex;gap:12px;align-items:center;}
+.ndl-progress{flex:1;height:8px;border-radius:5px;background:#081722;border:1px solid rgba(127,208,255,0.2);overflow:hidden;}
+#ndl-bar{height:100%;width:0%;background:linear-gradient(90deg,#1a638f,#7fd0ff);transition:width .2s;}
+#ndl-est{font-size:10.5px;color:#8aa8be;white-space:nowrap;}
+.ndl-var-desc{color:#5f7d93;font-size:10.5px;margin-left:4px;}
+.ndl-sources{margin-top:22px;padding-top:16px;border-top:1px solid rgba(127,208,255,0.15);}
+.ndl-src-head{font-size:11px;color:#7fd0ff;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
+.ndl-src-sub{font-size:11px;color:#8aa8be;line-height:1.5;margin-bottom:12px;max-width:760px;}
+.ndl-src-sub b{color:#cfe3f2;}
+/* Explicit 4 columns (not auto-fill) so 8 links land as two clean rows of
+   4 regardless of exact modal width, instead of an auto-fit count that
+   could leave a half-empty trailing row. */
+.ndl-src-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;}
+@media (max-width:700px){ .ndl-src-grid{grid-template-columns:repeat(2,1fr);} }
+.ndl-src-grid a{display:block;padding:10px 12px;border:1px solid rgba(127,208,255,0.2);border-radius:8px;
+  background:#081722;text-decoration:none;transition:border-color .15s;}
+.ndl-src-grid a:hover{border-color:rgba(127,208,255,0.55);}
+.ndl-src-grid a b{display:block;color:#7fd0ff;font-size:12px;margin-bottom:3px;}
+.ndl-src-grid a span{display:block;color:#8aa8be;font-size:10.5px;line-height:1.45;}
+/* Help modal — same chrome as the NOMADS modal, prose-oriented body */
+#help-modal{display:none;position:fixed;inset:0;z-index:900;background:rgba(3,8,14,0.82);
+  align-items:center;justify-content:center;padding:3vh 0;box-sizing:border-box;}
+#help-modal.show{display:flex;}
+#help-modal .nomads-modal-card{width:min(880px,94vw);height:auto;max-height:94vh;display:flex;}
+#help-body{width:100%;overflow-y:auto;padding:26px 30px 30px;box-sizing:border-box;
+  font-family:'Barlow Semi Condensed',sans-serif;font-size:14px;color:#cfe3f2;line-height:1.55;}
+#help-body h2{font-family:'Space Grotesk',sans-serif;font-size:19px;color:#eaf4fb;margin:0 0 4px;padding-right:44px;}
+#help-body .hp-sub{color:#8aa8be;font-size:13px;margin:0 0 18px;}
+#help-body h3{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.14em;
+  text-transform:uppercase;color:#7fd0ff;margin:22px 0 8px;padding-bottom:5px;
+  border-bottom:1px solid rgba(127,208,255,0.18);}
+#help-body p{margin:0 0 8px;color:#c5d9e8;}
+#help-body ul{margin:0 0 10px;padding-left:20px;color:#c5d9e8;}
+#help-body li{margin-bottom:5px;}
+#help-body b{color:#eaf4fb;font-weight:600;}
+#help-body kbd{font-family:'IBM Plex Mono',monospace;font-size:11px;background:#0d1f30;
+  border:1px solid rgba(127,208,255,0.3);border-radius:4px;padding:1px 6px;color:#d8e8f4;}
+#help-body .hp-tip{background:rgba(127,208,255,0.06);border:1px solid rgba(127,208,255,0.18);
+  border-radius:8px;padding:10px 13px;margin:10px 0;font-size:13px;color:#9fc4dd;}

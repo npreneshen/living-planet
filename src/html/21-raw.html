@@ -1,0 +1,131 @@
+
+<div style="position:fixed;right:14px;bottom:9px;z-index:60;pointer-events:none;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.08em;color:rgba(170,195,215,0.45);">Preneshen Naicker</div>
+
+
+
+<div id="help-modal" role="dialog" aria-modal="true" aria-label="Help and guide">
+  <div class="nomads-modal-card">
+    <button id="help-modal-close" title="Close (Esc)" style="position:absolute;top:10px;right:10px;z-index:2;width:30px;height:30px;border-radius:8px;border:1px solid rgba(127,208,255,0.35);background:#0d1f30;color:#d8e8f4;cursor:pointer;font-size:15px;line-height:1;">✕</button>
+    <div id="help-body">
+      <h2>The Living Planet — guide</h2>
+      <p class="hp-sub">An offline, single-file atlas of ocean currents, winds and climate patterns — with live data loading when you're online.</p>
+
+      <h3>Getting around</h3>
+      <ul>
+        <li><b>Drag</b> to rotate the globe · <b>scroll</b> to zoom · <b>click</b> a spot for live weather, air quality and any loaded data values at that point.</li>
+        <li>Hold <kbd>Alt</kbd> and hover to read exact grid values of the topmost data overlay under the cursor.</li>
+        <li>The <b>month slider</b> (left panel) drives every seasonal layer — ITCZ, sea ice, monsoons, cyclone basins, pressure systems.</li>
+        <li><kbd>Esc</kbd> closes any dialog.</li>
+      </ul>
+
+      <h3>Flow layers</h3>
+      <ul>
+        <li><b>Ocean currents</b> — warm/cold currents, the Antarctic Circumpolar Current and the subtropical gyres, animated from real long-term-mean CMEMS velocity data.</li>
+        <li><b>Winds</b> — trade winds, westerlies and polar easterlies from ERA5 reanalysis; <b>jet streams</b> ride their own 250 hPa field.</li>
+        <li>Each class has its own colormap picker, and the <b>Settings</b> section has sliders for particle count, speed, trail fade, width and opacity.</li>
+        <li>The <b>WebGPU renderer</b> toggle (bottom of the left panel) moves particle physics onto the GPU — smoother with high particle counts on capable machines, and it falls back to the standard renderer automatically.</li>
+      </ul>
+
+      <h3>Loading your own data</h3>
+      <ul>
+        <li><b>Drop a file</b> — drag any NetCDF (.nc) or GRIB2 file anywhere onto the globe. Multi-timestep files become animatable layers.</li>
+        <li><b>Large NetCDF-4/HDF5 files</b> — the in-browser HDF5 engine runs in a WebAssembly heap capped at 2GB, and the whole file has to fit inside that cap alongside its own decompression working memory, so files over <b>~1.7GB</b> won't load. Classic NetCDF-3 and GRIB2 don't share this ceiling — only NetCDF-4/HDF5 does. If you hit it, split the file first, e.g. with NCO: <code>ncks -d valid_time,0,199 file.nc part1.nc</code>, then drop the parts in as a series (the app merges them by time automatically).</li>
+        <li><b>NOMADS loader</b> (🌐 button under the title) — pick a model (GFS, GDAS, GEFS), date range, forecast hours and exact variables/levels; only those fields' bytes are fetched from NOAA and loaded as one animatable overlay. Hover any variable or level for a plain-English description.</li>
+        <li><b>Load from URL</b> (left panel) — direct links to .nc/.grib2 files, ERDDAP endpoints, or NOMADS filter URLs.</li>
+        <li>A loaded <b>u/v wind or current pair</b> can drive the particle animation itself — see "Loaded Fields" in the layer list, with side-by-side compare against the embedded climatology.</li>
+      </ul>
+
+      <h3>Working with overlays</h3>
+      <ul>
+        <li>Each overlay card has: variable/level/time pickers, <b>▶ animation</b> with adjustable fps, <b>contours</b> with adjustable count/style/step, colormap picker, and opacity/brightness/contrast/saturation sliders.</li>
+        <li><b>☁ Preload frames</b> — decodes every timestep into memory up front so animation and the timeline scrub without per-frame decode stutter (it tells you if the series would exceed the cache budget).</li>
+        <li><b>📈 Trend</b> — fits a per-cell linear trend over the series (full, splits, custom ranges, or rolling window). Slopes are normalized to real time (<b>per year</b>) when the file carries dates, with the detected cadence stated up front; optionally mask cells that aren't statistically significant.</li>
+        <li><b>➗ Derived layer</b> — combine overlays with a formula (A−B, wind speed √(A²+B²), ratios, potential temperature…). Each term binds to an overlay·variable·level·time; "Compare A · B" gives quick Pearson r / bias / RMSE before you commit. Derived layers are first-class: animate them, extract regions, even fit trends on them.</li>
+        <li><b>Timeline (top of Earth Systems)</b> — the master clock: with no data loaded, its month chips drive the seasonal layers; once overlays are loaded it switches to real dates and keeps every layer's frame in sync while playing.</li>
+      </ul>
+
+      <h3>Plots, regions & export</h3>
+      <ul>
+        <li><b>📊 2D plots</b> — every overlay opens plot windows: point <b>time series</b> (click a spot), <b>Hovmöller diagrams</b> (time–latitude or time–longitude), and region-mean series. Plot windows are draggable/resizable and follow the data as frames change.</li>
+        <li><b>Region extraction</b> — draw a box on the globe for area-mean statistics and time series over the box; export any of it as <b>CSV</b> (single frame or all timesteps).</li>
+        <li><b>📷 Export PNG</b> captures the current view. <b>📏 Measure</b> gives great-circle distance between two clicked points. <b>Annotations</b> pin dated notes to locations, tied to the timeline.</li>
+      </ul>
+
+      <h3>Custom fields & boundaries</h3>
+      <ul>
+        <li><b>Loaded Fields</b> (layer list) — load a u/v velocity JSON to drive the particle animation itself: <b>swap</b> it in place of the embedded currents/winds, or <b>⇄ Compare</b> to run both side-by-side on split particle pools with separate colormaps.</li>
+        <li><b>Loaded boundaries</b> (Geography group) — drop custom boundary GeoJSON (EEZs, basins, study regions) to draw it on the globe and toggle it like any other layer.</li>
+      </ul>
+
+      <h3>Appearance & performance</h3>
+      <ul>
+        <li>The <b>Appearance tab</b> holds themes and per-class colormaps for currents/winds/jets, particle sliders (count, speed, trail fade, width, opacity), label size/brightness boost, and night shading.</li>
+        <li><b>WebGL2 / WebGPU</b> toggles (bottom of the panel): WebGL2 renders the data overlays; WebGPU moves the particle physics itself onto the GPU — smoother at high particle counts, with automatic fallback if unavailable.</li>
+        <li>If animation stutters with several overlays: preload frames, or reduce particle count / disable contours while playing.</li>
+      </ul>
+
+      <h3>Live feeds & tools</h3>
+      <ul>
+        <li><b>Live data feeds</b> — USGS earthquakes (filter by magnitude/period) and coastal marine conditions, plus the point-click weather lookup (Open-Meteo).</li>
+        <li>Click any plotted feed marker for details and charts; click anywhere else for weather, air quality and loaded-data values at that point.</li>
+      </ul>
+
+      <div class="hp-tip">Tip: everything except the live feeds and the NOMADS loader works fully offline — the atlas, flow data and all analysis tools are embedded in this single file.</div>
+    </div>
+  </div>
+</div>
+
+<div id="nomads-modal" role="dialog" aria-modal="true" aria-label="Load NOMADS weather/ocean data">
+  <div class="nomads-modal-card">
+    <button id="nomads-modal-close" title="Close (Esc)">✕</button>
+    <div id="ndl-root">
+      <div class="ndl-head">NOMADS · Direct data loader</div>
+      <div class="ndl-sub">Pick a model, date range and fields — the data is fetched straight from NOAA's open-data servers (only the selected fields' bytes, per timestep) and loaded as one animatable overlay. No files, no links. Hover a variable or level for what it means.</div>
+      <div class="ndl-row">
+        <label>Model<select id="ndl-model"></select></label>
+        <label>Start date<input type="date" id="ndl-date"></label>
+        <label>End date<input type="date" id="ndl-date-end" title="Leave equal to start date for a single day"></label>
+        <label>Cycle<select id="ndl-cycle"><option>00</option><option>06</option><option>12</option><option>18</option></select></label>
+        <button id="ndl-latest" class="ndl-btn" title="Probe NOAA for the most recent published cycle">Use latest</button>
+      </div>
+      <div class="ndl-row">
+        <label>Fcst hour from<input type="number" id="ndl-fh0" value="0" min="0" step="1"></label>
+        <label>to<input type="number" id="ndl-fh1" value="0" min="0" step="1"></label>
+        <label>step<input type="number" id="ndl-fhs" value="3" min="1" step="1"></label>
+        <button id="ndl-inv" class="ndl-btn ndl-primary">Fetch inventory</button>
+      </div>
+      <div id="ndl-status" class="ndl-status"></div>
+      <div class="ndl-pick" id="ndl-pick" style="display:none">
+        <div class="ndl-col">
+          <div class="ndl-col-head">Variables <input type="search" id="ndl-vfilter" placeholder="filter…"></div>
+          <div class="ndl-list" id="ndl-vars"></div>
+        </div>
+        <div class="ndl-col">
+          <div class="ndl-col-head">Levels <input type="search" id="ndl-lfilter" placeholder="filter…"></div>
+          <div class="ndl-list" id="ndl-levs"></div>
+        </div>
+      </div>
+      <div class="ndl-foot" id="ndl-foot" style="display:none">
+        <span id="ndl-est"></span>
+        <div class="ndl-progress"><div id="ndl-bar"></div></div>
+        <button id="ndl-cancel" class="ndl-btn" style="display:none">Cancel</button>
+        <button id="ndl-load" class="ndl-btn ndl-primary">Load into globe</button>
+      </div>
+      <div class="ndl-sources">
+        <div class="ndl-src-head">More data sources</div>
+        <div class="ndl-src-sub">This loader covers NOAA's operational global models. For everything else, download a NetCDF/GRIB2 file from any of these and simply <b>drop it onto the globe</b> (ERDDAP subset URLs also work with "Load from URL" in the panel):</div>
+        <div class="ndl-src-grid">
+          <a href="https://nomads.ncep.noaa.gov/" target="_blank" rel="noopener"><b>NOMADS</b><span>NCEP operational models — GFS, GEFS, regional; GRIB filter &amp; full archive</span></a>
+          <a href="https://cds.climate.copernicus.eu/" target="_blank" rel="noopener"><b>Copernicus Climate Data Store</b><span>ERA5 reanalysis, seasonal forecasts, climate projections (NetCDF)</span></a>
+          <a href="https://data.marine.copernicus.eu/products" target="_blank" rel="noopener"><b>Copernicus Marine</b><span>Ocean currents, SST, sea level, biogeochemistry — analysis &amp; reanalysis</span></a>
+          <a href="https://psl.noaa.gov/data/gridded/" target="_blank" rel="noopener"><b>NOAA PSL</b><span>Gridded climate datasets — NCEP/NCAR reanalysis, OISST, precipitation</span></a>
+          <a href="https://search.earthdata.nasa.gov/" target="_blank" rel="noopener"><b>NASA Earthdata</b><span>Satellite products — MERRA-2, GPM, MODIS/VIIRS oceans &amp; atmosphere</span></a>
+          <a href="https://www.ncei.noaa.gov/thredds/catalog/catalog.html" target="_blank" rel="noopener"><b>NCEI THREDDS</b><span>NOAA's archive server — browse &amp; subset historical model/obs datasets</span></a>
+          <a href="https://www.ncei.noaa.gov/cdo-web/" target="_blank" rel="noopener"><b>NCEI Climate Data Online</b><span>Search &amp; download station and gridded historical climate records</span></a>
+          <a href="https://www.earthdata.nasa.gov/centers/po-daac" target="_blank" rel="noopener"><b>PO.DAAC (NASA JPL)</b><span>Satellite ocean data — altimetry, SST, OSCAR surface currents</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
