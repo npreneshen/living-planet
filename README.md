@@ -1,5 +1,5 @@
 # Interactive Globe · 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21401218.svg)](https://doi.org/10.5281/zenodo.21401218)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.21401218-blue)](https://doi.org/10.5281/zenodo.21401218)
 
 This is a 3-D atlas with data exploration and analysis tools. Functions in any browser, with no server and no internet connection required when analysing downloaded geospatial data (NetCDF and GRIB2)
 
