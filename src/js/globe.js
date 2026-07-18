@@ -157,6 +157,13 @@
   }
   // Opening view centers Africa (~17°E, 2°N) — d3 rotate is [-λ,-φ].
   let rotate = [-17, -2, 0];
+  // Max zoom as a multiple of baseScale. Was 3.2 — enough to inspect a
+  // continent but nowhere near enough to make a small regional GRIB2 grid
+  // (a few hundred km across — HRRR-Alaska, a Puerto Rico NDFD analysis,
+  // the Great Lakes wave model...) fill a useful portion of the screen.
+  // Projected-grid overlays are decimated to a fixed point cap regardless
+  // of zoom level, so raising this doesn't add rendering cost.
+  const MAX_ZOOM = 25;
   let night = true, dragging = false;
   let flowTick = 0, frameCount = 0, ncDeferTimer = null;
   let currentMonth = new Date().getMonth();
@@ -722,7 +729,7 @@
     svg.setAttribute('width',w); svg.setAttribute('height',h);
     cx=w/2; cy=h/2;
     baseScale=Math.max(50,Math.min(w,h)/2-46);
-    scale=Math.max(Math.min(scale,baseScale*3),baseScale);
+    scale=Math.max(Math.min(scale,baseScale*MAX_ZOOM),baseScale);
     if(scale===300) scale=baseScale;
     redraw();
     if(window._flowRotated) window._flowRotated();
@@ -758,6 +765,45 @@
       ncDeferTimer=setTimeout(()=>{if(window.GlobeAPI?.onRedraw)window.GlobeAPI.onRedraw();redraw();},60);
     })
   );
+  /* ---- pinch-to-zoom (two-finger touch) ----
+     d3.drag() above only ever tracks rotation from a single pointer, so on
+     touch devices a second finger did nothing — no gesture zoom, only the
+     ± buttons and (desktop-only) wheel. Handled as native Touch events on
+     `document` in the CAPTURE phase, which — unlike listeners on svg
+     itself — fires before d3.drag's own bubble-phase touchstart/touchmove,
+     letting stopPropagation() here actually keep d3 from also treating
+     the same two fingers as a rotate-drag. Gated to touches that start on
+     the globe so a pinch inside a plot window or the side panel is left
+     alone. */
+  (function(){
+    let pinchDist=null, pinchScale0=null;
+    const dist=(a,b)=>Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);
+    document.addEventListener('touchstart',(e)=>{
+      if(e.touches.length!==2) return;
+      if(!svg.contains(e.touches[0].target)&&!svg.contains(e.touches[1].target)) return;
+      e.preventDefault(); e.stopPropagation();
+      dragging=false; svg.classList.remove('dragging');
+      pinchDist=dist(e.touches[0],e.touches[1]);
+      pinchScale0=scale;
+    },{passive:false,capture:true});
+    document.addEventListener('touchmove',(e)=>{
+      if(pinchDist==null||e.touches.length!==2) return;
+      e.preventDefault(); e.stopPropagation();
+      const d=dist(e.touches[0],e.touches[1]);
+      scale=Math.max(baseScale*0.85,Math.min(baseScale*MAX_ZOOM,pinchScale0*(d/pinchDist)));
+      redraw();
+    },{passive:false,capture:true});
+    const endPinch=(e)=>{
+      if(pinchDist==null) return;
+      if(e.touches.length<2){
+        pinchDist=null; pinchScale0=null;
+        clearTimeout(ncDeferTimer);
+        ncDeferTimer=setTimeout(()=>{if(window.GlobeAPI?.onRedraw)window.GlobeAPI.onRedraw();redraw();},60);
+      }
+    };
+    document.addEventListener('touchend',endPinch,{capture:true});
+    document.addEventListener('touchcancel',endPinch,{capture:true});
+  })();
   /* ════════════════════════════════════════════════════════════════
      PARTICLE FLOW FIELD — earth.nullschool.net-style animated currents.
      A synthetic velocity field is built ONCE from the curated current
@@ -1015,7 +1061,16 @@
   };
   function sizeCanvas(){
       const v=_flowViewport();
-      dpr=window.devicePixelRatio||1;
+      // Capped, not raw devicePixelRatio: canvas pixel count (and so every
+      // per-frame clear/fill cost) scales with dpr², and a lot of phones
+      // report 3 — 9x the fill-rate of dpr=1 for particle TRAILS, which are
+      // soft/blurred by their own fade anyway and don't read any sharper at
+      // full native resolution the way text or borders would. This is the
+      // single biggest lever for the "currents freeze on older phones"
+      // complaint that doesn't touch particle count/physics/appearance at
+      // all — a capable device just gets slightly-supersampled trails
+      // instead of 2-3x supersampled ones, indistinguishable in practice.
+      dpr=Math.min(window.devicePixelRatio||1,2);
       cnv.width=Math.round(v.w*dpr);
       cnv.height=Math.round(v.h*dpr);
       windCnv.width=cnv.width;
@@ -1388,6 +1443,17 @@
     // to a fraction of the boost — GPU compute handles 40k trivially).
     // CPU path uses at most ~22k*1.2=26.4k so still well under ceiling.
     const MAXP=40000;
+    // Touch-primary devices (phones/tablets — NOT just "has a touchscreen",
+    // which would also catch touch-enabled laptops) get a lighter default
+    // particle count. The CPU/Canvas2D path below is single-threaded scalar
+    // math per particle every frame; on an older phone's weaker single-core
+    // performance, the desktop default (up to ~26k active particles) is
+    // frequently enough to blow the frame budget and read as "frozen"
+    // rather than merely slow. This scales the count actually simulated —
+    // sliders, their displayed range, and every other appearance setting
+    // are untouched, so a capable phone/tablet can still push density
+    // back up to the same ceiling desktop has.
+    const _mobileParticleScale=(window.matchMedia&&window.matchMedia('(pointer:coarse)').matches)?0.6:1;
     const pLon  =new Float32Array(MAXP);
     const pLat  =new Float32Array(MAXP);
     const pAge  =new Uint16Array(MAXP);
@@ -3327,7 +3393,7 @@ fn projPt(lon:f32,lat:f32)->vec3f{
       // revert): worst
       // case wind+jets is now 7000*1.18=8260. Invariant: oDensityCap +
       // wDensityCap*1.18 ≤ MAXP → 31500 + 8260 = 39760 ≤ 40000 ✓.
-      const oDensity=Math.min(MAXP-8500,Math.round((oceanSwapActive?(cfg.cOceanDensity??14000):(cfg.oDensity??14000))*gpuBoost));
+      const oDensity=Math.min(MAXP-8500,Math.round((oceanSwapActive?(cfg.cOceanDensity??14000):(cfg.oDensity??14000))*gpuBoost*_mobileParticleScale));
       // Wind boost clamp 1.5 / cap 7000 — measured middle ground. The
       // full-1.9-boost + 9500-cap experiment (6650 wind quads at default,
       // combined with the wider per-quad geometry below) tripled wind's
@@ -3340,7 +3406,7 @@ fn projPt(lon:f32,lat:f32)->vec3f{
       // tempered"): default slider (3500) in GPU mode now yields 4725 —
       // the exact count of the round the user signed off on — while the
       // width/alpha whisker fixes stay, so it reads calmer, not sparser.
-      const wDensity=Math.min(7000,Math.round((windSwapActive?(cfg.cWindDensity??3000):(cfg.wDensity??3000))*Math.min(gpuBoost,1.35)));
+      const wDensity=Math.min(7000,Math.round((windSwapActive?(cfg.cWindDensity??3000):(cfg.wDensity??3000))*Math.min(gpuBoost,1.35)*_mobileParticleScale));
       // Jets are a sparser accent layer, not full coverage — sized as a
       // fraction of wind's own density (so the "wind" density slider still
       // governs it, per "same appearance settings as wind"), zero when off.
@@ -4249,12 +4315,20 @@ fn projPt(lon:f32,lat:f32)->vec3f{
   })();
   // dedicated zoom control
   (function(){
-    function zoomBy(f){scale=Math.max(baseScale*0.85,Math.min(baseScale*3.2,scale*f));redraw();}
+    function zoomBy(f){scale=Math.max(baseScale*0.85,Math.min(baseScale*MAX_ZOOM,scale*f));redraw();}
     const z=document.createElement('div');
+    z.className='gp-zoomctrl';
     z.style.cssText='position:fixed;right:18px;top:18px;z-index:55;display:flex;flex-direction:column;gap:6px;';
-    [['＋',()=>zoomBy(1.3)],['－',()=>zoomBy(1/1.3)],['⌂',()=>{scale=baseScale;redraw();}]].forEach(([t,fn])=>{
+    [['＋',()=>zoomBy(1.3)],['－',()=>zoomBy(1/1.3)],['⌂',()=>{
+      // Previously only reset `scale`, leaving the globe wherever the user
+      // had last dragged/rotated it — after zooming into a small regional
+      // grid (Alaska, Puerto Rico, the Great Lakes...) clicking "home"
+      // would zoom back out but stay pointed at that region, which reads
+      // as broken since it doesn't return to the actual home view.
+      scale=baseScale; rotate=[-17,-2,0]; redraw();
+    }]].forEach(([t,fn])=>{
       const b=document.createElement('button');
-      b.textContent=t;b.title=t==='⌂'?'Reset zoom':(t==='＋'?'Zoom in':'Zoom out');
+      b.textContent=t;b.title=t==='⌂'?'Reset view':(t==='＋'?'Zoom in':'Zoom out');
       b.style.cssText='width:34px;height:34px;border-radius:8px;border:1px solid rgba(120,170,205,0.35);'+
         'background:rgba(8,20,33,0.85);color:#cfe3f2;font-size:15px;cursor:pointer;line-height:1;';
       b.addEventListener('mouseenter',()=>b.style.borderColor='var(--acc)');
@@ -4266,7 +4340,7 @@ fn projPt(lon:f32,lat:f32)->vec3f{
   })();
   svg.addEventListener('wheel',(e)=>{
     e.preventDefault();
-    scale=Math.max(baseScale*0.85,Math.min(baseScale*3.2,scale*(1-e.deltaY*0.0012)));
+    scale=Math.max(baseScale*0.85,Math.min(baseScale*MAX_ZOOM,scale*(1-e.deltaY*0.0012)));
     redraw();
   },{passive:false});
   // Guard against popup click-through: menus/dialogs that dismiss on

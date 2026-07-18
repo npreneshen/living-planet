@@ -8,6 +8,7 @@ This is a 3-D atlas with data exploration and analysis tools. Functions in any b
 This functions as a geospatial data exploration environment:
 
 - **In-browser trend fitting on your own data** — load any NetCDF / GRIB2 file and run per-cell linear trend analysis (full series, equal splits, custom date ranges, rolling windows) with statistical significance masking, reported in the data's native cadence. 
+- **A Teleconnection/statistics toolkit** — lagged correlation maps, composite (high/low index phase) analysis, EOF/PCA (dominant spatial modes + principal-component time series), and multiple regression (up to 6 predictors, β/R²/t/p per cell, with its own lag sweep) — all fit directly against whatever you loaded, in the data's own native time cadence (day/month/year auto-detected). Multi-lag results are browsable by statistic first, lag second, so you pick "β(ONI)" once and scrub every lag without re-selecting it.
 - **Region extraction with spherical geometry** — draw a polygon, pick a country, preset regions or custom cordinates and get a cos-latitude-weighted mean clipped by a spherical point-in-polygon test.
 - **Derived layers across mismatched grids** — combine two overlays with a formula (`A−B`, `sqrt(A²+B²)`, ratios) even when they come from different grids; the engine resamples with correct longitude wraparound.
 - **GRIB2 + HDF5 decoded entirely in the browser** — including JPEG2000-packed GRIB2 messages (e.g. ECMWF output). Raw bytes in, rendered globe out. Your data never leaves the machine.
@@ -23,7 +24,7 @@ This functions as a geospatial data exploration environment:
 [**Download Living Planet** (single HTML file, ~8 MB)](https://github.com/npreneshen/living-planet/releases/download/v1.1.0/living.planet.html)
 
 **[Try it in your browser →](https://living-planet.pages.dev)**
-> Works best on a modern desktop or laptop browser (Chrome, Edge, Firefox, Safari 16+). On mobile, a recent flagship-class device is recommended — older or lower-end phones may struggle with the GPU rendering.
+> Works best on a modern desktop or laptop browser (Chrome, Edge, Firefox, Safari 16+). Runs on most mobiles too — particle rendering scales itself down automatically on touch/lower-end devices.
 
 ![Living Planet — GFS surface data loaded over Africa with analysis panel open](screenshot.png)
 
@@ -60,7 +61,7 @@ The main application modules in `src/js/`:
 |---|---|
 | `atlas-core.js` | globe bootstrap, atlas data wiring |
 | `globe.js` | projection, drag/zoom, layer rendering, labels, particles |
-| `globe-nc.js` | NetCDF/HDF5/GRIB2 overlay engine: decoding, caching, colormaps, contours, trends, derived layers, region extraction, plots |
+| `globe-nc.js` | NetCDF/HDF5/GRIB2 overlay engine: decoding, caching, colormaps, contours, trends, derived layers, region extraction, plots, teleconnection tools (correlation/composite/EOF/regression) |
 | `globe-adv.js` | advanced embedded fields (real wind/current/jet data) |
 | `globe-features.js` | curated geography: currents, gyres, shipping lanes… |
 | `globe-tl.js` | master timeline synchronising all overlays |
@@ -79,7 +80,7 @@ python build.py
 python build.py --check path/to/reference.html
 ```
 
-`build.py` It concatenates the segments listed in `src/manifest.json` — raw HTML chunks verbatim, and each `.js`/`.css` module re-wrapped in its original `<script>`/`<style>` tag — which reproduces the standalone **byte-for-byte**.
+`build.py` needs nothing but the Python 3 standard library. It concatenates the segments listed in `src/manifest.json` — raw HTML chunks verbatim, and each `.js`/`.css` module re-wrapped in its original `<script>`/`<style>` tag — which reproduces the standalone **byte-for-byte**.
 
 ### Editing workflow
 
@@ -93,7 +94,7 @@ Do not edit `dist/interactive-globe.html` directly — it is generated.
 
 - **NetCDF-4/HDF5 files load best under ~1.7 GB**: the in-browser HDF5 engine (h5wasm) runs in a WebAssembly heap capped at 2 GB and the whole file must fit inside it. Split larger files first (e.g. `ncks -d valid_time,0,199 big.nc part1.nc`) and drop the parts in as a series — the app merges them by time. Classic NetCDF-3 and GRIB2 don't share this ceiling.
 - Land/sea-masked products (SST, soil moisture…) keep their own mask; the histogram flags suspicious value spikes (e.g. unmasked zeros) and region extraction warns when a country mean rests on only a handful of coastal cells.
-- Everything runs client-side
+- Everything runs client-side: your data never leaves the machine.
 
 ## Regenerating the embedded climatology fields
 

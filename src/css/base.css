@@ -1,7 +1,7 @@
 /* ============================================================
    globe.css — interactive rotatable globe
    ============================================================ */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Barlow+Semi+Condensed:ital,wght@0,400;0,500;0,600;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Barlow+Semi+Condensed:ital,wght@0,400;0,500;0,600;1,500&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
 
 :root {
   --abyss:#050d16; --ocean-0:#07131f; --ink:#eaf3fb; --ink-soft:#9fb6c9; --ink-faint:#5d7589;
@@ -93,8 +93,20 @@ input, textarea, select, [contenteditable],
    NOMADS/Help buttons ≈ 190px), which it used to overlap after the
    tagline/buttons were added. */
 .ctrl { position:fixed; top:200px; left:28px; z-index:20; width:312px;
-  background:var(--panel); border:1px solid var(--panel-line); border-radius:14px;
-  backdrop-filter:blur(9px); -webkit-backdrop-filter:blur(9px); padding:16px 16px 14px;
+  /* Aero-glass: a soft top sheen over the base panel colour, a brighter
+     rim along the top edge, stronger blur+saturate for a "frosted glass
+     floating over the globe" read, plus an outer shadow for depth. Panel
+     opacity itself stays as-is (var(--panel) is already fairly opaque) —
+     that was deliberately tuned in the past for legibility over busy globe
+     content, so the glass effect is layered on top rather than achieved by
+     thinning it out. */
+  background:linear-gradient(180deg,rgba(255,255,255,0.07) 0%,rgba(255,255,255,0.02) 35%,rgba(255,255,255,0) 70%),var(--panel);
+  border:1px solid rgba(255,255,255,0.12);
+  border-top-color:rgba(255,255,255,0.26);
+  border-radius:16px;
+  backdrop-filter:blur(18px) saturate(150%); -webkit-backdrop-filter:blur(18px) saturate(150%);
+  box-shadow:0 12px 36px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.09);
+  padding:16px 16px 14px;
   max-height:calc(100vh - 224px); overflow-y:auto; }
 .ctrl::-webkit-scrollbar { width:8px; }
 .ctrl::-webkit-scrollbar-thumb { background:rgba(120,170,205,0.25); border-radius:8px; }
@@ -254,8 +266,9 @@ input, textarea, select, [contenteditable],
 .nc-add-btn { width:100%; margin-top:8px; }
 
 /* card */
-.nc-card { border:1px solid var(--panel-line); border-radius:10px; overflow:hidden; margin-bottom:8px; }
-.nc-ch { display:flex; flex-direction:column; gap:6px; padding:8px 10px; cursor:pointer;
+.nc-card { border:1px solid var(--panel-line); border-radius:12px; overflow:hidden; margin-bottom:8px;
+  background:rgba(255,255,255,0.02); }
+.nc-ch { display:flex; flex-direction:column; gap:5px; padding:8px 10px; cursor:pointer;
   background:rgba(255,255,255,0.03); transition:background .14s; user-select:none; }
 .nc-ch:hover { background:rgba(255,255,255,0.06); }
 .nc-name-row { display:flex; align-items:flex-start; gap:8px; min-width:0; }
@@ -264,15 +277,34 @@ input, textarea, select, [contenteditable],
   color:var(--acc); letter-spacing:0.04em; flex-shrink:0; margin-top:1px; }
 .nc-cname { font-size:12px; color:var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .nc-ch .nc-st2 { font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:0.04em;
-  color:var(--acc); line-height:1.3; min-height:12px; }
+  color:var(--acc); line-height:1.3; min-height:12px;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .nc-empty { color:var(--ink-faint); font-style:italic; }
-.nc-ctools { display:flex; align-items:center; justify-content:center; gap:3px; flex-wrap:wrap; width:100%; }
-.nc-tbtn2 { background:rgba(255,255,255,0.04); border:1px solid rgba(127,208,255,0.18); font-size:10px;
-  font-family:'IBM Plex Mono',monospace; cursor:pointer; opacity:0.85; min-width:22px; height:22px;
-  padding:0 4px; border-radius:4px; transition:all .13s; line-height:1; color:var(--ink); flex-shrink:0;
+/* Header-row quick actions (visibility + remove) — borderless ghost buttons
+   pinned top-right beside the layer name, Windy/Worldview-style. */
+.nc-head-actions { display:flex; align-items:center; gap:2px; flex-shrink:0; margin-top:-2px; }
+.nc-hbtn { background:transparent; border:none; color:var(--ink-faint); width:24px; height:24px;
+  border-radius:6px; cursor:pointer; padding:0; display:inline-flex; align-items:center;
+  justify-content:center; transition:background .13s,color .13s; }
+.nc-hbtn:hover { background:rgba(127,208,255,0.14); color:var(--ink); }
+.nc-hbtn.nc-rm:hover { background:rgba(255,100,100,0.16); color:#ff9d9d; }
+/* Quick-access colour swatch — shows the layer's current colormap as a
+   small gradient chip, and jumps straight to Colours & style on click even
+   while the card body is still collapsed. */
+.nc-swatch-chip { width:20px; height:14px; border-radius:4px; border:1px solid rgba(255,255,255,0.22);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,0.25); }
+.nc-swatch:hover .nc-swatch-chip { border-color:rgba(255,255,255,0.5); }
+.nc-ctools { display:flex; align-items:center; gap:2px; width:100%; }
+.nc-tbtn2 { background:transparent; border:none; font-size:10px;
+  font-family:'IBM Plex Mono',monospace; cursor:pointer; min-width:26px; height:24px;
+  padding:0 4px; border-radius:6px; transition:background .13s,color .13s; line-height:1;
+  color:var(--ink-faint); flex-shrink:0;
   display:inline-flex; align-items:center; justify-content:center; }
-.nc-tbtn2:hover { opacity:1; background:rgba(127,208,255,0.14); border-color:rgba(127,208,255,0.45); }
-.nc-tbtn2.nc-rm:hover { background:rgba(255,100,100,0.15); border-color:rgba(255,120,120,0.45); }
+.nc-tbtn2:hover { background:rgba(127,208,255,0.14); color:var(--ink); }
+.nc-tbtn2.on { color:var(--acc); background:rgba(43,212,196,0.16); }
+.nc-tbtn2.on:hover { background:rgba(43,212,196,0.22); }
+/* "+ New overlay" keeps a visible button chrome — it's a text action, not an icon */
+.nc-send-var.nc-tbtn2 { border:1px solid rgba(127,208,255,0.25); background:rgba(255,255,255,0.04); color:var(--ink); }
 .nc-geo-boundary-sect { margin-top:10px; padding-top:10px; border-top:1px solid rgba(127,208,255,0.15); }
 
 /* card body */
@@ -367,6 +399,18 @@ input, textarea, select, [contenteditable],
 .nc-sr { display:flex; align-items:center; gap:8px; }
 .nc-sr input { flex:1; }
 .nc-sr span { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-soft); width:30px; text-align:right; }
+/* Opacity/Brightness/Contrast/Saturation used to stack as 4 full-width
+   rows (~45px each, ~180px total) — the single biggest chunk of an
+   expanded overlay card. A 2x2 grid halves that to ~90px with no loss
+   of control precision (sliders keep their full cell width). */
+.nc-fx-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px 12px; margin-bottom:2px; }
+.nc-fx-cell { font-size:11.5px; gap:3px; }
+.nc-fx-cell .nc-sr span { width:26px; }
+/* Always-visible per-layer opacity — single compact row (the one appearance
+   control everyone reaches for; the rest live in the collapsed style block) */
+.nc-op-row { display:flex; align-items:center; gap:8px; }
+.nc-op-row .nc-op { flex:1; }
+.nc-op-lab { font-size:10.5px; color:var(--ink-faint); flex-shrink:0; }
 .nc-rr { display:grid; grid-template-columns:auto auto 1fr 1fr; align-items:center; gap:5px; font-size:12.5px; }
 .nc-al { display:flex; align-items:center; gap:5px; font-size:12px; color:var(--ink-soft); cursor:pointer; white-space:nowrap; }
 .nc-al input { accent-color:var(--acc); }
@@ -383,7 +427,8 @@ input, textarea, select, [contenteditable],
 .nc-fps { font-family:'IBM Plex Mono',monospace; color:var(--ink);
   background:#07131f; border:1px solid var(--panel-line); border-radius:4px; outline:none; }
 .nc-fps:focus { border-color:var(--acc); }
-.nc-leg { display:flex; flex-direction:column; gap:2px; margin-top:2px; }
+.nc-leg { display:flex; flex-direction:column; gap:2px; margin-top:2px; cursor:pointer; }
+.nc-leg:hover canvas { outline:1px solid rgba(127,208,255,0.5); }
 .nc-leg canvas { display:block; width:100%; height:14px; border-radius:3px; }
 .nc-ll { display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--ink-faint); }
 .nc-lu { font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--ink-faint); text-align:center; letter-spacing:0.06em; }
@@ -393,8 +438,16 @@ input, textarea, select, [contenteditable],
 .nc-series-wrap { background:rgba(255,255,255,0.03); border:1px solid var(--panel-line);
   border-radius:8px; padding:9px 10px; display:flex; flex-direction:column; gap:6px; }
 .nc-series-label { font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.12em;
-  color:var(--ink-soft); display:flex; justify-content:space-between; align-items:center; }
-.nc-fc { color:var(--acc); letter-spacing:0.04em; }
+  color:var(--ink-soft); display:flex; justify-content:space-between; align-items:center; gap:8px; }
+.nc-series-label-txt { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1; min-width:0; }
+.nc-fc { color:var(--acc); letter-spacing:0.04em; white-space:nowrap; flex-shrink:0; }
+/* Single-file series (the common case): the filename/frame count are
+   already shown in the card header right above, so the label + per-file
+   breakdown here would just repeat it — collapse down to the bare "add a
+   file" action. A real multi-file series still gets the full breakdown. */
+.nc-series-wrap:not(.nc-series-multi) { background:none; border:none; padding:0; }
+.nc-series-wrap:not(.nc-series-multi) .nc-series-label,
+.nc-series-wrap:not(.nc-series-multi) .nc-file-list { display:none; }
 .nc-file-list { display:flex; flex-direction:column; gap:3px; max-height:96px; overflow-y:auto; }
 .nc-file-list:empty::after { content:'No files loaded yet'; font-size:11px; color:var(--ink-faint); font-style:italic; }
 .nc-file-row { display:grid; grid-template-columns:24px 1fr auto; align-items:center; gap:7px;
@@ -411,7 +464,7 @@ input, textarea, select, [contenteditable],
    ============================================================ */
 #tl-section { border-bottom:1px solid var(--panel-line); margin-bottom:12px; padding-bottom:14px; }
 .tl-head { display:flex; align-items:center; justify-content:space-between; cursor:pointer;
-  font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.22em;
+  font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; letter-spacing:0.08em;
   text-transform:uppercase; color:var(--ink-soft); margin-bottom:0; user-select:none;
   padding-bottom:12px; }
 .tl-head:hover { color:var(--ink); }
@@ -440,7 +493,7 @@ input, textarea, select, [contenteditable],
 .ann-row:hover { background:rgba(255,255,255,0.07); }
 .ann-form { background:rgba(8,18,30,0.7); border:1px solid var(--panel-line); border-radius:10px;
   padding:14px; margin-top:10px; display:flex; flex-direction:column; gap:8px; }
-.ann-form-title { font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.22em;
+.ann-form-title { font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; letter-spacing:0.08em;
   text-transform:uppercase; color:var(--acc); margin-bottom:2px; }
 .ann-colors { display:flex; gap:7px; flex-wrap:wrap; margin-top:4px; }
 .ann-swatch { width:22px; height:22px; border-radius:50%; cursor:pointer; border:2.5px solid transparent;
@@ -489,35 +542,61 @@ input, textarea, select, [contenteditable],
 /* Collapsed rail parks vertically CENTERED on the left edge — at its old
    top position it sat right on top of the header's NOMADS/Help buttons. */
 .ctrl.gp-shell.gp-collapsed { width:44px; min-width:44px; top:50%; transform:translateY(-50%); }
-.gp-tabbar { display:flex; border-bottom:1px solid var(--panel-line); flex-shrink:0; }
-.gp-tabbar button { flex:1; font-family:'IBM Plex Mono',monospace; font-size:8.5px; letter-spacing:0.08em;
-  text-transform:uppercase; padding:9px 4px; border:none; cursor:pointer; background:transparent;
-  color:var(--ink-faint); border-bottom:2px solid transparent; transition:all .15s; }
-.gp-tabbar button.on { color:var(--acc); border-bottom-color:var(--acc); background:rgba(43,212,196,0.06); }
+/* Segmented-control look: the three tabs sit inside one inset "track" so
+   they read as a single cohesive switch instead of three loose buttons
+   floating on the panel background — matches the aero-glass treatment
+   used elsewhere in this panel (raised active pill, inset track shadow). */
+.gp-tabbar { display:flex; gap:3px; padding:4px; margin:7px 8px 9px; flex-shrink:0;
+  background:rgba(0,0,0,0.2); border-radius:10px; box-shadow:inset 0 1px 4px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.04); }
+.gp-tabbar button { flex:1; font-family:'IBM Plex Mono',monospace; font-weight:400; font-size:10px; letter-spacing:0.06em;
+  text-transform:uppercase; padding:9px 4px; border:none; border-radius:7px; cursor:pointer; background:transparent;
+  color:var(--ink-faint); transition:background .15s,color .15s,box-shadow .15s,transform .15s; }
+.gp-tabbar button:hover { color:var(--ink-soft); background:rgba(255,255,255,0.05); }
+.gp-tabbar button.on { color:var(--acc); font-weight:600;
+  background:linear-gradient(180deg,rgba(43,212,196,0.24),rgba(43,212,196,0.11));
+  box-shadow:0 1px 5px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.09), inset 0 0 0 1px rgba(43,212,196,0.38); }
 .gp-body { flex:1; overflow-y:auto; padding:12px 14px 14px; }
 .gp-body::-webkit-scrollbar { width:8px; }
 .gp-body::-webkit-scrollbar-thumb { background:rgba(120,170,205,0.25); border-radius:8px; }
 .gp-pane { display:none; }
 .gp-pane.on { display:block; }
-.gp-collapse { position:absolute; right:-11px; top:50%; transform:translateY(-50%); width:22px; height:44px;
-  border-radius:0 8px 8px 0; border:1px solid var(--panel-line); border-left:none; background:var(--panel);
-  color:var(--ink-faint); cursor:pointer; font-size:11px; z-index:22; display:flex; align-items:center; justify-content:center; }
-.gp-collapse:hover { color:var(--acc); border-color:rgba(43,212,196,0.4); }
-.gp-rail { display:none; flex-direction:column; align-items:center; gap:6px; padding:10px 0; }
+.gp-collapse { position:absolute; right:-15px; top:50%; transform:translateY(-50%); width:26px; height:58px;
+  border-radius:0 13px 13px 0; border:1px solid rgba(43,212,196,0.4); border-left:none;
+  background:linear-gradient(180deg,rgba(43,212,196,0.24),rgba(43,212,196,0.11));
+  color:var(--acc); cursor:pointer; font-size:15px; font-weight:700; z-index:22;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:2px 2px 12px rgba(0,0,0,0.32);
+  transition:color .15s,border-color .15s,background .15s,transform .15s; }
+.gp-collapse:hover { color:#eafffb; border-color:rgba(43,212,196,0.75);
+  background:linear-gradient(180deg,rgba(43,212,196,0.38),rgba(43,212,196,0.18));
+  transform:translateY(-50%) scale(1.07); }
+.gp-rail { display:none; flex-direction:column; align-items:center; gap:8px; padding:12px 0; }
 .gp-collapsed .gp-tabbar, .gp-collapsed .gp-body { display:none !important; }
 .gp-collapsed { overflow:hidden; }
 .gp-collapsed > *:not(.gp-rail):not(.gp-collapse) { display:none !important; }
 .gp-collapsed .gp-rail { display:flex !important; }
-.gp-rail button { width:32px; height:32px; border-radius:7px; border:1px solid var(--panel-line); background:rgba(255,255,255,0.04);
-  color:var(--ink-faint); cursor:pointer; font-size:13px; }
-.gp-rail button.on, .gp-rail button:hover { color:var(--acc); border-color:rgba(43,212,196,0.45); }
-.gp-sect { margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid rgba(120,170,205,0.1); }
-.gp-sect-title { font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase;
-  color:var(--ink-faint); margin:0 0 8px; }
+.gp-rail button { width:34px; height:34px; border-radius:9px; border:1px solid transparent; background:rgba(255,255,255,0.04);
+  color:var(--ink-faint); cursor:pointer; font-size:14px; transition:background .15s,color .15s,border-color .15s; }
+.gp-rail button:hover { color:var(--ink-soft); background:rgba(255,255,255,0.08); }
+.gp-rail button.on { color:var(--acc); background:rgba(43,212,196,0.14); border-color:rgba(43,212,196,0.35); }
+.gp-sect { margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid rgba(120,170,205,0.1); }
+.gp-sect-title { font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase;
+  color:var(--ink-soft); margin:0 0 9px; padding-left:9px; border-left:2px solid var(--acc); line-height:1.3; }
 .gp-appear label { display:block; margin-bottom:7px; font-size:10px; color:var(--ink-soft); }
 .gp-appear input[type=range] { width:100%; accent-color:var(--acc); margin-top:3px; display:block; }
-.nc-style-head { display:flex; align-items:center; justify-content:space-between; cursor:pointer; padding:6px 0 4px;
-  font-size:10px; color:var(--ink-faint); letter-spacing:0.06em; }
-.nc-style-head:hover { color:var(--ink-soft); }
-.nc-style-block { padding-top:2px; }
-.nc-head{display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:9px 0 7px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.26em;text-transform:uppercase;color:var(--ink-soft);border-bottom:1px solid var(--panel-line);margin-bottom:10px;}.nc-head:hover{color:var(--ink);}.nc-tog{font-size:12px;color:var(--acc);}.nc-badge{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:0.12em;color:#040d18;background:var(--acc);padding:2px 6px;border-radius:3px;margin-left:8px;}#nc-section{margin-top:12px;border-top:1px solid var(--panel-line);padding-top:2px;}
+/* Raised from plain faint text to an actual pill/row so it reads as a
+   clickable settings entry point, not decoration — this was the single
+   easiest-to-miss control in the card. */
+.nc-style-head { display:flex; align-items:center; justify-content:space-between; cursor:pointer;
+  padding:7px 9px; margin-top:2px; font-size:10.5px; font-weight:600; color:var(--ink-soft);
+  letter-spacing:0.06em; background:rgba(127,208,255,0.07); border:1px solid rgba(127,208,255,0.18);
+  border-radius:7px; transition:background .14s,border-color .14s,color .14s; }
+.nc-style-head:hover { color:var(--ink); background:rgba(127,208,255,0.13); border-color:rgba(127,208,255,0.35); }
+.nc-style-block { padding-top:6px; }
+/* Contours (icon-toggled from the tools row) — the sub-controls float free
+   of a checkbox/label now, so give the group its own light separation. */
+.nc-ctr-wrap { margin-top:2px; padding-top:6px; border-top:1px solid rgba(120,170,205,0.10); }
+.nc-ctr-sl-wrap { display:flex; align-items:center; gap:7px; padding-bottom:2px; }
+.nc-ctr-style-wrap { margin-top:4px; padding-bottom:2px; }
+.nc-ctr-lvln { margin-top:2px; font-size:9px; color:var(--ink-faint); }
+.nc-head{display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:9px 0 7px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-soft);border-bottom:1px solid var(--panel-line);margin-bottom:10px;}.nc-head:hover{color:var(--ink);}.nc-tog{font-size:12px;color:var(--acc);}.nc-badge{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:0.12em;color:#040d18;background:var(--acc);padding:2px 6px;border-radius:3px;margin-left:8px;}#nc-section{margin-top:12px;border-top:1px solid var(--panel-line);padding-top:2px;}

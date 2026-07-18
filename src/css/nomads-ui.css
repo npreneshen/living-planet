@@ -1,5 +1,5 @@
 
-.nomads-btn{pointer-events:auto;display:inline-flex;align-items:center;gap:6px;margin-top:10px;
+.nomads-btn{pointer-events:auto;display:inline-flex;align-items:center;gap:6px;margin-top:18px;
   font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;
   color:var(--acc);background:rgba(127,208,255,0.08);border:1px solid rgba(127,208,255,0.32);
   padding:7px 13px;border-radius:20px;cursor:pointer;transition:background .2s,border-color .2s;}

@@ -1009,11 +1009,35 @@ window.GlobalCharts = (() => {
 
   const COLORS = ["#38bdf8", "#f472b6", "#4ade80", "#fbbf24", "#a78bfa", "#fb923c"];
 
-  function fmtTick(v) {
+  function fmtTick(v, step) {
     if (!Number.isFinite(v)) return "";
-    const a = Math.abs(v);
-    const d = a < 1 ? 2 : a < 10 ? 1 : 0;
-    return (+v.toFixed(d)).toString();
+    // Decimal count derives from the tick STEP, not the individual value's
+    // own magnitude — otherwise a narrow-range series (e.g. 15.1-15.4°C)
+    // rounds every tick to the same integer and the axis shows "15 15 15
+    // 15 15", which reads as broken. Deriving from step means ticks always
+    // stay distinguishable regardless of the values' absolute size.
+    const d = step > 0 ? Math.max(0, Math.ceil(-Math.log10(step))) : (Math.abs(v) < 1 ? 2 : Math.abs(v) < 10 ? 1 : 0);
+    return (+v.toFixed(Math.min(d, 6))).toString();
+  }
+
+  // "Nice" round-number tick step (1/2/5 × 10^k), matching the D3/Excel/
+  // matplotlib convention — avoids ugly axis labels like 17.3, 34.6, 51.9
+  // from a naive linear split of the range into N equal parts.
+  function niceStep(range, targetCount) {
+    if (!(range > 0)) return 1;
+    const rawStep = range / Math.max(1, targetCount);
+    const mag = Math.pow(10, Math.floor(Math.log10(rawStep)));
+    const norm = rawStep / mag;
+    return (norm < 1.5 ? 1 : norm < 3 ? 2 : norm < 7 ? 5 : 10) * mag;
+  }
+  function niceTicks(vMin, vMax, targetCount) {
+    const step = niceStep(vMax - vMin, targetCount);
+    if (!(step > 0)) return { ticks: [vMin, vMax], step: Math.max(1e-9, vMax - vMin) };
+    const start = Math.ceil(vMin / step) * step;
+    const ticks = [];
+    for (let v = start; v <= vMax + step * 1e-6; v += step) ticks.push(+v.toFixed(10));
+    if (!ticks.length) ticks.push(vMin, vMax);
+    return { ticks, step };
   }
 
   function fmtTime(t) {
@@ -1081,6 +1105,28 @@ window.GlobalCharts = (() => {
     const { left, right } = assignAxes(active, opts);
     const hasRight = right.length > 0;
     const pad = { l: 48, r: hasRight ? 48 : 12, t: 20, b: 32 };
+
+    // Pre-compute legend line-wrapping BEFORE finalizing pad.t: the legend
+    // used to advance left-to-right with no bounds check at all, so with 3+
+    // series (a common case for dual-axis weather/marine charts) entries
+    // just ran off the right edge of the canvas past pad.r instead of
+    // wrapping — and even when they did fit, they were squeezed into a
+    // fixed 6px gap that could overlap the plot's own top border.
+    const showLegend = opts.legend !== false && active.length > 1;
+    const legendLineH = 12;
+    let legendLines = 1;
+    if (showLegend) {
+      ctx.font = "9px IBM Plex Mono, monospace";
+      const legendW = w - pad.l - pad.r;
+      let lx = 0;
+      active.forEach((s, i) => {
+        const label = (s.label || `Series ${i + 1}`) + " (R)"; // worst-case width incl. right-axis suffix
+        const itemW = 13 + ctx.measureText(label).width + 24;
+        if (lx > 0 && lx + itemW > legendW) { legendLines++; lx = 0; }
+        lx += itemW;
+      });
+    }
+    pad.t = 12 + (showLegend ? legendLines * legendLineH + 6 : 8);
     const plotW = w - pad.l - pad.r;
     const plotH = h - pad.t - pad.b;
 
@@ -1119,13 +1165,17 @@ window.GlobalCharts = (() => {
     ctx.strokeRect(pad.l, pad.t, plotW, plotH);
 
     const drawYTicks = (vMin, vMax, yAt, side) => {
-      const nY = 4;
+      // Nice round-number ticks (see niceTicks above) instead of a naive
+      // linear split into 4 equal parts, which produced ugly non-round
+      // labels and, for a narrow-range series, ticks that all rounded to
+      // the same displayed number.
+      const { ticks, step } = niceTicks(vMin, vMax, 4);
       ctx.font = "9px IBM Plex Mono, monospace";
       ctx.textBaseline = "middle";
       ctx.textAlign = side === "right" ? "left" : "right";
-      for (let i = 0; i <= nY; i++) {
-        const v = vMin + ((vMax - vMin) * i) / nY;
+      for (const v of ticks) {
         const y = yAt(v);
+        if (y < pad.t - 0.5 || y > pad.t + plotH + 0.5) continue;
         ctx.strokeStyle = "rgba(127,170,205,0.12)";
         ctx.beginPath();
         ctx.moveTo(pad.l, y);
@@ -1133,7 +1183,7 @@ window.GlobalCharts = (() => {
         ctx.stroke();
         ctx.fillStyle = "#7a93a8";
         const tx = side === "right" ? pad.l + plotW + 5 : pad.l - 5;
-        ctx.fillText(fmtTick(v), tx, y);
+        ctx.fillText(fmtTick(v, step), tx, y);
       }
     };
 
@@ -1232,20 +1282,24 @@ window.GlobalCharts = (() => {
       drawLine(m.s, yAtR, color);
     });
 
-    if (opts.legend !== false && active.length > 1) {
+    if (showLegend) {
       let lx = pad.l;
-      const ly = pad.t - 6;
+      let line = 0;
+      const legendW = w - pad.l - pad.r;
       ctx.font = "9px IBM Plex Mono, monospace";
+      ctx.textAlign = "left";
       active.forEach((s, i) => {
         const color = s.color || COLORS[i % COLORS.length];
         const onRight = right.some((m) => m.s === s);
+        const label = (s.label || `Series ${i + 1}`) + (onRight ? " (R)" : "");
+        const itemW = 13 + ctx.measureText(label).width + 24;
+        if (lx > pad.l && lx - pad.l + itemW > legendW) { line++; lx = pad.l; }
+        const ly = 10 + line * legendLineH + 8;
         ctx.fillStyle = color;
         ctx.fillRect(lx, ly - 8, 10, 3);
         ctx.fillStyle = "#94a3b8";
-        const label = (s.label || `Series ${i + 1}`) + (onRight ? " (R)" : "");
-        ctx.textAlign = "left";
         ctx.fillText(label, lx + 13, ly);
-        lx += ctx.measureText(label).width + 24;
+        lx += itemW;
       });
     }
   }
@@ -1528,6 +1582,10 @@ window.GlobeFeeds = function (api) {
     // on whatever's under the cursor once the click's mousedown target,
     // the backdrop, is gone).
     if (document.querySelector(".nc-derive-dlg")) return true;
+    if (document.querySelector(".nc-corr-dlg")) return true;
+    if (document.querySelector(".nc-comp-dlg")) return true;
+    if (document.querySelector(".nc-eof-dlg")) return true;
+    if (document.querySelector(".nc-regr-dlg")) return true;
     // Any other floating UI counts too: while a window/menu/dialog is open,
     // a globe click should never spawn the point-weather popup on top of
     // (or underneath) it — one open window at a time.
@@ -2332,7 +2390,7 @@ window.GlobeFeeds = function (api) {
   let _globePick = null;
   window.addEventListener("pointerdown", (e) => {
     if (e.button !== 0) return;
-    if (e.target.closest(".ctrl,.gf-feed-detail,.nc-plot-win,#info-panel,[data-info],.pw-tabs,.pw-map-opts")) return;
+    if (e.target.closest(".ctrl,.gf-feed-detail,.nc-plot-win,#info-panel,[data-info],.pw-tabs,.pw-map-opts,.gp-zoomctrl")) return;
     _globePick = { x: e.clientX, y: e.clientY, id: e.pointerId };
   }, true);
 
@@ -2341,7 +2399,7 @@ window.GlobeFeeds = function (api) {
     const moved = Math.hypot(e.clientX - _globePick.x, e.clientY - _globePick.y);
     _globePick = null;
     if (moved > 10 || globeBusy()) return;
-    if (e.target.closest(".ctrl,.gf-feed-detail,.nc-plot-win,#info-panel,[data-info],.nc-trend-dlg,.nc-derive-dlg,#nomads-modal,#help-modal,.nc-csv-menu,.ann-form")) return;
+    if (e.target.closest(".ctrl,.gf-feed-detail,.nc-plot-win,#info-panel,[data-info],.nc-trend-dlg,.nc-derive-dlg,.nc-corr-dlg,.nc-comp-dlg,.nc-eof-dlg,.nc-regr-dlg,#nomads-modal,#help-modal,.nc-csv-menu,.ann-form,.gp-zoomctrl")) return;
 
     const feedG = e.target.closest("[data-feed-id]");
     const domHit = feedG ? feed.data.get(feedG.getAttribute("data-feed-id")) : null;

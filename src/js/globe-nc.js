@@ -288,7 +288,64 @@ class GRIB2Adapter {
       this.dimensions[0].size=this._times.length;
     }
   }
-  static _GP={'0_0_0':['tmp','Temperature'],'0_0_2':['ptmp','Potential Temperature'],'0_0_4':['tmax','Max Temperature'],'0_0_5':['tmin','Min Temperature'],'0_0_6':['dpt','Dew Point'],'0_0_10':['lhtfl','Latent Heat Net Flux'],'0_0_11':['shtfl','Sensible Heat Net Flux'],'0_1_0':['spfh','Specific Humidity'],'0_1_1':['rh','Relative Humidity'],'0_1_3':['pwat','Precipitable Water'],'0_1_7':['prate','Precipitation Rate'],'0_1_8':['apcp','Total Precipitation'],'0_1_11':['snod','Snow Depth'],'0_1_42':['snowc','Snow Cover'],'0_1_193':['tprate','Total Precipitation Rate'],'0_2_2':['ugrd','U-component of Wind'],'0_2_3':['vgrd','V-component of Wind'],'0_2_8':['vvel','Vertical Velocity'],'0_2_10':['wspd','Wind Speed'],'0_2_17':['uflx','Momentum Flux U'],'0_2_18':['vflx','Momentum Flux V'],'0_3_0':['pres','Pressure'],'0_3_1':['mslp','MSLP'],'0_3_5':['hgt','Geopotential Height'],'0_4_192':['dswrf','Downward SW Radiation'],'0_4_193':['uswrf','Upward SW Radiation'],'0_5_192':['dlwrf','Downward LW Radiation'],'0_5_193':['ulwrf','Upward LW Radiation'],'0_6_0':['cbase','Cloud Base'],'0_6_1':['tcc','Total Cloud Cover'],'0_6_3':['lcc','Low Cloud Cover'],'0_6_4':['mcc','Medium Cloud Cover'],'0_6_5':['hcc','High Cloud Cover'],'0_7_0':['cape','CAPE'],'0_7_1':['cin','CIN'],'0_7_6':['bli','Best Lifted Index'],'0_7_192':['lftx','Lifted Index'],'0_13_192':['pmtc','Particulate Matter (Coarse)'],'0_13_193':['pmtf','Particulate Matter (Fine)'],'0_14_0':['tozne','Total Ozone'],'0_19_1':['albedo','Albedo'],'0_20_0':['chmcdn','Aerosol Mass Density'],'0_20_1':['colmd','Column-Integrated Mass Density'],'0_20_2':['mxmr','Aerosol Mass Mixing Ratio'],'0_20_4':['adens','Aerosol Number Density'],'0_20_100':['aotk','Aerosol Optical Thickness'],'0_20_101':['eatk','Aerosol Extinction Coefficient'],'0_20_102':['aotk055','AOT at 0.55 µm'],'0_20_103':['ssalb','Single Scattering Albedo'],'0_20_104':['asysf','Asymmetry Factor'],'0_20_112':['sctaot','Scattering AOT'],'2_0_0':['land','Land Cover'],'2_0_2':['tsoil','Soil Temperature'],'2_0_192':['soilw','Volumetric Soil Moisture'],'2_0_193':['gflux','Ground Heat Flux'],'10_0_0':['surge','Storm Surge'],'10_0_3':['sst','Sea Surface Temperature'],'10_1_0':['wvhgt','Significant Wave Height'],'10_2_0':['icec','Ice Cover'],'10_2_1':['icetk','Ice Thickness']};
+  static _GP={'0_0_0':['tmp','Temperature'],'0_0_2':['ptmp','Potential Temperature'],'0_0_4':['tmax','Max Temperature'],'0_0_5':['tmin','Min Temperature'],'0_0_6':['dpt','Dew Point'],'0_0_10':['lhtfl','Latent Heat Net Flux'],'0_0_11':['shtfl','Sensible Heat Net Flux'],'0_1_0':['spfh','Specific Humidity'],'0_1_1':['rh','Relative Humidity'],'0_1_3':['pwat','Precipitable Water'],'0_1_7':['prate','Precipitation Rate'],'0_1_8':['apcp','Total Precipitation'],'0_1_11':['snod','Snow Depth'],'0_1_42':['snowc','Snow Cover'],'0_1_193':['tprate','Total Precipitation Rate'],'0_2_1':['wspd','Wind Speed'],'0_2_2':['ugrd','U-component of Wind'],'0_2_3':['vgrd','V-component of Wind'],'0_2_8':['vvel','Vertical Velocity'],'0_2_17':['uflx','Momentum Flux U'],'0_2_18':['vflx','Momentum Flux V'],'0_3_0':['pres','Pressure'],'0_3_1':['mslp','MSLP'],'0_3_5':['hgt','Geopotential Height'],'0_4_192':['dswrf','Downward SW Radiation'],'0_4_193':['uswrf','Upward SW Radiation'],'0_5_192':['dlwrf','Downward LW Radiation'],'0_5_193':['ulwrf','Upward LW Radiation'],'0_6_0':['cbase','Cloud Base'],'0_6_1':['tcc','Total Cloud Cover'],'0_6_3':['lcc','Low Cloud Cover'],'0_6_4':['mcc','Medium Cloud Cover'],'0_6_5':['hcc','High Cloud Cover'],'0_7_0':['cape','CAPE'],'0_7_1':['cin','CIN'],'0_7_6':['bli','Best Lifted Index'],'0_7_192':['lftx','Lifted Index'],'0_13_192':['pmtc','Particulate Matter (Coarse)'],'0_13_193':['pmtf','Particulate Matter (Fine)'],'0_14_0':['tozne','Total Ozone'],'0_19_1':['albedo','Albedo'],'0_20_0':['chmcdn','Aerosol Mass Density'],'0_20_1':['colmd','Column-Integrated Mass Density'],'0_20_2':['mxmr','Aerosol Mass Mixing Ratio'],'0_20_4':['adens','Aerosol Number Density'],'0_20_100':['aotk','Aerosol Optical Thickness'],'0_20_101':['eatk','Aerosol Extinction Coefficient'],'0_20_102':['aotk055','AOT at 0.55 µm'],'0_20_103':['ssalb','Single Scattering Albedo'],'0_20_104':['asysf','Asymmetry Factor'],'0_20_112':['sctaot','Scattering AOT'],'2_0_0':['land','Land Cover'],'2_0_2':['tsoil','Soil Temperature'],'2_0_192':['soilw','Volumetric Soil Moisture'],'2_0_193':['gflux','Ground Heat Flux'],
+    // Discipline 10 (Oceanographic), verified against WMO GRIB2 Table 4.2-10-x.
+    // Category 0 = Waves. Category 1 = Currents. Category 2 = Ice.
+    // Category 3 = Surface properties. Category 4 = Sub-surface properties.
+    // NOTE: an earlier version of this table had 10_0_3 (HTSGW, wave height)
+    // mislabeled as Sea Surface Temperature, and 10_1_0 (current direction)
+    // mislabeled as wave height — both are fixed below. Real SST is 10_3_0
+    // (WTMP, water temperature) per the spec.
+    '10_0_0':['wvsp1','Wave Spectra (1)'],'10_0_1':['wvsp2','Wave Spectra (2)'],'10_0_2':['wvsp3','Wave Spectra (3)'],
+    '10_0_3':['htsgw','Significant Height of Combined Wind Waves and Swell'],'10_0_4':['wvdir','Direction of Wind Waves'],
+    '10_0_5':['wvhgt','Significant Height of Wind Waves'],'10_0_6':['wvper','Mean Period of Wind Waves'],
+    '10_0_7':['swdir','Direction of Swell Waves'],'10_0_8':['swell','Significant Height of Swell Waves'],
+    '10_0_9':['swper','Mean Period of Swell Waves'],'10_0_10':['dirpw','Primary Wave Direction'],
+    '10_0_11':['perpw','Primary Wave Mean Period'],'10_0_12':['dirsw','Secondary Wave Direction'],
+    '10_0_13':['persw','Secondary Wave Mean Period'],'10_0_14':['wwsdir','Direction of Combined Wind Waves and Swell'],
+    '10_0_15':['mwsper','Mean Period of Combined Wind Waves and Swell'],'10_0_34':['wstp','Peak Wave Period'],
+    '10_1_0':['dircu','Current Direction'],'10_1_1':['spcu','Current Speed'],
+    '10_1_2':['ucur','U-component of Current'],'10_1_3':['vcur','V-component of Current'],
+    '10_2_0':['icec','Ice Cover'],'10_2_1':['icetk','Ice Thickness'],'10_2_2':['diced','Direction of Ice Drift'],
+    '10_2_3':['siced','Speed of Ice Drift'],'10_2_4':['uice','U-component of Ice Drift'],'10_2_5':['vice','V-component of Ice Drift'],
+    '10_2_6':['iceg','Ice Growth Rate'],'10_2_7':['icedv','Ice Divergence'],
+    '10_3_0':['wtmp','Water Temperature'],'10_3_1':['dslm','Deviation of Sea Level from Mean'],
+    '10_4_0':['wtmpss','Sub-surface Water Temperature'],'10_4_1':['salin','Salinity'],
+    '10_4_2':['wdens','Water Density'],'10_4_6':['wvelz','Geometric Vertical Velocity'],
+    '10_0_25':['invmwf','Inverse Mean Wave Frequency'],
+    // Well-documented NCEP local-table additions (identical across GFS/NAM/HRRR/AQM).
+    '0_1_192':['crain','Categorical Rain'],'0_1_193':['cfrzr','Categorical Freezing Rain'],
+    '0_1_194':['cicep','Categorical Ice Pellets'],'0_1_195':['csnow','Categorical Snow'],
+    '0_2_0':['wdir','Wind Direction'],
+    '0_2_9':['dzdt','Vertical Velocity (Geometric)'],'0_2_10':['absv','Absolute Vorticity'],
+    '0_2_12':['relv','Relative Vorticity'],'0_2_13':['reld','Relative Divergence'],
+    '0_2_22':['gust','Wind Speed (Gust)'],'0_6_13':['ceil','Ceiling'],
+    '0_19_0':['vis','Visibility'],'0_7_7':['shwinx','Showalter Index'],
+    // WMO-standard radiation flux codes — distinct from the NCEP-local
+    // 192/193 codes above (same physical quantities, different table).
+    '0_5_3':['ulwrf','Upward Long-Wave Radiation Flux'],'0_5_4':['dlwrf','Downward Long-Wave Radiation Flux'],
+    '0_4_7':['dswrf','Downward Short-Wave Radiation Flux'],'0_4_8':['uswrf','Upward Short-Wave Radiation Flux']};
+  // WMO Table 4.2 category names, keyed 'discipline_category' — used as a
+  // fallback label for any param not in _GP above so unmapped fields show
+  // something legible ("Moisture (param 197) @ ...") instead of a bare
+  // "d0_c1_p197" code. Far more numerous than the params we can name
+  // precisely (NCEP alone has hundreds of local-table codes across its
+  // operational models), so this is deliberately honest about not knowing
+  // the exact parameter rather than guessing and risking another
+  // HTSGW/SST-style mislabel.
+  static _CATNAME={
+    '0_0':'Temperature','0_1':'Moisture','0_2':'Momentum','0_3':'Mass','0_4':'Short-wave Radiation',
+    '0_5':'Long-wave Radiation','0_6':'Cloud','0_7':'Thermodynamic Stability','0_13':'Aerosols',
+    '0_14':'Trace Gases','0_15':'Radar','0_16':'Forecast Radar Imagery','0_17':'Electrodynamics',
+    '0_18':'Nuclear/Radiology','0_19':'Physical Atmospheric Properties',
+    '0_20':'Atmospheric Chemical Constituents','0_191':'Miscellaneous','0_192':'Covariance',
+    '1_0':'Hydrology Basic Products','1_1':'Hydrology Probabilistic Products',
+    '1_2':'Inland Water/Sediment Properties',
+    '2_0':'Vegetation/Biomass','2_1':'Agricultural/Aquacultural Products',
+    '2_2':'Transportation-related Products','2_3':'Soil Products','2_4':'Fire Weather Products',
+    '3_192':'Simulated Satellite Imagery',
+    '10_0':'Waves','10_1':'Currents','10_2':'Ice','10_3':'Surface Properties',
+    '10_4':'Sub-surface Properties'};
   _varName(discipline,pdt,levelType){
     const k=discipline+'_'+(pdt.paramCat||0)+'_'+(pdt.paramNum||0);
     const gp=GRIB2Adapter._GP[k];
@@ -303,13 +360,33 @@ class GRIB2Adapter {
     const gp=GRIB2Adapter._GP[k];
     const _lvl=pdt.typeOfLevel??0;
     const _ld={1:'Surface',10:'Entire atmosphere',100:'Isobaric',103:'Height above ground',105:'Hybrid level',200:'Entire atmosphere'}[_lvl];
-    const _ls=gp?gp[1]:('Disc '+discipline+' Cat '+(pdt.paramCat||0)+' Param '+(pdt.paramNum||0));
+    let _ls;
+    if(gp) _ls=gp[1];
+    else{
+      const catName=GRIB2Adapter._CATNAME[discipline+'_'+(pdt.paramCat||0)];
+      // Not in the exact-name table (NCEP alone has hundreds of local
+      // codes) — fall back to the WMO category name plus the raw param
+      // number, e.g. "Moisture (param 197)", rather than a bare numeric
+      // code or (worse) a guessed name that might be wrong.
+      _ls=catName?(catName+' (param '+(pdt.paramNum||0)+')'):('Disc '+discipline+' Cat '+(pdt.paramCat||0)+' Param '+(pdt.paramNum||0));
+    }
     return _ld?(_ls+' @ '+_ld):_ls;
   }
   _units(msg){
     const k=msg.discipline+'_'+((msg.pdt||{}).paramCat||0)+'_'+((msg.pdt||{}).paramNum||0);
-    return({'0_0_0':'K','0_1_1':'%','0_2_2':'m/s','0_2_3':'m/s','0_2_10':'m/s',
-      '0_3_0':'Pa','10_0_3':'K','0_2_31':'m/s','0_2_32':'m/s','10_0_0':'m'})[k]||'';
+    return({'0_0_0':'K','0_1_1':'%','0_2_1':'m/s','0_2_2':'m/s','0_2_3':'m/s',
+      '0_3_0':'Pa','0_2_31':'m/s','0_2_32':'m/s',
+      // Momentum additions (kept in sync with _GP above) — note param 10
+      // is Absolute Vorticity (/s), not Wind Speed (that's param 1, m/s).
+      '0_2_0':'deg','0_2_9':'m/s','0_2_10':'/s','0_2_12':'/s','0_2_13':'/s','0_2_22':'m/s','0_6_13':'m',
+      '0_19_0':'m','0_7_7':'K','0_5_3':'W/m2','0_5_4':'W/m2','0_4_7':'W/m2','0_4_8':'W/m2',
+      '10_0_25':'s',
+      // Discipline 10 (Oceanographic) — kept in sync with _GP above.
+      '10_0_3':'m','10_0_4':'deg','10_0_5':'m','10_0_6':'s','10_0_7':'deg','10_0_8':'m','10_0_9':'s',
+      '10_0_10':'deg','10_0_11':'s','10_0_12':'deg','10_0_13':'s','10_0_14':'deg','10_0_15':'s','10_0_34':'s',
+      '10_1_0':'deg','10_1_1':'m/s','10_1_2':'m/s','10_1_3':'m/s',
+      '10_2_0':'proportion','10_2_1':'m','10_2_2':'deg','10_2_3':'m/s','10_2_4':'m/s','10_2_5':'m/s','10_2_6':'m/s',
+      '10_3_0':'K','10_3_1':'m','10_4_0':'K','10_4_1':'kg/kg','10_4_2':'kg/m3','10_4_6':'m/s'})[k]||'';
   }
   get grid(){ return this._grd; }
   getAttribute(varName,attrName){
@@ -1012,7 +1089,11 @@ function computeAutoRange(slice){
 
 /* ---- Contouring: high-res lat/lon field → d3.contours → geoPath on globe ---- */
 const _CTR_STYLES={
-  synoptic:{stroke:'rgba(255,205,90,0.95)',halo:'rgba(0,0,0,0.42)',width:1.05},
+  // Slightly brighter/warmer gold than before (was 205,90,0.95) — now that
+  // opacity is decoupled from the overlay's data-opacity slider (see
+  // doRender), this is the contour's actual on-screen strength rather than
+  // getting crushed down by whatever the data opacity happens to be set to.
+  synoptic:{stroke:'rgba(255,218,110,1)',halo:'rgba(0,0,0,0.42)',width:1.15},
   white:   {stroke:'rgba(255,255,255,0.92)',halo:'rgba(0,0,0,0.35)',width:1.0},
   dark:    {stroke:'rgba(28,32,42,0.88)',   halo:'rgba(255,255,255,0.55)',width:1.1},
   cyan:    {stroke:'rgba(100,220,255,0.92)',halo:'rgba(0,0,0,0.4)',  width:1.05},
@@ -1824,6 +1905,49 @@ window.GlobeNC = function(api) {
   // Student-t two-tailed 5% critical values, interpolated in 1/df — used by
   // the optional "mask insignificant trends" fit option below.
   const _T05=[[1,12.706],[2,4.303],[3,3.182],[4,2.776],[5,2.571],[6,2.447],[8,2.306],[10,2.228],[15,2.131],[20,2.086],[30,2.042],[60,2.000],[120,1.980]];
+  // Two-tailed p-value from a t-statistic — the regularized incomplete
+  // beta function via a continued-fraction expansion (the standard
+  // Numerical-Recipes routine). _tCrit05 above only answers "significant
+  // at the 5% level or not"; the regression p-value MAP needs an actual
+  // continuous p per cell, hence this fuller (but still compact) version.
+  function _logGamma(x){
+    const cof=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];
+    let y=x,tmp=x+5.5; tmp-=(x+0.5)*Math.log(tmp);
+    let ser=1.000000000190015;
+    for(let j=0;j<6;j++){y+=1;ser+=cof[j]/y;}
+    return -tmp+Math.log(2.5066282746310005*ser/x);
+  }
+  function _betacf(a,b,x){
+    const MAXIT=100,EPS=3e-7,FPMIN=1e-30;
+    const qab=a+b,qap=a+1,qam=a-1;
+    let c=1,d=1-qab*x/qap;
+    if(Math.abs(d)<FPMIN)d=FPMIN;
+    d=1/d; let h=d;
+    for(let m=1;m<=MAXIT;m++){
+      const m2=2*m;
+      let aa=m*(b-m)*x/((qam+m2)*(a+m2));
+      d=1+aa*d; if(Math.abs(d)<FPMIN)d=FPMIN;
+      c=1+aa/c; if(Math.abs(c)<FPMIN)c=FPMIN;
+      d=1/d; h*=d*c;
+      aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));
+      d=1+aa*d; if(Math.abs(d)<FPMIN)d=FPMIN;
+      c=1+aa/c; if(Math.abs(c)<FPMIN)c=FPMIN;
+      d=1/d; const del=d*c; h*=del;
+      if(Math.abs(del-1)<EPS)break;
+    }
+    return h;
+  }
+  function _betai(a,b,x){
+    if(x<=0)return 0; if(x>=1)return 1;
+    const bt=Math.exp(_logGamma(a+b)-_logGamma(a)-_logGamma(b)+a*Math.log(x)+b*Math.log(1-x));
+    if(x<(a+1)/(a+b+2)) return bt*_betacf(a,b,x)/a;
+    return 1-bt*_betacf(b,a,1-x)/b;
+  }
+  function _tTestPValue(t,df){
+    if(!isFinite(t)||df<=0) return NaN;
+    const x=df/(df+t*t);
+    return _betai(df/2,0.5,x);
+  }
   function _tCrit05(df){
     if(df<=1) return 12.706;
     if(df>=120) return 1.96;
@@ -2001,6 +2125,7 @@ window.GlobeNC = function(api) {
       const db=nv.cardEl.querySelector('.nc-drop-btn'); if(db) db.style.display='none';
       const badge=nv.cardEl.querySelector('.nc-cname');
       if(badge){ badge.textContent='📈 '+nv.name; badge.classList.remove('nc-empty'); }
+      const cmSel=nv.cardEl.querySelector('.nc-cm'); if(cmSel){ cmSel.value=nv.selCmap; updateCmapPrev(nv); }
       updateTimeControls(nv);
     }
     renumberCards(); schedRender(nv);
@@ -2182,7 +2307,15 @@ window.GlobeNC = function(api) {
     syncParams();
     const close=()=>dlg.remove();
     box.querySelector('#trend-cancel').addEventListener('click',close);
-    dlg.addEventListener('click',e=>{ if(e.target===dlg) close(); });
+    // Close only when BOTH the press and the release land on the bare
+    // backdrop — a plain 'click' check alone also fires when a drag that
+    // starts on a text field inside the dialog (e.g. selecting/highlighting
+    // a lag number by dragging) happens to release outside that field,
+    // since the resulting click's target is wherever the mouse came up,
+    // not where the drag began.
+    let _backdropDown=false;
+    dlg.addEventListener('mousedown',e=>{ _backdropDown=(e.target===dlg); });
+    dlg.addEventListener('click',e=>{ if(e.target===dlg&&_backdropDown) close(); });
     box.querySelector('#trend-run').addEventListener('click',async()=>{
       const mode=box.querySelector('input[name="trend-mode"]:checked')?.value||'full';
       const spec={mode,sig:!!box.querySelector('#trend-sig')?.checked};
@@ -2217,6 +2350,1460 @@ window.GlobeNC = function(api) {
       document.body.appendChild(el);
     }
     el.textContent=msg;
+  }
+
+  /* ============================================================ CORRELATION / TELECONNECTION MAPS
+     Click a reference point on any loaded field, then correlate that
+     point's time series (optionally lagged) against every cell of a
+     target field — the same field (self-teleconnection, e.g. an ENSO-SST
+     map) or a different one (e.g. an SST index vs. a precipitation
+     field). Mirrors the trend-analysis pipeline above almost exactly:
+     _fitTrendSlice/_computeTrendMap/_buildTrendOverlay have direct
+     analogues here, producing the same kind of virtual-frame result
+     overlay — except "frame" = one lag value instead of one time window,
+     so the existing scrub/animate transport doubles as the lag slider
+     the correlation-map / lag-correlation request asked for, for free. */
+  async function _extractPointSeries(ov,lon,lat){
+    const n=ov.frames.length;
+    const sortKeys=[],values=[];
+    for(let t=0;t<n;t++){
+      const fr=_cacheGet(ov,t); if(!fr) continue;
+      const rs=fr.renderSlice;
+      const v=sampleAt(lon,lat,rs,rs.lats,rs.lons);
+      if(isNaN(v)) continue;
+      const sk=ov.frames[t]?.sortKey;
+      sortKeys.push(typeof sk==='number'&&isFinite(sk)?sk:t);
+      values.push(v);
+      if((t&15)===15) await new Promise(r=>setTimeout(r,0));
+    }
+    // "Dated" here means every frame (not just the ones with a valid
+    // sample at this point) carries a real calendar sortKey — same test
+    // _fitTrendSlice uses, applied to the full frame list rather than the
+    // filtered series, since a few NaN/land-masked samples shouldn't
+    // disqualify an otherwise perfectly dated file from lag correlation.
+    const allSks=ov.frames.map(f=>f.sortKey).filter(sk=>typeof sk==='number'&&isFinite(sk));
+    const looksDated=/^\d{4}-\d{2}-\d{2}/.test(String(ov.frames[0]?.label||''));
+    const dated=looksDated&&allSks.length===n&&allSks.length>1&&allSks.every((v,i)=>i===0||v>allSks[i-1]);
+    return {sortKeys,values,dated,ovName:ov.name||ov.selVar||'layer'};
+  }
+  // Linear-interpolate a time series at an arbitrary query time (real
+  // days-since-epoch when the series is dated). Clamps at the ends
+  // rather than extrapolating — a lag that pushes past either end of the
+  // reference series just holds the nearest edge value.
+  function _interpAtTime(series,tq){
+    const sk=series.sortKeys,v=series.values,m=sk.length;
+    if(!m) return null;
+    // Outside the reference series' actual date coverage — don't clamp to
+    // an edge value (that would silently pair, say, a 2020 target frame
+    // with a 1854 index value just because 1854 is the first one on file).
+    // Callers already skip null/NaN matches, so this correctly restricts
+    // matching to the real overlap period between the two datasets.
+    if(tq<sk[0]||tq>sk[m-1]) return null;
+    let lo=0,hi=m-1;
+    while(hi-lo>1){ const mid=(lo+hi)>>1; if(sk[mid]<=tq) lo=mid; else hi=mid; }
+    const t0=sk[lo],t1=sk[hi];
+    const f=(t1>t0)?(tq-t0)/(t1-t0):0;
+    return v[lo]*(1-f)+v[hi]*f;
+  }
+  async function _fitCorrelationSlice(targetOv,refSeries,lagOffsetDays,opts,bothDated){
+    opts=opts||{};
+    const probe=_cacheGet(targetOv,0);
+    if(!probe) return null;
+    const rs0=probe.renderSlice;
+    const N=rs0.nLat*rs0.nLon;
+    const n=targetOv.frames.length;
+    const stride=Math.max(1,opts.stride||1);
+    let matched=0;
+    const sumX=new Float64Array(N),sumY=new Float64Array(N),sumXY=new Float64Array(N),
+          sumX2=new Float64Array(N),sumY2=new Float64Array(N),cnt=new Int32Array(N);
+    for(let t=0;t<n;t+=stride){
+      const fr=_cacheGet(targetOv,t); if(!fr) continue;
+      let xv;
+      if(bothDated){
+        const tsk=targetOv.frames[t]?.sortKey;
+        if(typeof tsk!=='number'||!isFinite(tsk)) continue;
+        xv=_interpAtTime(refSeries,tsk-lagOffsetDays);
+      } else {
+        // No reliable real-date alignment on one or both sides — fall
+        // back to matching by frame POSITION (the t-th target frame vs.
+        // the t-th valid reference sample). Lag is meaningless here
+        // (there's no real time axis to shift along), so callers only
+        // reach this path with lagOffsetDays effectively 0.
+        xv=t<refSeries.values.length?refSeries.values[t]:null;
+      }
+      if(xv==null||isNaN(xv)) continue;
+      matched++;
+      const d=fr.renderSlice.data;
+      for(let k=0;k<N;k++){
+        const yv=d[k]; if(isNaN(yv)) continue;
+        sumX[k]+=xv; sumY[k]+=yv; sumXY[k]+=xv*yv; sumX2[k]+=xv*xv; sumY2[k]+=yv*yv; cnt[k]++;
+      }
+      if((Math.floor(t/stride)&7)===7){ if(opts.onProgress) opts.onProgress(t+1,n); await new Promise(r=>setTimeout(r,0)); }
+    }
+    const r=new Float32Array(N);
+    for(let k=0;k<N;k++){
+      const c=cnt[k];
+      if(c<3){ r[k]=NaN; continue; }
+      const varX=c*sumX2[k]-sumX[k]*sumX[k];
+      const varY=c*sumY2[k]-sumY[k]*sumY[k];
+      if(varX<=1e-9||varY<=1e-9){ r[k]=NaN; continue; }
+      const covXY=c*sumXY[k]-sumX[k]*sumY[k];
+      let rr=Math.max(-1,Math.min(1,covXY/Math.sqrt(varX*varY)));
+      if(opts.sig){
+        // Two-tailed t-test on r itself (equivalent to the slope test in
+        // _fitTrendSlice — r² is the same quantity either way).
+        const r2=rr*rr, df=c-2;
+        const t2=r2>=1?Infinity:r2*df/(1-r2);
+        const tc=_tCrit05(df);
+        if(t2<tc*tc){ r[k]=NaN; continue; }
+      }
+      r[k]=rr;
+    }
+    return {data:r,nLat:rs0.nLat,nLon:rs0.nLon,lats:rs0.lats,lons:rs0.lons,n,matchedN:matched,stride};
+  }
+  function _fmtLL(lon,lat){
+    return (lat>=0?lat.toFixed(1)+'°N':(-lat).toFixed(1)+'°S')+' '+(lon>=0?lon.toFixed(1)+'°E':(-lon).toFixed(1)+'°W');
+  }
+  async function _computeCorrelationMap(refOv,lon,lat,targetOv,spec){
+    if(!targetOv.frames||targetOv.frames.length<3){ alert('Target layer needs at least 3 time frames.'); return; }
+    _hintTrend('Sampling reference series…');
+    const refSeries=await _extractPointSeries(refOv,lon,lat);
+    if(!refSeries.values.length){ _hintTrend(null); alert('No data at that point in the reference layer.'); return; }
+    if(refSeries.values.length<3){ _hintTrend(null); alert('Reference series has fewer than 3 valid time steps at that point.'); return; }
+    const tgtSks=targetOv.frames.map(f=>f.sortKey).filter(sk=>typeof sk==='number'&&isFinite(sk));
+    const tgtLooksDated=/^\d{4}-\d{2}-\d{2}/.test(String(targetOv.frames[0]?.label||''));
+    const targetDated=tgtLooksDated&&tgtSks.length===targetOv.frames.length&&tgtSks.length>1&&tgtSks.every((v,i)=>i===0||v>tgtSks[i-1]);
+    const bothDated=refSeries.dated&&targetDated;
+    const lags=bothDated?(spec.lags||[0]):[0];
+    if(!bothDated&&spec.lags&&spec.lags.length>1){
+      console.warn('[correlation] target layer lacks usable real dates — lag disabled, computing a single frame-position-aligned correlation instead');
+    }
+    const slices=[];
+    for(let i=0;i<lags.length;i++){
+      const lag=lags[i];
+      _hintTrend(lags.length>1?('Correlating lag '+(i+1)+'/'+lags.length+'…'):'Correlating…');
+      await new Promise(r=>setTimeout(r,0));
+      const sl=await _fitCorrelationSlice(targetOv,refSeries,lag*(spec.unitDays||0),{sig:!!spec.sig,stride:spec.stride},bothDated);
+      if(!sl) continue;
+      sl.label=lags.length>1?('Lag '+(lag>0?'+':'')+lag+' '+(spec.unitLabel||'')):(bothDated?'r (zero lag)':'r (frame-aligned, no dates)');
+      sl.lag=lag;
+      slices.push(sl);
+    }
+    _hintTrend(null);
+    if(!slices.length){ alert('No correlation slices could be computed.'); return; }
+    const prefix='Corr: '+refSeries.ovName+' @ '+_fmtLL(lon,lat)+' ↔ '+(targetOv.name||targetOv.selVar||'layer');
+    _buildCorrelationOverlay(targetOv,slices,prefix);
+    console.log('[correlation]',slices.length,'lag slice(s) for',prefix);
+  }
+  function _buildCorrelationOverlay(targetOv,slices,titlePrefix){
+    const nv=createOverlay();
+    if(!nv) return null;
+    nv._corr={srcId:targetOv.id,frames:slices,nLat:slices[0].nLat,nLon:slices[0].nLon,
+      lats:slices[0].lats,lons:slices[0].lons};
+    nv.name=titlePrefix||('Correlation: '+(targetOv.name||targetOv.selVar||'layer'));
+    nv.selVar='correlation';
+    nv.varOptions=[{name:'correlation',label:nv.name}];
+    nv.selCmap='RdBu';
+    nv.frames=slices.map((s,i)=>({label:s.label||('lag '+i),localT:i,virtual:true,corrSlice:i,sortKey:i}));
+    nv.maxTime=nv.frames.length;
+    const zeroIdx=slices.findIndex(s=>s.lag===0);
+    nv.selTime=zeroIdx>=0?zeroIdx:0;
+    nv._fcache=new Map();
+    rebuildSlice(nv);
+    if(nv.cardEl){
+      refreshCardVarPicker(nv);
+      const body=nv.cardEl.querySelector('.nc-cb'); if(body) body.style.display='';
+      const sw=nv.cardEl.querySelector('.nc-series-wrap'); if(sw) sw.style.display='none';
+      const db=nv.cardEl.querySelector('.nc-drop-btn'); if(db) db.style.display='none';
+      const badge=nv.cardEl.querySelector('.nc-cname');
+      if(badge){ badge.textContent='🔗 '+nv.name; badge.classList.remove('nc-empty'); }
+      const cmSel=nv.cardEl.querySelector('.nc-cm'); if(cmSel){ cmSel.value=nv.selCmap; updateCmapPrev(nv); }
+      updateTimeControls(nv);
+    }
+    renumberCards(); schedRender(nv);
+    document.getElementById('nc-body').style.display='';
+    document.getElementById('nc-tog').textContent='▾';
+    return nv;
+  }
+  function _openCorrelationDialog(ov,lon,lat){
+    document.querySelectorAll('.nc-corr-dlg').forEach(d=>d.remove());
+    const targets=overlays.filter(o=>o.frames&&o.frames.length>=3);
+    if(!targets.length){ alert('No loaded layer with 3+ time frames to correlate against.'); return; }
+    const dlg=document.createElement('div');
+    dlg.className='nc-corr-dlg';
+    dlg.style.cssText='position:fixed;inset:0;z-index:500;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.55);';
+    const box=document.createElement('div');
+    box.style.cssText='background:rgba(6,17,28,0.98);border:1px solid rgba(127,208,255,0.4);border-radius:10px;padding:16px 18px;max-width:460px;width:92%;font-family:IBM Plex Mono,monospace;font-size:11px;color:#cfe3f2;box-shadow:0 12px 40px rgba(0,0,0,0.5);';
+    const sks=ov.frames.map(f=>f.sortKey).filter(sk=>typeof sk==='number'&&isFinite(sk));
+    const looksDated=/^\d{4}-\d{2}-\d{2}/.test(String(ov.frames[0]?.label||''));
+    const dated=looksDated&&sks.length===ov.frames.length&&sks.length>1&&sks.every((v,i)=>i===0||v>sks[i-1]);
+    const unit=dated?_nativeTrendUnit(_medianGapDays(sks)):null;
+    const cadenceNote=dated
+      ? 'Detected reference spacing: <b style="color:#eaf3fb">'+_cadenceLabel(sks)+'</b> — lag steps below are in <b style="color:#eaf3fb">'+unit.label.toUpperCase()+'S</b>. (If the target layer turns out not to carry real dates too, lag is dropped automatically at compute time.)'
+      : '<span style="color:#ffb870">No usable dates found on this layer</span> — lag is disabled; this computes one frame-position-aligned correlation.';
+    box.innerHTML='<div style="font-size:13px;font-weight:600;margin-bottom:10px;color:#eaf3fb;">🔗 Correlation map</div>'+
+      '<div style="font-size:9.5px;color:#7fa0b8;margin-bottom:8px;line-height:1.45;">Reference point <b style="color:#eaf3fb">'+_fmtLL(lon,lat)+'</b> on <b style="color:#eaf3fb">'+(ov.name||ov.selVar||'layer')+'</b> — correlates its time series against every cell of the target layer below.</div>'+
+      '<div style="font-size:9.5px;color:#9fc4dd;margin-bottom:12px;line-height:1.5;padding:8px 10px;border-radius:6px;background:rgba(127,208,255,0.06);border:1px solid rgba(127,208,255,0.18);">'+cadenceNote+'</div>'+
+      '<label style="display:block;margin-bottom:10px;">Target layer<select id="corr-target" style="width:100%;margin-top:4px;padding:5px;background:#0a1828;color:#cfe3f2;border:1px solid rgba(120,170,205,0.3);border-radius:4px;">'+
+        targets.map(o=>'<option value="'+o.id+'"'+(o.id===ov.id?' selected':'')+'>'+(o.name||o.selVar||'layer')+'</option>').join('')+
+      '</select></label>'+
+      (dated?(
+      '<div style="display:flex;gap:8px;margin-bottom:6px;">'+
+        '<label style="flex:1;">Lag min<input type="number" id="corr-lmin" value="-12" style="width:100%;margin-top:4px;padding:4px;background:#0a1828;color:#cfe3f2;border:1px solid rgba(120,170,205,0.3);border-radius:4px;"></label>'+
+        '<label style="flex:1;">Lag max<input type="number" id="corr-lmax" value="12" style="width:100%;margin-top:4px;padding:4px;background:#0a1828;color:#cfe3f2;border:1px solid rgba(120,170,205,0.3);border-radius:4px;"></label>'+
+        '<label style="flex:1;">Step<input type="number" id="corr-lstep" value="1" min="1" style="width:100%;margin-top:4px;padding:4px;background:#0a1828;color:#cfe3f2;border:1px solid rgba(120,170,205,0.3);border-radius:4px;"></label>'+
+      '</div>'+
+      '<div style="font-size:9px;color:#7a93a8;margin-bottom:10px;">Positive lag = reference LEADS the target (e.g. +3 tests whether the reference '+unit.label+'s ago predicts the target now, per the ENSO→rainfall style relationship). One correlation map per step — scrub through them afterwards with the normal time slider/animate button.</div>'
+      ):'')+
+      '<label style="display:block;margin:0 0 12px;font-size:10px;cursor:pointer;color:#9fc4dd;">'+
+        '<input type="checkbox" id="corr-sig" style="margin-right:7px;accent-color:#7fd0ff;">'+
+        'Mask insignificant cells (two-tailed t-test, p ≥ 0.05 → transparent)</label>'+
+      '<label style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">Frame stride'+
+        '<input type="number" id="corr-stride" value="'+_suggestCorrStride(ov)+'" min="1" step="1" style="width:64px;padding:4px;background:#0a1828;color:#cfe3f2;border:1px solid rgba(120,170,205,0.3);border-radius:4px;">'+
+        '<span style="font-size:9px;color:#7a93a8;">use every Nth target frame</span></label>'+
+      '<div style="font-size:9px;color:#7a93a8;margin-bottom:10px;">A full daily record swept across many lags is genuinely a lot of arithmetic (frames × lags × grid cells) — this is pre-set to keep it responsive. Set to 1 for the full native-resolution record (slower); raise it further for a quicker first look.</div>'+
+      '<div style="display:flex;gap:8px;justify-content:flex-end;">'+
+        '<button type="button" id="corr-cancel" style="padding:6px 12px;border-radius:5px;border:1px solid rgba(120,170,205,0.3);background:transparent;color:#9fb6c9;cursor:pointer;">Cancel</button>'+
+        '<button type="button" id="corr-run" style="padding:6px 14px;border-radius:5px;border:none;background:#7fd0ff;color:#050d16;font-weight:600;cursor:pointer;">Compute</button></div>';
+    dlg.appendChild(box);
+    document.body.appendChild(dlg);
+    // The reference-point marker (_showRegionPoint, below) has no natural
+    // "done" moment of its own the way a region-extract's 6s auto-hide
+    // does — picking happens BEFORE this dialog even opens. Tie its
+    // removal to the dialog closing (Cancel, backdrop click, or Compute)
+    // instead, or it was left on the globe indefinitely.
+    const close=()=>{dlg.remove();_hideRegionBox();};
+    box.querySelector('#corr-cancel').addEventListener('click',close);
+    // Close only when BOTH the press and the release land on the bare
+    // backdrop — a plain 'click' check alone also fires when a drag that
+    // starts on a text field inside the dialog (e.g. selecting/highlighting
+    // a lag number by dragging) happens to release outside that field,
+    // since the resulting click's target is wherever the mouse came up,
+    // not where the drag began.
+    let _backdropDown=false;
+    dlg.addEventListener('mousedown',e=>{ _backdropDown=(e.target===dlg); });
+    dlg.addEventListener('click',e=>{ if(e.target===dlg&&_backdropDown) close(); });
+    box.querySelector('#corr-run').addEventListener('click',async()=>{
+      const targetId=box.querySelector('#corr-target').value;
+      const targetOv=overlays.find(o=>o.id===targetId)||ov;
+      const sig=!!box.querySelector('#corr-sig')?.checked;
+      let lags=[0],unitDays=0,unitLabel='';
+      if(dated){
+        const lminRaw=Math.round(+(box.querySelector('#corr-lmin')?.value||0));
+        const lmaxRaw=Math.round(+(box.querySelector('#corr-lmax')?.value||0));
+        const lstep=Math.max(1,Math.round(+(box.querySelector('#corr-lstep')?.value||1)));
+        const lmin=Math.min(lminRaw,lmaxRaw),lmax=Math.max(lminRaw,lmaxRaw);
+        lags=[];
+        for(let l=lmin;l<=lmax;l+=lstep) lags.push(l);
+        if(!lags.length) lags=[0];
+        if(lags.length>61){ alert('That is '+lags.length+' lag steps — narrow the range or increase the step (max 61).'); return; }
+        unitDays=unit.days; unitLabel=unit.label;
+      }
+      const stride=Math.max(1,Math.round(+(box.querySelector('#corr-stride')?.value||1)));
+      close();
+      await _computeCorrelationMap(ov,lon,lat,targetOv,{lags,unitDays,unitLabel,sig,stride});
+    });
+  }
+  // Exhaustive lagged correlation is O(frames × lags × grid cells) — a
+  // multi-year daily record swept across a couple dozen lags is genuinely
+  // billions of basic ops in single-threaded JS. Pre-suggest a stride
+  // (process every Nth frame) that keeps a first look responsive; 1 always
+  // remains available for a full-resolution run. Assumes the default
+  // ±12/step-1 = 25-lag sweep since the actual lag count isn't chosen yet
+  // when this dialog opens.
+  function _suggestCorrStride(ov){
+    const n=ov.frames?.length||0;
+    const assumedLags=25;
+    const budget=50000; // frames × lags kept under this (~500M cell-visits at a ~10k-cell grid)
+    return Math.max(1,Math.ceil((n*assumedLags)/budget));
+  }
+  let _corrPick=null;
+  const _corrCoordPanel=document.createElement('div');
+  _corrCoordPanel.style.cssText='position:fixed;display:none;z-index:350;left:50%;top:54px;transform:translateX(-50%);'+
+    'align-items:center;gap:6px;background:rgba(6,17,28,0.95);border:1px solid rgba(255,210,127,0.55);border-radius:8px;'+
+    'padding:6px 10px;font-family:IBM Plex Mono,monospace;font-size:10.5px;color:#ffd27f;';
+  _corrCoordPanel.innerHTML='<span>or enter coords:</span>'+
+    '<input type="number" id="corr-coord-lat" placeholder="lat" step="0.1" min="-90" max="90" style="width:62px;padding:3px 5px;background:#0a1828;color:#ffe9c2;border:1px solid rgba(255,210,127,0.4);border-radius:4px;">'+
+    '<input type="number" id="corr-coord-lon" placeholder="lon" step="0.1" min="-180" max="180" style="width:62px;padding:3px 5px;background:#0a1828;color:#ffe9c2;border:1px solid rgba(255,210,127,0.4);border-radius:4px;">'+
+    '<button type="button" id="corr-coord-go" style="padding:3px 10px;border-radius:4px;border:none;background:#ffd27f;color:#2a1a00;font-weight:600;cursor:pointer;">Go</button>';
+  document.body.appendChild(_corrCoordPanel);
+  function _corrCoordGo(){
+    if(!_corrPick)return;
+    const latEl=_corrCoordPanel.querySelector('#corr-coord-lat'),lonEl=_corrCoordPanel.querySelector('#corr-coord-lon');
+    const lat=parseFloat(latEl.value),lon=parseFloat(lonEl.value);
+    if(!isFinite(lat)||!isFinite(lon)||lat<-90||lat>90||lon<-180||lon>180){alert('Enter a valid latitude (-90 to 90) and longitude (-180 to 180).');return;}
+    const cp=_corrPick; _corrPick=null; if(api) api._globeRegionPicking=false; _hintRegion(null); _corrCoordPanel.style.display='none';
+    latEl.value=''; lonEl.value='';
+    _showRegionPoint([lon,lat]);
+    _openCorrelationDialog(cp.ov,lon,lat);
+  }
+  _corrCoordPanel.querySelector('#corr-coord-go').addEventListener('click',_corrCoordGo);
+  _corrCoordPanel.addEventListener('keydown',e=>{ if(e.key==='Enter'){e.preventDefault();_corrCoordGo();} });
+  function startCorrPick(ov){
+    if(!ov.frames||ov.frames.length<3){alert('Load at least 3 time frames first.');return;}
+    _corrPick={ov};
+    if(api) api._globeRegionPicking=true;
+    _hintRegion('CORRELATION MAP — click a reference point on the globe, or enter coords below (Esc cancels)');
+    _corrCoordPanel.style.display='flex';
+  }
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&_corrPick){_corrPick=null;if(api)api._globeRegionPicking=false;_hintRegion(null);_corrCoordPanel.style.display='none';} });
+  document.addEventListener('click',e=>{
+    if(!_corrPick)return;
+    if(e.target.closest('.ctrl,.nc-plot-win,.nc-csv-menu,.nc-corr-dlg,#info-panel,.gf-feed-detail'))return;
+    if(_corrCoordPanel.contains(e.target))return;
+    const proj=api.projection,[pcx,pcy]=proj.translate(),pR=proj.scale();
+    const dx=e.clientX-pcx,dy=e.clientY-pcy; if(dx*dx+dy*dy>pR*pR)return;
+    const ll=proj.invert([e.clientX,e.clientY]); if(!ll)return;
+    const cp=_corrPick; _corrPick=null; if(api) api._globeRegionPicking=false; _hintRegion(null); _corrCoordPanel.style.display='none';
+    _showRegionPoint(ll);
+    _openCorrelationDialog(cp.ov,ll[0],ll[1]);
+  },true);
+
+  /* ============================================================ COMPOSITE ANALYSIS
+     "Mean field for El Niño years" style analysis: sample a reference
+     index (any REGION_PRESETS box/diff, or a custom box) from a chosen
+     layer, classify every target-layer frame by whether that index was
+     running high or low at the matching time, then average the target
+     field separately over the high-phase and low-phase frames — plus
+     their difference, usually the most diagnostic view. Reuses _boxSeries
+     (box-mean, already cos-lat weighted and cached) for the index and the
+     same virtual-overlay pattern as _corr/_trend for the result. */
+  async function _extractBoxIndexSeries(ov,boxSpec,progressPrefix){
+    let means;
+    if(boxSpec.diff){
+      const A=await _boxSeries(ov,boxSpec.diff[0],(progressPrefix||'Computing ')+'A ');
+      const B=await _boxSeries(ov,boxSpec.diff[1],(progressPrefix||'Computing ')+'B ');
+      means=A.means.map((v,i)=>v-B.means[i]);
+    } else {
+      means=(await _boxSeries(ov,boxSpec,progressPrefix||'Computing ',boxSpec.clipFeature)).means;
+    }
+    const allSks=ov.frames.map(f=>f.sortKey).filter(sk=>typeof sk==='number'&&isFinite(sk));
+    const looksDated=/^\d{4}-\d{2}-\d{2}/.test(String(ov.frames[0]?.label||''));
+    const dated=looksDated&&allSks.length===ov.frames.length&&allSks.length>1&&allSks.every((v,i)=>i===0||v>allSks[i-1]);
+    const sortKeys=[],values=[];
+    for(let i=0;i<means.length;i++){
+      if(isNaN(means[i])) continue;
+      const sk=ov.frames[i]?.sortKey;
+      sortKeys.push(typeof sk==='number'&&isFinite(sk)?sk:i);
+      values.push(means[i]);
+    }
+    return {sortKeys,values,dated,ovName:boxSpec.name||ov.name||ov.selVar||'index'};
+  }
+  const _SEASON_MONTHS={DJF:[12,1,2],MAM:[3,4,5],JJA:[6,7,8],SON:[9,10,11]};
+  async function _fitCompositeSlice(targetOv,idxSeries,opts,bothDated){
+    opts=opts||{};
+    const seasonMonths=opts.season&&_SEASON_MONTHS[opts.season];
+    const probe=_cacheGet(targetOv,0);
+    if(!probe) return null;
+    const rs0=probe.renderSlice;
+    const srcUnits=probe.activeSlice?.units||'';
+    const N=rs0.nLat*rs0.nLon;
+    const n=targetOv.frames.length;
+    // Pass 1: match each target frame to an index value (season-filtered),
+    // so the classification threshold is computed over the SAME set of
+    // timesteps actually being composited (a DJF composite shouldn't be
+    // thresholded against the full-year index distribution).
+    const matched=[];
+    for(let t=0;t<n;t++){
+      let xv,month=0;
+      if(bothDated){
+        const tsk=targetOv.frames[t]?.sortKey;
+        if(typeof tsk!=='number'||!isFinite(tsk)) continue;
+        const m=/^\d{4}-(\d{2})-\d{2}/.exec(String(targetOv.frames[t]?.label||''));
+        month=m?+m[1]:0;
+        if(seasonMonths&&!seasonMonths.includes(month)) continue;
+        xv=_interpAtTime(idxSeries,tsk);
+      } else {
+        xv=t<idxSeries.values.length?idxSeries.values[t]:null;
+      }
+      if(xv==null||isNaN(xv)) continue;
+      matched.push({t,xv});
+    }
+    if(matched.length<4) return null;
+    const mean=matched.reduce((a,m)=>a+m.xv,0)/matched.length;
+    const variance=matched.reduce((a,m)=>a+(m.xv-mean)*(m.xv-mean),0)/matched.length;
+    const sd=Math.sqrt(variance);
+    const k=opts.k||0.5;
+    const hiThresh=mean+k*sd, loThresh=mean-k*sd;
+    // Accumulate a per-cell climatology (mean over EVERY matched timestep,
+    // not just the classified ones) alongside the hi/lo sums, in the same
+    // pass — decoding each frame once. Composite-ing raw absolute values
+    // (e.g. actual SST in °C) is dominated by whatever spatial pattern is
+    // large and constant across ALL timesteps (for SST: the ~30°C
+    // pole-to-equator gradient), which swamps the much smaller signal
+    // that actually differs between phases (an ENSO SST signal is
+    // typically 1-3°C) — the positive- and negative-phase maps end up
+    // looking almost identical at a glance even though the underlying
+    // numbers differ. Subtracting this per-cell climatology (the standard
+    // practice for composite/anomaly analysis in climate science) removes
+    // the shared baseline and leaves just the phase-dependent signal, so
+    // positive vs. negative phase are visibly — and correctly — mirror
+    // images of each other. The difference frame is mathematically
+    // unaffected either way (the climatology cancels out on subtraction).
+    const sumAll=new Float64Array(N),cntAll=new Int32Array(N);
+    const sumHi=new Float64Array(N),cntHi=new Int32Array(N);
+    const sumLo=new Float64Array(N),cntLo=new Int32Array(N);
+    let nHi=0,nLo=0;
+    for(let i=0;i<matched.length;i++){
+      const {t,xv}=matched[i];
+      const isHi=xv>hiThresh, isLo=xv<loThresh;
+      const fr=_cacheGet(targetOv,t); if(!fr) continue;
+      const d=fr.renderSlice.data;
+      for(let k2=0;k2<N;k2++){
+        const v=d[k2]; if(isNaN(v)) continue;
+        sumAll[k2]+=v; cntAll[k2]++;
+        if(isHi){ sumHi[k2]+=v; cntHi[k2]++; }
+        else if(isLo){ sumLo[k2]+=v; cntLo[k2]++; }
+      }
+      if(isHi) nHi++; else if(isLo) nLo++;
+      if((i&7)===7) await new Promise(r=>setTimeout(r,0));
+    }
+    if(!nHi&&!nLo) return null;
+    const hi=new Float32Array(N),lo=new Float32Array(N),diff=new Float32Array(N);
+    for(let k2=0;k2<N;k2++){
+      const clim=cntAll[k2]?sumAll[k2]/cntAll[k2]:NaN;
+      const hm=cntHi[k2]?sumHi[k2]/cntHi[k2]:NaN;
+      const lm=cntLo[k2]?sumLo[k2]/cntLo[k2]:NaN;
+      hi[k2]=(cntHi[k2]&&!isNaN(clim))?hm-clim:NaN;
+      lo[k2]=(cntLo[k2]&&!isNaN(clim))?lm-clim:NaN;
+      diff[k2]=(cntHi[k2]&&cntLo[k2])?hm-lm:NaN;
+    }
+    return {nLat:rs0.nLat,nLon:rs0.nLon,lats:rs0.lats,lons:rs0.lons,
+      hi,lo,diff,nHi,nLo,mean,sd,k,matchedN:matched.length,srcUnits};
+  }
+  function _buildCompositeOverlay(targetOv,fit,titlePrefix){
+    const nv=createOverlay();
+    if(!nv) return null;
+    const u=fit.srcUnits||'value';
+    const hiDesc='mean anomaly (vs. the '+fit.matchedN+'-timestep period mean) over '+fit.nHi+' timesteps where the index was above its own mean by ≥'+fit.k+'σ';
+    const loDesc='mean anomaly (vs. the '+fit.matchedN+'-timestep period mean) over '+fit.nLo+' timesteps where the index was below its own mean by ≥'+fit.k+'σ';
+    const slices=[
+      {label:'Positive phase anomaly (n='+fit.nHi+')',data:fit.hi,kind:'hi',
+        units:'Δ'+u+' — '+hiDesc},
+      {label:'Negative phase anomaly (n='+fit.nLo+')',data:fit.lo,kind:'lo',
+        units:'Δ'+u+' — '+loDesc},
+      {label:'Positive − Negative',data:fit.diff,kind:'diff',
+        units:'Δ'+u+' — positive-phase composite minus negative-phase composite (raw values, not anomalies — the period mean cancels out in the subtraction either way)'}
+    ];
+    nv._composite={srcId:targetOv.id,frames:slices,nLat:fit.nLat,nLon:fit.nLon,lats:fit.lats,lons:fit.lons};
+    nv.name=titlePrefix||('Composite: '+(targetOv.name||targetOv.selVar||'layer'));
+    nv.selVar='composite';
+    nv.varOptions=[{name:'composite',label:nv.name}];
+    nv.selCmap='RdBu';
+    nv.frames=slices.map((s,i)=>({label:s.label,localT:i,virtual:true,compSlice:i,sortKey:i}));
+    nv.maxTime=nv.frames.length;
+    nv.selTime=2; // default to the difference map — usually the point of the exercise
+    nv._fcache=new Map();
+    rebuildSlice(nv);
+    if(nv.cardEl){
+      refreshCardVarPicker(nv);
+      const body=nv.cardEl.querySelector('.nc-cb'); if(body) body.style.display='';
+      const sw=nv.cardEl.querySelector('.nc-series-wrap'); if(sw) sw.style.display='none';
+      const db=nv.cardEl.querySelector('.nc-drop-btn'); if(db) db.style.display='none';
+      const badge=nv.cardEl.querySelector('.nc-cname');
+      if(badge){ badge.textContent='🧮 '+nv.name; badge.classList.remove('nc-empty'); }
+      const cmSel=nv.cardEl.querySelector('.nc-cm'); if(cmSel){ cmSel.value=nv.selCmap; updateCmapPrev(nv); }
+      updateTimeControls(nv);
+    }
+    renumberCards(); schedRender(nv);
+    document.getElementById('nc-body').style.display='';
+    document.getElementById('nc-tog').textContent='▾';
+    return nv;
+  }
+  async function _computeCompositeMap(refOv,boxSpec,targetOv,opts){
+    if(!targetOv.frames||targetOv.frames.length<4){ alert('Target layer needs at least 4 time frames.'); return; }
+    // _boxSeries (called inside _extractBoxIndexSeries) reports its own
+    // progress through _hintRegion — a SEPARATE hint element from the
+    // _hintTrend one used for the stage messages below. Both must be
+    // cleared on every exit path (including an unexpected throw, which
+    // would otherwise leave the UI stuck showing stale progress text with
+    // no visible error) — hence the try/finally wrapping the whole body.
+    try{
+      _hintTrend('Sampling index series…');
+      const idxSeries=await _extractBoxIndexSeries(refOv,boxSpec,'Index: ');
+      if(idxSeries.values.length<4){ alert('Reference index has fewer than 4 valid time steps.'); return; }
+      const tgtSks=targetOv.frames.map(f=>f.sortKey).filter(sk=>typeof sk==='number'&&isFinite(sk));
+      const tgtLooksDated=/^\d{4}-\d{2}-\d{2}/.test(String(targetOv.frames[0]?.label||''));
+      const targetDated=tgtLooksDated&&tgtSks.length===targetOv.frames.length&&tgtSks.length>1&&tgtSks.every((v,i)=>i===0||v>tgtSks[i-1]);
+      const bothDated=idxSeries.dated&&targetDated;
+      if(!bothDated&&opts.season){ console.warn('[composite] target layer lacks usable real dates — season filter and date alignment disabled, falling back to frame-position matching'); opts={...opts,season:null}; }
+      _hintTrend('Compositing…');
+      await new Promise(r=>setTimeout(r,0));
+      const fit=await _fitCompositeSlice(targetOv,idxSeries,opts,bothDated);
+      if(!fit){ alert('Not enough matched, classified frames to composite (need at least a few in each phase).'); return; }
+      const prefix='Composite: '+idxSeries.ovName+(opts.season?(' '+opts.season):'')+' ↔ '+(targetOv.name||targetOv.selVar||'layer');
+      _buildCompositeOverlay(targetOv,fit,prefix);
+      console.log('[composite]',prefix,'n_hi='+fit.nHi,'n_lo='+fit.nLo,'mean='+fit.mean.toFixed(3),'sd='+fit.sd.toFixed(3));
+    }catch(err){
+      console.error('[composite] failed:',err);
+      alert('Composite analysis failed: '+(err?.message||err));
+    }finally{
+      _hintTrend(null);
+      _hintRegion(null);
+    }
+  }
+  // opts carries whatever should survive a "reopen after pick/prompt/country
+  // lookup" round-trip: the custom box just resolved (customBox) plus the
+  // dropdown/threshold/season values the user had already set (preserved so
+  // switching to "Enter coordinates…" etc. doesn't reset the rest of the form).
+  function _openCompositeDialog(ov,opts){
+    opts=opts||{};
+    document.querySelectorAll('.nc-comp-dlg').forEach(d=>d.remove());
+    const refCandidates=overlays.filter(o=>o.frames&&o.frames.length>=4);
+    if(!refCandidates.length){ alert('No loaded layer with 4+ time frames to build an index from.'); return; }
+    const targets=refCandidates;
+    const dlg=document.createElement('div');
+    dlg.className='nc-comp-dlg';
+    dlg.style.cssText='position:fixed;inset:0;z-index:500;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.55);';
+    const box=document.createElement('div');
+    box.style.cssText='background:rgba(6,17,28,0.98);border:1px solid rgba(127,208,255,0.4);border-radius:10px;padding:16px 18px;max-width:480px;width:92%;max-height:88vh;overflow:auto;font-family:IBM Plex Mono,monospace;font-size:11px;color:#cfe3f2;box-shadow:0 12px 40px rgba(0,0,0,0.5);';
+    const customBox=opts.customBox||null;
+    let grpHtml='<option value="pick">◰ Pick corners on globe…</option>'+
+      '<option value="coords">⌨ Enter coordinates…</option>'+
+      '<option value="country">🌍 Country / region…</option>',lastGrp='';
+    const oniIdx=REGION_PRESETS.findIndex(p=>p.name.indexOf('ONI')===0);
+    REGION_PRESETS.forEach((p,i)=>{
+      if(p.group&&p.group!==lastGrp){ if(lastGrp) grpHtml+='</optgroup>'; grpHtml+='<optgroup label="'+p.group+'">'; lastGrp=p.group; }
+      grpHtml+='<option value="'+i+'"'+((!customBox&&i===oniIdx)?' selected':'')+'>'+p.name+'</option>';
+    });
+    if(lastGrp) grpHtml+='</optgroup>';
+    if(customBox) grpHtml+='<option value="custom" selected>'+(customBox.name||'Custom region')+'</option>';
+    box.innerHTML='<div style="font-size:13px;font-weight:600;margin-bottom:10px;color:#eaf3fb;">🧮 Composite analysis</div>'+
+      '<div style="font-size:9.5px;color:#7fa0b8;margin-bottom:12px;line-height:1.45;">Classifies the target layer\'s frames by whether a reference index was running high or low at that time, then averages each group\'s deviation from the whole compositing period\'s own mean — e.g. mean rainfall anomaly for El Niño vs La Niña periods. Anomalies (not raw values) so a signal like ENSO isn\'t swamped by a much larger constant pattern (e.g. the pole-to-equator SST gradient).</div>'+
+      '<label style="display:block;margin-bottom:10px;">Index source layer<select id="comp-refsrc" style="width:100%;margin-top:4px;padding:5px;background:#0a1828;color:#cfe3f2;border:1px solid rgba(120,170,205,0.3);border-radius:4px;">'+
+        refCandidates.map(o=>'<option value="'+o.id+'"'+(o.id===(opts.refsrc||ov.id)?' selected':'')+'>'+(o.name||o.selVar||'layer')+'</option>').join('')+
+      '</select></label>'+
+      '<label style="display:block;margin-bottom:10px;">Index region<select id="comp-region" style="width:100%;margin-top:4px;padding:5px;background:#0a1828;color:#cfe3f2;border:1px solid rgba(120,170,205,0.3);border-radius:4px;">'+grpHtml+'</select></label>'+
+      '<label style="display:block;margin-bottom:10px;">Target layer (what gets composited)<select id="comp-target" style="width:100%;margin-top:4px;padding:5px;background:#0a1828;color:#cfe3f2;border:1px solid rgba(120,170,205,0.3);border-radius:4px;">'+
+        targets.map(o=>'<option value="'+o.id+'"'+(o.id===(opts.target||ov.id)?' selected':'')+'>'+(o.name||o.selVar||'layer')+'</option>').join('')+
+      '</select></label>'+
+      '<div style="display:flex;gap:8px;margin-bottom:10px;">'+
+        '<label style="flex:1;">Threshold (×σ)<input type="number" id="comp-k" value="'+(opts.k!=null?opts.k:0.5)+'" step="0.1" min="0.1" style="width:100%;margin-top:4px;padding:4px;background:#0a1828;color:#cfe3f2;border:1px solid rgba(120,170,205,0.3);border-radius:4px;"></label>'+
+        '<label style="flex:1;">Season<select id="comp-season" style="width:100%;margin-top:4px;padding:4px;background:#0a1828;color:#cfe3f2;border:1px solid rgba(120,170,205,0.3);border-radius:4px;">'+
+          ['','DJF','MAM','JJA','SON'].map(v=>'<option value="'+v+'"'+(v===(opts.season||'')?' selected':'')+'>'+(v||'All months')+'</option>').join('')+
+        '</select></label>'+
+      '</div>'+
+      '<div style="font-size:9px;color:#7a93a8;margin-bottom:12px;">Positive/negative phase = index above/below its own mean by the threshold (in standard deviations), computed over the matched, season-filtered timesteps. Produces 3 frames — positive composite, negative composite, and their difference — scrub with the normal time slider.</div>'+
+      '<div style="display:flex;gap:8px;justify-content:flex-end;">'+
+        '<button type="button" id="comp-cancel" style="padding:6px 12px;border-radius:5px;border:1px solid rgba(120,170,205,0.3);background:transparent;color:#9fb6c9;cursor:pointer;">Cancel</button>'+
+        '<button type="button" id="comp-run" style="padding:6px 14px;border-radius:5px;border:none;background:#7fd0ff;color:#050d16;font-weight:600;cursor:pointer;">Compute</button></div>';
+    dlg.appendChild(box);
+    document.body.appendChild(dlg);
+    const close=()=>dlg.remove();
+    box.querySelector('#comp-cancel').addEventListener('click',close);
+    // Close only when BOTH the press and the release land on the bare
+    // backdrop — a plain 'click' check alone also fires when a drag that
+    // starts on a text field inside the dialog (e.g. selecting/highlighting
+    // a lag number by dragging) happens to release outside that field,
+    // since the resulting click's target is wherever the mouse came up,
+    // not where the drag began.
+    let _backdropDown=false;
+    dlg.addEventListener('mousedown',e=>{ _backdropDown=(e.target===dlg); });
+    dlg.addEventListener('click',e=>{ if(e.target===dlg&&_backdropDown) close(); });
+    const regionSel=box.querySelector('#comp-region');
+    const currentFields=()=>({
+      refsrc:box.querySelector('#comp-refsrc').value,
+      target:box.querySelector('#comp-target').value,
+      k:+(box.querySelector('#comp-k')?.value||0.5),
+      season:box.querySelector('#comp-season').value||null
+    });
+    regionSel.addEventListener('change',()=>{
+      const v=regionSel.value;
+      if(v!=='pick'&&v!=='coords'&&v!=='country'&&v!=='custom') _flashPresetRegion(REGION_PRESETS[+v]);
+      if(v==='pick'){
+        const fields=currentFields();
+        close();
+        startCompositeBoxPick(ov,fields);
+        return;
+      }
+      if(v==='coords'){
+        const inp=prompt('Index region as lon0,lat0,lon1,lat1 (°E, °N; west-negative OR 0–360).\nIf lon0 > lon1 the box wraps the antimeridian.\nExample Niño 3.4:  -170,-5,-120,5');
+        regionSel.value=customBox?'custom':(''+oniIdx);
+        if(!inp) return;
+        const v2=inp.split(',').map(Number);
+        if(v2.length!==4||v2.some(isNaN)){ alert('Need four numbers: lon0,lat0,lon1,lat1'); return; }
+        const [LO0,LA0,LO1,LA1]=v2;
+        const fields=currentFields();
+        const newBox={name:'Custom ('+inp+')',lon0:LO0,lon1:LO1,lat0:Math.min(LA0,LA1),lat1:Math.max(LA0,LA1),wrap:LO0>LO1};
+        close();
+        _openCompositeDialog(ov,{...fields,customBox:newBox});
+        return;
+      }
+      if(v==='country'){
+        const cn=(prompt('Country or region name:\n(e.g. Brazil, India, Arctic)\nCountries use their bounding box on the data grid.')||'').trim();
+        regionSel.value=customBox?'custom':(''+oniIdx);
+        if(!cn) return;
+        const feat=_findCountryFeature(cn)||_findUserGeoFeature(cn);
+        const fields=currentFields();
+        if(feat){
+          const b=d3.geoBounds(feat);
+          const p=feat.properties||{};
+          const newBox={name:(p.name||p.NAME||p.Name||cn),lon0:b[0][0],lat0:b[0][1],lon1:b[1][0],lat1:b[1][1],wrap:b[0][0]>b[1][0],clipFeature:feat};
+          close();
+          _openCompositeDialog(ov,{...fields,customBox:newBox});
+          return;
+        }
+        const mtch=REGION_PRESETS.find(p=>p.name.toLowerCase().includes(cn.toLowerCase()));
+        if(mtch){ close(); _openCompositeDialog(ov,{...fields,customBox:mtch}); return; }
+        alert('"'+cn+'" not found. Try any country name (e.g. Peru, Vietnam, Germany), or: '+REGION_PRESETS.filter(p=>p.group==='Countries').map(p=>p.name).join(', '));
+        return;
+      }
+    });
+    box.querySelector('#comp-run').addEventListener('click',async()=>{
+      const refId=box.querySelector('#comp-refsrc').value;
+      const refOv=overlays.find(o=>o.id===refId)||ov;
+      const targetId=box.querySelector('#comp-target').value;
+      const targetOv=overlays.find(o=>o.id===targetId)||ov;
+      const rv=regionSel.value;
+      const boxSpec=_resolvePresetBox((rv==='custom'&&customBox)?customBox:REGION_PRESETS[+rv]);
+      if(!boxSpec){ alert('Pick an index region first.'); return; }
+      const k=Math.max(0.05,+(box.querySelector('#comp-k')?.value||0.5));
+      const season=box.querySelector('#comp-season').value||null;
+      close();
+      await _computeCompositeMap(refOv,boxSpec,targetOv,{k,season});
+    });
+  }
+  let _compBoxPick=null;
+  function startCompositeBoxPick(ov,saved){
+    _compBoxPick={ov,pts:[],saved:saved||{}};
+    if(api) api._globeRegionPicking=true;
+    _hintRegion('COMPOSITE INDEX REGION — click the FIRST corner on the globe (Esc cancels)');
+  }
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&_compBoxPick){_compBoxPick=null;if(api)api._globeRegionPicking=false;_hintRegion(null);} });
+  document.addEventListener('click',e=>{
+    if(!_compBoxPick)return;
+    if(e.target.closest('.ctrl,.nc-plot-win,.nc-csv-menu,.nc-comp-dlg,#info-panel,.gf-feed-detail'))return;
+    const proj=api.projection,[pcx,pcy]=proj.translate(),pR=proj.scale();
+    const dx=e.clientX-pcx,dy=e.clientY-pcy; if(dx*dx+dy*dy>pR*pR)return;
+    const ll=proj.invert([e.clientX,e.clientY]); if(!ll)return;
+    _compBoxPick.pts.push(ll);
+    if(_compBoxPick.pts.length===1){
+      _showRegionPoint(ll);
+      _hintRegion('Now click the SECOND (opposite) corner');
+    } else {
+      const cp=_compBoxPick; _compBoxPick=null; if(api) api._globeRegionPicking=false; _hintRegion(null);
+      const [p1,p2]=cp.pts;
+      const lon0=Math.min(p1[0],p2[0]),lon1=Math.max(p1[0],p2[0]),lat0=Math.min(p1[1],p2[1]),lat1=Math.max(p1[1],p2[1]);
+      _showRegionBox(lon0,lon1,lat0,lat1,false);
+      setTimeout(_hideRegionBox,6000);
+      const newBox={name:'Custom box',lon0,lat0,lon1,lat1};
+      _openCompositeDialog(cp.ov,{...cp.saved,customBox:newBox});
+    }
+  },true);
+
+  /* ============================================================ EOF / PCA
+     Finds the dominant spatial modes of variability in a field over a
+     region: build a (time × valid-cell) anomaly matrix, then extract the
+     top few singular vectors via block power iteration (never forming a
+     full covariance matrix — that's what makes this tractable in-browser
+     for a large daily record). Each mode becomes a spatial "loading" frame
+     on the usual virtual-overlay time slider, paired with a principal-
+     component time series reachable via Region extract on that frame. */
+  async function _fitEofSlice(targetOv,boxSpec,opts){
+    opts=opts||{};
+    const nModes=Math.max(1,Math.min(8,opts.nModes||4));
+    const detrend=!!opts.detrend, standardize=!!opts.standardize;
+    const latWeight=opts.latWeight||'cos';
+    const probe=_cacheGet(targetOv,0);
+    if(!probe) return {error:'Could not read the source layer.'};
+    const rs0=probe.renderSlice;
+    const srcUnits=probe.activeSlice?.units||'';
+    const isCurv0=rs0.lats.length===rs0.data.length&&rs0.lons.length===rs0.data.length;
+    const lon0=boxSpec.lon0, lon1=boxSpec.lon1;
+    const lat0=Math.min(boxSpec.lat0,boxSpec.lat1), lat1=Math.max(boxSpec.lat0,boxSpec.lat1);
+    const a0=((lon0%360)+360)%360, a1=((lon1%360)+360)%360;
+    const fullGlobeLon=(lon1-lon0)>=360;
+    const inPoly=boxSpec.clipFeature?(lo,la)=>d3.geoContains(boxSpec.clipFeature,[lo,la]):null;
+    function cellMask(rs,isCurv){
+      const idx=[];
+      if(isCurv){
+        for(let k=0;k<rs.data.length;k++){
+          const la=rs.lats[k]; if(la<lat0||la>lat1)continue;
+          const lo=rs.lons[k]; const loN=((lo%360)+360)%360;
+          const inLon=fullGlobeLon||(a0<=a1?(loN>=a0&&loN<=a1):(loN>=a0||loN<=a1));
+          if(!inLon)continue;
+          if(inPoly&&!inPoly(lo,la))continue;
+          idx.push(k);
+        }
+      } else {
+        for(let i=0;i<rs.nLat;i++){
+          const la=rs.lats[i]; if(la<lat0||la>lat1)continue;
+          for(let j=0;j<rs.nLon;j++){
+            const lo=rs.lons[j]; const loN=((lo%360)+360)%360;
+            const inLon=fullGlobeLon||(a0<=a1?(loN>=a0&&loN<=a1):(loN>=a0||loN<=a1));
+            if(!inLon)continue;
+            if(inPoly&&!inPoly(lo,la))continue;
+            idx.push(i*rs.nLon+j);
+          }
+        }
+      }
+      return idx;
+    }
+    const boxIdx=cellMask(rs0,isCurv0);
+    if(boxIdx.length<4) return {error:'Selected region has fewer than 4 grid cells.'};
+    // Time stride safety cap: T×S kept under a compute budget (an
+    // 8000-frame daily record over a several-thousand-cell region is
+    // otherwise tens of billions of ops for the SVD below) — mirrors the
+    // same idea as the correlation map's frame-stride option.
+    const nFramesTotal=targetOv.frames.length;
+    const rawBudget=opts.maxElements||20000000;
+    const stride=Math.max(1,Math.ceil((nFramesTotal*boxIdx.length)/rawBudget));
+    const tIdx=[]; for(let t=0;t<nFramesTotal;t+=stride) tIdx.push(t);
+    const T=tIdx.length, S0=boxIdx.length;
+    if(T<8) return {error:'Fewer than 8 timesteps available after time-striding — widen the record or shrink the region.'};
+    _hintTrend('EOF: reading frames 0%…');
+    await new Promise(r=>setTimeout(r,0));
+    // Pass 1: a cell survives if it has valid (non-NaN) data across at
+    // least MIN_VALID_FRAC of the sampled record — NOT necessarily every
+    // single timestep. Real satellite products commonly ship as
+    // "uninterpolated": every day has scattered per-pixel gaps from swath
+    // coverage/cloud QC (NOAA's daily OLR is a working example — 15-35% of
+    // cells missing on a typical day, spread essentially randomly across
+    // the grid, not concentrated in a handful of bad days). Requiring
+    // 100% completeness against that kind of record leaves ZERO surviving
+    // cells regardless of region — not a rare edge case, but the norm for
+    // this class of dataset. Remaining scattered gaps in a kept cell are
+    // filled with 0 (i.e. "at that cell's own mean/trend line") after
+    // anomaly removal below — standard naive imputation for EOF with
+    // sporadic missing data.
+    const MIN_VALID_FRAC=0.5;
+    const raw=new Float32Array(T*S0);
+    const validCount=new Int32Array(S0);
+    for(let ti=0;ti<T;ti++){
+      const t=tIdx[ti];
+      const fr=_cacheGet(targetOv,t);
+      const base=ti*S0;
+      if(!fr){ for(let s=0;s<S0;s++) raw[base+s]=NaN; }
+      else{
+        const d=fr.renderSlice.data;
+        for(let s=0;s<S0;s++){
+          const v=d[boxIdx[s]];
+          raw[base+s]=v;
+          if(!isNaN(v)) validCount[s]++;
+        }
+      }
+      if((ti&15)===15){ _hintTrend('EOF: reading frames '+Math.round((ti+1)/T*100)+'%…'); await new Promise(r=>setTimeout(r,0)); }
+    }
+    const finalCols=[]; for(let s=0;s<S0;s++) if(validCount[s]>=MIN_VALID_FRAC*T) finalCols.push(s);
+    const S=finalCols.length;
+    if(S<4) return {error:'Fewer than 4 grid cells have at least '+Math.round(MIN_VALID_FRAC*100)+'% valid data across the sampled record in this region.'};
+    const A=new Float64Array(T*S);
+    for(let ti=0;ti<T;ti++){
+      const base=ti*S0, obase=ti*S;
+      for(let s=0;s<S;s++) A[obase+s]=raw[base+finalCols[s]];
+    }
+    // Per-cell mean (or linear trend, if requested) is fit from that
+    // cell's own VALID samples only, then removed from those samples;
+    // any remaining gap in the cell is set to exactly 0 (no anomaly
+    // signal) rather than participating in the fit.
+    const tIdxF=new Float64Array(T); for(let i=0;i<T;i++) tIdxF[i]=i;
+    for(let s=0;s<S;s++){
+      let sumT=0,sumTT=0,sumV=0,sumTV=0,n=0;
+      for(let ti=0;ti<T;ti++){
+        const v=A[ti*S+s]; if(isNaN(v)) continue;
+        const tv=tIdxF[ti];
+        sumT+=tv; sumTT+=tv*tv; sumV+=v; sumTV+=tv*v; n++;
+      }
+      const meanV=n?sumV/n:0;
+      if(detrend&&n>2){
+        const meanT=sumT/n, varT=sumTT-n*meanT*meanT;
+        const slope=varT>1e-9?(sumTV-n*meanT*meanV)/varT:0;
+        const intercept=meanV-slope*meanT;
+        for(let ti=0;ti<T;ti++){
+          const v=A[ti*S+s];
+          A[ti*S+s]=isNaN(v)?0:(v-(intercept+slope*tIdxF[ti]));
+        }
+      } else {
+        for(let ti=0;ti<T;ti++){
+          const v=A[ti*S+s];
+          A[ti*S+s]=isNaN(v)?0:(v-meanV);
+        }
+      }
+    }
+    if(standardize){
+      for(let s=0;s<S;s++){
+        let ss=0; for(let ti=0;ti<T;ti++) ss+=A[ti*S+s]*A[ti*S+s];
+        const sd=Math.sqrt(ss/T);
+        if(sd>1e-9) for(let ti=0;ti<T;ti++) A[ti*S+s]/=sd;
+      }
+    }
+    // Latitude weighting: on a lat/lon grid a high-latitude cell covers far
+    // less real-world area than a tropical one but counts as one column
+    // exactly the same as a tropical column — weighting by (sqrt of)
+    // cos(latitude) before the SVD is the standard climate-science fix so
+    // the extracted modes reflect actual geographic area, not grid-cell
+    // count. The weighting is divided back out of the spatial pattern
+    // afterwards so the displayed loadings stay in physical units.
+    const colWeight=new Float64Array(S);
+    for(let s=0;s<S;s++){
+      const cellIdx=boxIdx[finalCols[s]];
+      const la=isCurv0?rs0.lats[cellIdx]:rs0.lats[Math.floor(cellIdx/rs0.nLon)];
+      const c=Math.max(0,Math.cos(la*Math.PI/180));
+      colWeight[s]=latWeight==='none'?1:(latWeight==='sqrtcos'?Math.sqrt(c):c);
+    }
+    if(latWeight!=='none'){
+      for(let s=0;s<S;s++){ const w=colWeight[s]; if(w!==1) for(let ti=0;ti<T;ti++) A[ti*S+s]*=w; }
+    }
+    // ---- Truncated SVD via block/orthogonal power iteration ----
+    // Only the top nModes singular vectors are needed, so a full S×S (or
+    // T×T) eigendecomposition would be wasted work at this scale — this
+    // instead applies A and Aᵀ purely as matrix-vector products (never
+    // materialising a covariance matrix) and refines nModes candidate
+    // vectors together, re-orthonormalising every step so the modes stay
+    // independent. Standard technique for pulling a handful of leading
+    // EOFs out of a dataset too large to fully diagonalise in-browser.
+    let V=new Float64Array(S*nModes);
+    { let seed=12345; const rnd=()=>{seed=(seed*1103515245+12345)&0x7fffffff;return seed/0x7fffffff;};
+      for(let i=0;i<S*nModes;i++) V[i]=rnd()-0.5; }
+    function orthonormalize(M,rows,cols){
+      for(let c=0;c<cols;c++){
+        for(let p=0;p<c;p++){
+          let dot=0; for(let r=0;r<rows;r++) dot+=M[c*rows+r]*M[p*rows+r];
+          for(let r=0;r<rows;r++) M[c*rows+r]-=dot*M[p*rows+r];
+        }
+        let norm=0; for(let r=0;r<rows;r++) norm+=M[c*rows+r]*M[c*rows+r];
+        norm=Math.sqrt(norm);
+        if(norm<1e-9){
+          for(let r=0;r<rows;r++) M[c*rows+r]=Math.random()-0.5;
+          norm=0; for(let r=0;r<rows;r++) norm+=M[c*rows+r]*M[c*rows+r]; norm=Math.sqrt(norm)||1;
+        }
+        for(let r=0;r<rows;r++) M[c*rows+r]/=norm;
+      }
+    }
+    orthonormalize(V,S,nModes);
+    const maxIter=opts.maxIter||30;
+    let prevEig=new Float64Array(nModes);
+    for(let iter=0;iter<maxIter;iter++){
+      const U=new Float64Array(T*nModes);
+      for(let ti=0;ti<T;ti++){
+        const abase=ti*S;
+        for(let c=0;c<nModes;c++){
+          let s=0; const vbase=c*S;
+          for(let j=0;j<S;j++) s+=A[abase+j]*V[vbase+j];
+          U[ti*nModes+c]=s;
+        }
+      }
+      const W=new Float64Array(S*nModes);
+      for(let ti=0;ti<T;ti++){
+        const abase=ti*S, ubase=ti*nModes;
+        for(let c=0;c<nModes;c++){
+          const u=U[ubase+c]; if(u===0) continue;
+          const wbase=c*S;
+          for(let j=0;j<S;j++) W[wbase+j]+=A[abase+j]*u;
+        }
+      }
+      const eig=new Float64Array(nModes);
+      for(let c=0;c<nModes;c++){ let n2=0; for(let r=0;r<S;r++) n2+=W[c*S+r]*W[c*S+r]; eig[c]=n2; }
+      orthonormalize(W,S,nModes);
+      V=W;
+      let maxDelta=0;
+      for(let c=0;c<nModes;c++) maxDelta=Math.max(maxDelta,Math.abs(Math.sqrt(eig[c])-prevEig[c])/(prevEig[c]||1));
+      prevEig=new Float64Array(nModes); for(let c=0;c<nModes;c++) prevEig[c]=Math.sqrt(eig[c]);
+      if((iter&3)===3){ _hintTrend('EOF: solving modes — iter '+(iter+1)+'/'+maxIter+'…'); await new Promise(r=>setTimeout(r,0)); }
+      if(iter>5&&maxDelta<1e-4) break;
+    }
+    const PC=new Float64Array(T*nModes);
+    for(let ti=0;ti<T;ti++){
+      const abase=ti*S;
+      for(let c=0;c<nModes;c++){
+        let s=0; const vbase=c*S;
+        for(let j=0;j<S;j++) s+=A[abase+j]*V[vbase+j];
+        PC[ti*nModes+c]=s;
+      }
+    }
+    const sigma=new Float64Array(nModes);
+    for(let c=0;c<nModes;c++){ let ss=0; for(let ti=0;ti<T;ti++) ss+=PC[ti*nModes+c]*PC[ti*nModes+c]; sigma[c]=Math.sqrt(ss); }
+    let totalVar=0; for(let i=0;i<A.length;i++) totalVar+=A[i]*A[i];
+    const N=rs0.nLat*rs0.nLon;
+    const modes=[];
+    for(let c=0;c<nModes;c++){
+      const pattern=new Float32Array(N).fill(NaN);
+      for(let s=0;s<S;s++){
+        const cellIdx=boxIdx[finalCols[s]];
+        const w=colWeight[s];
+        pattern[cellIdx]=w>1e-9?V[c*S+s]/w:V[c*S+s];
+      }
+      const pct=totalVar>1e-12?(sigma[c]*sigma[c]/totalVar*100):0;
+      const pcValues=new Float64Array(T);
+      for(let ti=0;ti<T;ti++) pcValues[ti]=PC[ti*nModes+c];
+      modes.push({pattern,pct,sigma:sigma[c],pc:pcValues});
+    }
+    const pcLabels=tIdx.map(t=>targetOv.frames[t]?.label||('t'+t));
+    const pcSortKeys=tIdx.map(t=>targetOv.frames[t]?.sortKey);
+    return {nLat:rs0.nLat,nLon:rs0.nLon,lats:rs0.lats,lons:rs0.lons,modes,srcUnits,
+      S,T,stride,matchedN:T,pcLabels,pcSortKeys,regionName:boxSpec.name||'region'};
+  }
+  function _buildEofOverlay(targetOv,fit,titlePrefix){
+    const nv=createOverlay();
+    if(!nv) return null;
+    const u=fit.srcUnits||'value';
+    const slices=fit.modes.map((m,i)=>({
+      label:'EOF '+(i+1)+' ('+m.pct.toFixed(1)+'% var)',
+      data:m.pattern,
+      units:'loading (Δ'+u+' per unit PC'+(i+1)+') — '+m.pct.toFixed(1)+'% of variance explained over '+fit.matchedN+' timesteps'+(fit.stride>1?' (time-strided ×'+fit.stride+')':''),
+      pc:m.pc, pct:m.pct
+    }));
+    nv._eof={srcId:targetOv.id,frames:slices,nLat:fit.nLat,nLon:fit.nLon,lats:fit.lats,lons:fit.lons,
+      pcLabels:fit.pcLabels,pcSortKeys:fit.pcSortKeys,regionName:fit.regionName};
+    nv.name=titlePrefix||('EOF: '+(targetOv.name||targetOv.selVar||'layer'));
+    nv.selVar='eof';
+    nv.varOptions=[{name:'eof',label:nv.name}];
+    nv.selCmap='RdBu';
+    nv.frames=slices.map((s,i)=>({label:s.label,localT:i,virtual:true,eofSlice:i,sortKey:i}));
+    nv.maxTime=nv.frames.length;
+    nv.selTime=0; // EOF1 (dominant mode) is the natural default view
+    nv._fcache=new Map();
+    rebuildSlice(nv);
+    if(nv.cardEl){
+      refreshCardVarPicker(nv);
+      const body=nv.cardEl.querySelector('.nc-cb'); if(body) body.style.display='';
+      const sw=nv.cardEl.querySelector('.nc-series-wrap'); if(sw) sw.style.display='none';
+      const db=nv.cardEl.querySelector('.nc-drop-btn'); if(db) db.style.display='none';
+      const badge=nv.cardEl.querySelector('.nc-cname');
+      if(badge){ badge.textContent='📊 '+nv.name; badge.classList.remove('nc-empty'); }
+      const cmSel=nv.cardEl.querySelector('.nc-cm'); if(cmSel){ cmSel.value=nv.selCmap; updateCmapPrev(nv); }
+      updateTimeControls(nv);
+    }
+    renumberCards(); schedRender(nv);
+    document.getElementById('nc-body').style.display='';
+    document.getElementById('nc-tog').textContent='▾';
+    return nv;
+  }
+  async function _computeEofMap(targetOv,boxSpec,opts){
+    if(!targetOv.frames||targetOv.frames.length<8){ alert('This layer needs at least 8 time frames for EOF analysis.'); return; }
+    try{
+      _hintTrend('EOF: preparing…');
+      await new Promise(r=>setTimeout(r,0));
+      const fit=await _fitEofSlice(targetOv,boxSpec,opts);
+      if(!fit||fit.error){ alert(fit?.error||'EOF analysis failed — not enough valid data in this region.'); return; }
+      const prefix='EOF: '+(boxSpec.name||'region')+' ↔ '+(targetOv.name||targetOv.selVar||'layer');
+      _buildEofOverlay(targetOv,fit,prefix);
+      console.log('[eof]',prefix,fit.modes.map((m,i)=>'EOF'+(i+1)+'='+m.pct.toFixed(1)+'%').join(' '));
+    }catch(err){
+      console.error('[eof] failed:',err);
+      alert('EOF analysis failed: '+(err?.message||err));
+    }finally{
+      _hintTrend(null);
+    }
+  }
+  function _openEofDialog(ov,opts){
+    opts=opts||{};
+    document.querySelectorAll('.nc-eof-dlg').forEach(d=>d.remove());
+    if(!ov.frames||ov.frames.length<8){ alert('This layer needs at least 8 time frames to run EOF analysis.'); return; }
+    const dlg=document.createElement('div');
+    dlg.className='nc-eof-dlg';
+    dlg.style.cssText='position:fixed;inset:0;z-index:500;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.55);';
+    const box=document.createElement('div');
+    box.style.cssText='background:rgba(6,17,28,0.98);border:1px solid rgba(127,208,255,0.4);border-radius:10px;padding:16px 18px;max-width:480px;width:92%;max-height:88vh;overflow:auto;font-family:IBM Plex Mono,monospace;font-size:11px;color:#cfe3f2;box-shadow:0 12px 40px rgba(0,0,0,0.5);';
+    const customBox=opts.customBox||null;
+    let grpHtml='<option value="pick">◰ Pick corners on globe…</option>'+
+      '<option value="coords">⌨ Enter coordinates…</option>'+
+      '<option value="country">🌍 Country / region…</option>'+
+      '<option value="global">🌐 Global</option>',lastGrp='';
+    REGION_PRESETS.forEach((p,i)=>{
+      if(p.diff) return; // EOF needs a single field-region, not a two-box difference index
+      if(p.group&&p.group!==lastGrp){ if(lastGrp) grpHtml+='</optgroup>'; grpHtml+='<optgroup label="'+p.group+'">'; lastGrp=p.group; }
+      grpHtml+='<option value="'+i+'">'+p.name+'</option>';
+    });
+    if(lastGrp) grpHtml+='</optgroup>';
+    if(customBox) grpHtml+='<option value="custom" selected>'+(customBox.name||'Custom region')+'</option>';
+    box.innerHTML='<div style="font-size:13px;font-weight:600;margin-bottom:10px;color:#eaf3fb;">📊 EOF / PCA analysis</div>'+
+      '<div style="font-size:9.5px;color:#7fa0b8;margin-bottom:12px;line-height:1.45;">Finds the dominant spatial patterns of variability in this field over the selected region — e.g. run on tropical Pacific SST and EOF1 typically comes back looking like ENSO. Produces spatial mode maps (scrub with the time slider) plus a principal-component time series per mode, reachable via Region extract while that mode is selected.</div>'+
+      '<label style="display:block;margin-bottom:10px;">Field (this layer)<div style="margin-top:4px;padding:5px;background:rgba(127,208,255,0.06);border:1px solid rgba(127,208,255,0.18);border-radius:4px;color:#eaf3fb;">'+(ov.name||ov.selVar||'layer')+'</div></label>'+
+      '<label style="display:block;margin-bottom:10px;">Region<select id="eof-region" style="width:100%;margin-top:4px;padding:5px;background:#0a1828;color:#cfe3f2;border:1px solid rgba(120,170,205,0.3);border-radius:4px;">'+grpHtml+'</select></label>'+
+      '<div style="display:flex;gap:8px;margin-bottom:10px;">'+
+        '<label style="flex:1;">Modes<input type="number" id="eof-modes" value="'+(opts.nModes||4)+'" min="1" max="8" style="width:100%;margin-top:4px;padding:4px;background:#0a1828;color:#cfe3f2;border:1px solid rgba(120,170,205,0.3);border-radius:4px;"></label>'+
+        '<label style="flex:1;">Lat weighting<select id="eof-latw" style="width:100%;margin-top:4px;padding:4px;background:#0a1828;color:#cfe3f2;border:1px solid rgba(120,170,205,0.3);border-radius:4px;">'+
+          '<option value="cos"'+((opts.latWeight||'cos')==='cos'?' selected':'')+'>cos(latitude)</option>'+
+          '<option value="sqrtcos"'+(opts.latWeight==='sqrtcos'?' selected':'')+'>√cos(latitude)</option>'+
+          '<option value="none"'+(opts.latWeight==='none'?' selected':'')+'>None</option>'+
+        '</select></label>'+
+      '</div>'+
+      '<label style="display:block;margin:0 0 6px;font-size:10px;cursor:pointer;color:#9fc4dd;">'+
+        '<input type="checkbox" id="eof-detrend" style="margin-right:7px;accent-color:#7fd0ff;"'+(opts.detrend?' checked':'')+'> Remove linear trend per cell (in addition to the mean)</label>'+
+      '<label style="display:block;margin:0 0 12px;font-size:10px;cursor:pointer;color:#9fc4dd;">'+
+        '<input type="checkbox" id="eof-standardize" style="margin-right:7px;accent-color:#7fd0ff;"'+(opts.standardize?' checked':'')+'> Standardise each grid cell (divide by its own std dev)</label>'+
+      '<div style="font-size:9px;color:#7a93a8;margin-bottom:10px;">The mean is always removed per cell first. A very large region on a long, fine-resolution record is auto-strided in time to stay responsive — the result reports the effective sample count used.</div>'+
+      '<div style="display:flex;gap:8px;justify-content:flex-end;">'+
+        '<button type="button" id="eof-cancel" style="padding:6px 12px;border-radius:5px;border:1px solid rgba(120,170,205,0.3);background:transparent;color:#9fb6c9;cursor:pointer;">Cancel</button>'+
+        '<button type="button" id="eof-run" style="padding:6px 14px;border-radius:5px;border:none;background:#7fd0ff;color:#050d16;font-weight:600;cursor:pointer;">Run EOF analysis</button></div>';
+    dlg.appendChild(box);
+    document.body.appendChild(dlg);
+    const close=()=>dlg.remove();
+    box.querySelector('#eof-cancel').addEventListener('click',close);
+    // Close only when BOTH the press and the release land on the bare
+    // backdrop — a plain 'click' check alone also fires when a drag that
+    // starts on a text field inside the dialog (e.g. selecting/highlighting
+    // a lag number by dragging) happens to release outside that field,
+    // since the resulting click's target is wherever the mouse came up,
+    // not where the drag began.
+    let _backdropDown=false;
+    dlg.addEventListener('mousedown',e=>{ _backdropDown=(e.target===dlg); });
+    dlg.addEventListener('click',e=>{ if(e.target===dlg&&_backdropDown) close(); });
+    const regionSel=box.querySelector('#eof-region');
+    const currentFields=()=>({
+      nModes:Math.max(1,Math.min(8,Math.round(+(box.querySelector('#eof-modes')?.value||4)))),
+      latWeight:box.querySelector('#eof-latw').value||'cos',
+      detrend:!!box.querySelector('#eof-detrend')?.checked,
+      standardize:!!box.querySelector('#eof-standardize')?.checked
+    });
+    regionSel.addEventListener('change',()=>{
+      const v=regionSel.value;
+      if(v!=='pick'&&v!=='coords'&&v!=='country'&&v!=='custom'&&v!=='global') _flashPresetRegion(REGION_PRESETS[+v]);
+      if(v==='pick'){
+        const fields=currentFields();
+        close();
+        startEofBoxPick(ov,fields);
+        return;
+      }
+      if(v==='coords'){
+        const inp=prompt('Region as lon0,lat0,lon1,lat1 (°E, °N; west-negative OR 0–360).\nIf lon0 > lon1 the box wraps the antimeridian.\nExample tropical Pacific:  120,-20,-80,20');
+        regionSel.value=customBox?'custom':'global';
+        if(!inp) return;
+        const v2=inp.split(',').map(Number);
+        if(v2.length!==4||v2.some(isNaN)){ alert('Need four numbers: lon0,lat0,lon1,lat1'); return; }
+        const [LO0,LA0,LO1,LA1]=v2;
+        const fields=currentFields();
+        const newBox={name:'Custom ('+inp+')',lon0:LO0,lon1:LO1,lat0:Math.min(LA0,LA1),lat1:Math.max(LA0,LA1),wrap:LO0>LO1};
+        close();
+        _openEofDialog(ov,{...fields,customBox:newBox});
+        return;
+      }
+      if(v==='country'){
+        const cn=(prompt('Country or region name:\n(e.g. Brazil, India, Arctic)\nCountries use their bounding box on the data grid.')||'').trim();
+        regionSel.value=customBox?'custom':'global';
+        if(!cn) return;
+        const feat=_findCountryFeature(cn)||_findUserGeoFeature(cn);
+        const fields=currentFields();
+        if(feat){
+          const b=d3.geoBounds(feat);
+          const p=feat.properties||{};
+          const newBox={name:(p.name||p.NAME||p.Name||cn),lon0:b[0][0],lat0:b[0][1],lon1:b[1][0],lat1:b[1][1],wrap:b[0][0]>b[1][0],clipFeature:feat};
+          close();
+          _openEofDialog(ov,{...fields,customBox:newBox});
+          return;
+        }
+        const mtch=REGION_PRESETS.find(p=>!p.diff&&p.name.toLowerCase().includes(cn.toLowerCase()));
+        if(mtch){ close(); _openEofDialog(ov,{...fields,customBox:mtch}); return; }
+        alert('"'+cn+'" not found. Try any country name (e.g. Peru, Vietnam, Germany), or: '+REGION_PRESETS.filter(p=>p.group==='Countries').map(p=>p.name).join(', '));
+        return;
+      }
+    });
+    box.querySelector('#eof-run').addEventListener('click',async()=>{
+      const rv=regionSel.value;
+      const boxSpec=_resolvePresetBox((rv==='custom'&&customBox)?customBox:
+        (rv==='global'?{name:'Global',lon0:-180,lon1:180,lat0:-90,lat1:90}:REGION_PRESETS[+rv]));
+      if(!boxSpec){ alert('Pick a region first.'); return; }
+      const fields=currentFields();
+      close();
+      await _computeEofMap(ov,boxSpec,fields);
+    });
+  }
+  let _eofBoxPick=null;
+  function startEofBoxPick(ov,saved){
+    _eofBoxPick={ov,pts:[],saved:saved||{}};
+    if(api) api._globeRegionPicking=true;
+    _hintRegion('EOF REGION — click the FIRST corner on the globe (Esc cancels)');
+  }
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&_eofBoxPick){_eofBoxPick=null;if(api)api._globeRegionPicking=false;_hintRegion(null);} });
+  document.addEventListener('click',e=>{
+    if(!_eofBoxPick)return;
+    if(e.target.closest('.ctrl,.nc-plot-win,.nc-csv-menu,.nc-eof-dlg,#info-panel,.gf-feed-detail'))return;
+    const proj=api.projection,[pcx,pcy]=proj.translate(),pR=proj.scale();
+    const dx=e.clientX-pcx,dy=e.clientY-pcy; if(dx*dx+dy*dy>pR*pR)return;
+    const ll=proj.invert([e.clientX,e.clientY]); if(!ll)return;
+    _eofBoxPick.pts.push(ll);
+    if(_eofBoxPick.pts.length===1){
+      _showRegionPoint(ll);
+      _hintRegion('Now click the SECOND (opposite) corner');
+    } else {
+      const cp=_eofBoxPick; _eofBoxPick=null; if(api) api._globeRegionPicking=false; _hintRegion(null);
+      const [p1,p2]=cp.pts;
+      const lon0=Math.min(p1[0],p2[0]),lon1=Math.max(p1[0],p2[0]),lat0=Math.min(p1[1],p2[1]),lat1=Math.max(p1[1],p2[1]);
+      _showRegionBox(lon0,lon1,lat0,lat1,false);
+      setTimeout(_hideRegionBox,6000);
+      const newBox={name:'Custom box',lon0,lat0,lon1,lat1};
+      _openEofDialog(cp.ov,{...cp.saved,customBox:newBox});
+    }
+  },true);
+
+  /* ============================================================ MULTIPLE REGRESSION
+     Fits target = β0 + β1·pred1 + β2·pred2 + … at every grid cell via
+     ordinary least squares, so each predictor's coefficient map shows its
+     relationship with the target CONTROLLING FOR the other predictors —
+     e.g. ENSO's independent effect on rainfall once IOD and SAM are
+     accounted for, which a plain correlation map can't separate out.
+     Predictors are region-mean index series (same mechanism as
+     Composite's index picker, reused via _extractBoxIndexSeries). The key
+     efficiency trick: the design matrix X is identical for every grid
+     cell (only the target values differ), so (XᵀX)⁻¹ is inverted exactly
+     ONCE and reused — per-cell work is then just a couple of small
+     matrix-vector products, not a fresh regression solve per cell. */
+  function _gaussJordanInverse(Mflat,n){
+    const w=2*n;
+    const A=new Float64Array(n*w);
+    for(let i=0;i<n;i++){
+      for(let j=0;j<n;j++) A[i*w+j]=Mflat[i*n+j];
+      A[i*w+n+i]=1;
+    }
+    for(let col=0;col<n;col++){
+      let piv=col,best=Math.abs(A[col*w+col]);
+      for(let r=col+1;r<n;r++){ const v=Math.abs(A[r*w+col]); if(v>best){best=v;piv=r;} }
+      if(best<1e-10) return null; // singular — predictors are collinear
+      if(piv!==col){ for(let j=0;j<w;j++){ const tmp=A[col*w+j]; A[col*w+j]=A[piv*w+j]; A[piv*w+j]=tmp; } }
+      const pv=A[col*w+col];
+      for(let j=0;j<w;j++) A[col*w+j]/=pv;
+      for(let r=0;r<n;r++){
+        if(r===col) continue;
+        const f=A[r*w+col];
+        if(f===0) continue;
+        for(let j=0;j<w;j++) A[r*w+j]-=f*A[col*w+j];
+      }
+    }
+    const inv=new Float64Array(n*n);
+    for(let i=0;i<n;i++) for(let j=0;j<n;j++) inv[i*n+j]=A[i*w+n+j];
+    return inv;
+  }
+  async function _fitRegressionSlice(targetOv,predSeries,opts){
+    opts=opts||{};
+    const lagDays=opts.lagDays||0, standardize=!!opts.standardize;
+    const k=predSeries.length;
+    const probe=_cacheGet(targetOv,0);
+    if(!probe) return {error:'Could not read the target layer.'};
+    const rs0=probe.renderSlice;
+    const srcUnits=probe.activeSlice?.units||'';
+    const N=rs0.nLat*rs0.nLon;
+    const tgtSks=targetOv.frames.map(f=>f.sortKey).filter(sk=>typeof sk==='number'&&isFinite(sk));
+    const tgtLooksDated=/^\d{4}-\d{2}-\d{2}/.test(String(targetOv.frames[0]?.label||''));
+    const targetDated=tgtLooksDated&&tgtSks.length===targetOv.frames.length&&tgtSks.length>1&&tgtSks.every((v,i)=>i===0||v>tgtSks[i-1]);
+    if(!targetDated||predSeries.some(s=>!s.dated)){
+      return {error:'Regression needs real calendar dates on the target layer AND every predictor — at least one of these lacks usable dates.'};
+    }
+    const n=targetOv.frames.length;
+    const matched=[];
+    for(let t=0;t<n;t++){
+      const tsk=targetOv.frames[t]?.sortKey;
+      if(typeof tsk!=='number'||!isFinite(tsk)) continue;
+      const xs=new Array(k);
+      let ok=true;
+      for(let j=0;j<k;j++){
+        const v=_interpAtTime(predSeries[j],tsk-lagDays);
+        if(v==null||isNaN(v)){ok=false;break;}
+        xs[j]=v;
+      }
+      if(!ok) continue;
+      matched.push({t,xs});
+    }
+    const T=matched.length;
+    const df=T-k-1;
+    if(df<3) return {error:'Only '+T+' matched timesteps for '+k+' predictor(s) — need more date overlap (df='+df+', want at least 3).'};
+    // Design matrix X (T × (k+1)), column 0 = intercept. Standardising
+    // the predictors (subtract mean, divide by std, over the matched set)
+    // makes β read as "per 1σ of the predictor" — directly comparable
+    // across predictors with different natural units/scales — and keeps
+    // the small matrix inversion below numerically well-conditioned.
+    const predMean=new Float64Array(k), predSd=new Float64Array(k).fill(1);
+    if(standardize){
+      for(let j=0;j<k;j++){
+        let s=0; for(let i=0;i<T;i++) s+=matched[i].xs[j];
+        predMean[j]=s/T;
+        let ss=0; for(let i=0;i<T;i++){ const d=matched[i].xs[j]-predMean[j]; ss+=d*d; }
+        predSd[j]=Math.sqrt(ss/T)||1;
+      }
+    }
+    const kk=k+1;
+    const X=new Float64Array(T*kk);
+    for(let i=0;i<T;i++){
+      X[i*kk]=1;
+      for(let j=0;j<k;j++){
+        const raw=matched[i].xs[j];
+        X[i*kk+1+j]=standardize?(raw-predMean[j])/predSd[j]:raw;
+      }
+    }
+    const XtX=new Float64Array(kk*kk);
+    for(let i=0;i<T;i++){
+      for(let a=0;a<kk;a++){
+        const xa=X[i*kk+a];
+        for(let b=0;b<kk;b++) XtX[a*kk+b]+=xa*X[i*kk+b];
+      }
+    }
+    const C=_gaussJordanInverse(XtX,kk);
+    if(!C) return {error:'Predictors are collinear (near-perfectly correlated with each other) — the regression matrix can\'t be inverted. Try fewer or less-similar predictors.'};
+    // Frame-outer accumulation: SumY, SumYY and XᵀY per cell are the
+    // sufficient statistics for β/R²/SE per cell — accumulating these
+    // avoids ever storing a full (time × cells) matrix in memory.
+    //
+    // A missing target value at one (timestep, cell) pair is skipped for
+    // just that pair — NOT treated as disqualifying the whole cell for
+    // every other timestep. Real daily satellite products (this was found
+    // against NOAA's uninterpolated OLR) routinely have a handful of
+    // fully-blank days plus scattered per-pixel gaps everywhere else; an
+    // earlier version of this flagged a cell permanently invalid on its
+    // FIRST missing day, which for a multi-year daily record with >1%
+    // scattered missingness meant essentially every cell in the grid was
+    // eventually touched by at least one gap — silently producing a
+    // blank (all-NaN) regression map with no error shown. A per-cell
+    // valid-sample COUNT with a completeness floor tolerates that
+    // scattered pattern; β/R² are still fit from the (correctly reduced)
+    // sufficient statistics, and each cell's own valid-sample count sets
+    // its degrees of freedom for the t-test/p-value, rather than assuming
+    // the full T for every cell regardless of how much of it is missing.
+    const sumY=new Float64Array(N), sumYY=new Float64Array(N);
+    const XtY=new Float64Array(kk*N);
+    const validN=new Int32Array(N);
+    for(let i=0;i<T;i++){
+      const fr=_cacheGet(targetOv,matched[i].t);
+      if(!fr) continue;
+      const d=fr.renderSlice.data;
+      const xoff=i*kk;
+      for(let c=0;c<N;c++){
+        const y=d[c];
+        if(isNaN(y)) continue;
+        sumY[c]+=y; sumYY[c]+=y*y; validN[c]++;
+        for(let a=0;a<kk;a++) XtY[a*N+c]+=X[xoff+a]*y;
+      }
+      if((i&7)===7){ _hintTrend('Regression: fitting '+Math.round((i+1)/T*100)+'%…'); await new Promise(r=>setTimeout(r,0)); }
+    }
+    const minValidN=Math.max(kk+2,Math.ceil(0.5*T));
+    const beta=[]; for(let a=0;a<kk;a++) beta.push(new Float32Array(N).fill(NaN));
+    const tstat=[]; for(let j=0;j<k;j++) tstat.push(new Float32Array(N).fill(NaN));
+    const pval=[]; for(let j=0;j<k;j++) pval.push(new Float32Array(N).fill(NaN));
+    const r2=new Float32Array(N).fill(NaN);
+    const bc=new Float64Array(kk);
+    for(let c=0;c<N;c++){
+      const nc=validN[c];
+      if(nc<minValidN) continue;
+      const dfC=nc-kk;
+      for(let a=0;a<kk;a++){
+        let s=0; for(let b=0;b<kk;b++) s+=C[a*kk+b]*XtY[b*N+c];
+        bc[a]=s;
+      }
+      let xtyDotB=0; for(let a=0;a<kk;a++) xtyDotB+=bc[a]*XtY[a*N+c];
+      const sse=Math.max(0,sumYY[c]-xtyDotB);
+      const meanY=sumY[c]/nc;
+      const sst=Math.max(1e-12,sumYY[c]-nc*meanY*meanY);
+      r2[c]=1-sse/sst;
+      const sigma2=sse/dfC;
+      for(let a=0;a<kk;a++) beta[a][c]=bc[a];
+      for(let j=0;j<k;j++){
+        const se=Math.sqrt(Math.max(0,sigma2*C[(j+1)*kk+(j+1)]));
+        const t=se>1e-12?bc[j+1]/se:0;
+        tstat[j][c]=t;
+        const p=_tTestPValue(t,dfC);
+        pval[j][c]=p;
+        if(opts.sig&&!(p<0.05)){ beta[j+1][c]=NaN; tstat[j][c]=NaN; }
+      }
+    }
+    return {nLat:rs0.nLat,nLon:rs0.nLon,lats:rs0.lats,lons:rs0.lons,
+      beta,tstat,pval,r2,k,T,df,srcUnits,standardize,lagDays,
+      predNames:predSeries.map(s=>s.name),
+      regionName:predSeries.map(s=>s.name).join(' + ')};
+  }
+  // fits: one or more per-lag results from _fitRegressionSlice (same
+  // target/predictors, each just re-run at a different lagDays, paired
+  // with a display-ready lagLabel already in the record's own native
+  // cadence unit). Unlike Correlation (a single "r" variable, so lag can
+  // just be the flat frame list), regression has several DIFFERENT maps
+  // per lag (β per predictor, R², t per predictor, p per predictor) — so
+  // here the STATISTIC is the selectable "variable" (like a normal
+  // overlay's var dropdown) and LAG is what the time slider scrubs,
+  // letting you pick "β(ONI)" once and then step through every lag
+  // without also stepping through R²/t/p at each one.
+  function _buildRegressionOverlay(targetOv,fits,titlePrefix){
+    const nv=createOverlay();
+    if(!nv) return null;
+    const fit0=fits[0];
+    const u=fit0.srcUnits||'value';
+    const stats=[];
+    for(let j=0;j<fit0.k;j++){
+      stats.push({key:'beta'+j,label:'β '+fit0.predNames[j],
+        dataPerLag:fits.map(f=>f.beta[j+1]),
+        unitsPerLag:fits.map(f=>'Δ'+u+' per '+(f.standardize?'1σ of ':'unit ')+f.predNames[j]+' (controlling for the other predictors) — df='+f.df)});
+    }
+    stats.push({key:'r2',label:'R²',
+      dataPerLag:fits.map(f=>f.r2),
+      unitsPerLag:fits.map(f=>'fraction of variance explained by all '+f.k+' predictor(s) together (0–1) — df='+f.df)});
+    for(let j=0;j<fit0.k;j++){
+      stats.push({key:'t'+j,label:'t-stat '+fit0.predNames[j],
+        dataPerLag:fits.map(f=>f.tstat[j]),
+        unitsPerLag:fits.map(f=>'t-statistic on β('+f.predNames[j]+'), df='+f.df)});
+    }
+    for(let j=0;j<fit0.k;j++){
+      stats.push({key:'p'+j,label:'p-value '+fit0.predNames[j],
+        dataPerLag:fits.map(f=>f.pval[j]),
+        unitsPerLag:fits.map(f=>'two-tailed p-value on β('+f.predNames[j]+') — smaller = more significant, df='+f.df)});
+    }
+    nv._regress={srcId:targetOv.id,stats,lags:fits.map(f=>f.lagDays),
+      nLat:fit0.nLat,nLon:fit0.nLon,lats:fit0.lats,lons:fit0.lons,regionName:fit0.regionName};
+    nv.name=titlePrefix||('Regression: '+(targetOv.name||targetOv.selVar||'layer'));
+    nv.selVar=stats[0].key; // first predictor's β
+    nv.varOptions=stats.map(s=>({name:s.key,label:s.label}));
+    nv.selCmap='RdBu';
+    nv.frames=fits.map((f,i)=>({label:f.lagLabel||('lag '+i),localT:i,virtual:true,regressLag:i,sortKey:i}));
+    nv.maxTime=nv.frames.length;
+    nv.selTime=0; // first lag (or the only one, for a single-lag run)
+    nv._fcache=new Map();
+    rebuildSlice(nv);
+    if(nv.cardEl){
+      refreshCardVarPicker(nv);
+      const body=nv.cardEl.querySelector('.nc-cb'); if(body) body.style.display='';
+      const sw=nv.cardEl.querySelector('.nc-series-wrap'); if(sw) sw.style.display='none';
+      const db=nv.cardEl.querySelector('.nc-drop-btn'); if(db) db.style.display='none';
+      const badge=nv.cardEl.querySelector('.nc-cname');
+      if(badge){ badge.textContent='📈 '+nv.name; badge.classList.remove('nc-empty'); }
+      const cmSel=nv.cardEl.querySelector('.nc-cm'); if(cmSel){ cmSel.value=nv.selCmap; updateCmapPrev(nv); }
+      updateTimeControls(nv);
+    }
+    renumberCards(); schedRender(nv);
+    document.getElementById('nc-body').style.display='';
+    document.getElementById('nc-tog').textContent='▾';
+    return nv;
+  }
+  async function _computeRegressionMap(targetOv,predictors,opts){
+    if(!targetOv.frames||targetOv.frames.length<8){ alert('Target layer needs at least 8 time frames.'); return; }
+    try{
+      _hintTrend('Regression: sampling predictors…');
+      await new Promise(r=>setTimeout(r,0));
+      const predSeries=[];
+      for(let i=0;i<predictors.length;i++){
+        const p=predictors[i];
+        const s=await _extractBoxIndexSeries(p.srcOv,p.boxSpec,'Predictor '+(i+1)+': ');
+        if(s.values.length<8){ alert('Predictor "'+(p.boxSpec.name||'?')+'" has fewer than 8 valid time steps.'); return; }
+        predSeries.push({...s,name:p.boxSpec.name||('predictor'+(i+1))});
+      }
+      const lags=opts.lags&&opts.lags.length?opts.lags:[opts.lagDays||0];
+      const lagLabels=opts.lagLabels&&opts.lagLabels.length===lags.length?opts.lagLabels:lags.map(l=>'Lag '+(l>0?'+':'')+l+'d');
+      const fits=[],errs=[];
+      for(let i=0;i<lags.length;i++){
+        _hintTrend(lags.length>1?('Regression: fitting '+lagLabels[i]+' ('+(i+1)+'/'+lags.length+')…'):'Regression: fitting…');
+        await new Promise(r=>setTimeout(r,0));
+        const fit=await _fitRegressionSlice(targetOv,predSeries,{...opts,lagDays:lags[i]});
+        if(!fit||fit.error) errs.push(lagLabels[i]+': '+(fit?.error||'failed'));
+        else{ fit.lagLabel=lagLabels[i]; fits.push(fit); }
+      }
+      if(!fits.length){ alert('Regression failed at every lag —\n'+errs.join('\n')); return; }
+      if(errs.length) console.warn('[regression] some lags skipped:',errs.join(' | '));
+      const prefix='Regression: '+(targetOv.name||targetOv.selVar||'layer')+' ~ '+predSeries.map(s=>s.name).join(' + ');
+      _buildRegressionOverlay(targetOv,fits,prefix);
+      console.log('[regression]',prefix,'lags='+fits.length,'df='+fits[0].df,'matched='+fits[0].T);
+    }catch(err){
+      console.error('[regression] failed:',err);
+      alert('Regression failed: '+(err?.message||err));
+    }finally{
+      _hintTrend(null);
+      _hintRegion(null);
+    }
+  }
+  function _openRegressionDialog(ov,opts){
+    opts=opts||{};
+    document.querySelectorAll('.nc-regr-dlg').forEach(d=>d.remove());
+    const srcCandidates=overlays.filter(o=>o.frames&&o.frames.length>=8);
+    if(!srcCandidates.length){ alert('No loaded layer with 8+ time frames to use as a predictor source.'); return; }
+    if(!ov.frames||ov.frames.length<8){ alert('This layer needs at least 8 time frames as a regression target.'); return; }
+    // Lag is entered in whatever native time step the TARGET's own dates
+    // resolve to (day/month/year) — a hardcoded "days" field was wrong
+    // for e.g. a monthly SST record, where "lag 30" reads as one step
+    // instead of one month. Mirrors Correlation's cadence detection.
+    const sks=ov.frames.map(f=>f.sortKey).filter(sk=>typeof sk==='number'&&isFinite(sk));
+    const looksDated=/^\d{4}-\d{2}-\d{2}/.test(String(ov.frames[0]?.label||''));
+    const dated=looksDated&&sks.length===ov.frames.length&&sks.length>1&&sks.every((v,i)=>i===0||v>sks[i-1]);
+    const lagUnit=dated?_nativeTrendUnit(_medianGapDays(sks)):{label:'day',days:1};
+    const lagUnitAbbrev={day:'d',month:'mo',year:'yr',frame:'fr'}[lagUnit.label]||lagUnit.label;
+    const dlg=document.createElement('div');
+    dlg.className='nc-regr-dlg';
+    dlg.style.cssText='position:fixed;inset:0;z-index:500;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.55);';
+    const box=document.createElement('div');
+    box.style.cssText='background:rgba(6,17,28,0.98);border:1px solid rgba(127,208,255,0.4);border-radius:10px;padding:16px 18px;max-width:520px;width:92%;max-height:88vh;overflow:auto;font-family:IBM Plex Mono,monospace;font-size:11px;color:#cfe3f2;box-shadow:0 12px 40px rgba(0,0,0,0.5);';
+    let presetHtml='',lastGrp='';
+    REGION_PRESETS.forEach((p,i)=>{
+      if(p.group&&p.group!==lastGrp){ if(lastGrp) presetHtml+='</optgroup>'; presetHtml+='<optgroup label="'+p.group+'">'; lastGrp=p.group; }
+      presetHtml+='<option value="'+i+'">'+p.name+'</option>';
+    });
+    if(lastGrp) presetHtml+='</optgroup>';
+    const srcHtml=srcCandidates.map(o=>'<option value="'+o.id+'">'+(o.name||o.selVar||'layer')+'</option>').join('');
+    box.innerHTML='<div style="font-size:13px;font-weight:600;margin-bottom:10px;color:#eaf3fb;">📈 Multiple regression</div>'+
+      '<div style="font-size:9.5px;color:#7fa0b8;margin-bottom:12px;line-height:1.45;">Fits target = β₀ + β₁·pred₁ + β₂·pred₂ + … at every grid cell, so each predictor\'s map shows its relationship with the target CONTROLLING FOR the others — e.g. ENSO\'s independent effect on rainfall once IOD and SAM are accounted for. Predictors are region-mean indices (same mechanism as Composite\'s index picker) — presets only here, per-predictor pick/coords/country regions aren\'t available yet.</div>'+
+      '<label style="display:block;margin-bottom:10px;">Target (this layer)<div style="margin-top:4px;padding:5px;background:rgba(127,208,255,0.06);border:1px solid rgba(127,208,255,0.18);border-radius:4px;color:#eaf3fb;">'+(ov.name||ov.selVar||'layer')+'</div></label>'+
+      '<div id="regr-preds" style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px;"></div>'+
+      '<button type="button" id="regr-add" style="width:100%;padding:6px;border-radius:5px;border:1px dashed rgba(127,208,255,0.35);background:transparent;color:#7fd0ff;cursor:pointer;font-family:IBM Plex Mono,monospace;font-size:10px;margin-bottom:12px;">+ Add predictor</button>'+
+      '<div style="display:flex;gap:8px;margin-bottom:6px;">'+
+        '<label style="flex:1;">Lag min ('+lagUnit.label+'s)<input type="number" id="regr-lmin" value="0" step="1" style="width:100%;margin-top:4px;padding:4px;background:#0a1828;color:#cfe3f2;border:1px solid rgba(120,170,205,0.3);border-radius:4px;"></label>'+
+        '<label style="flex:1;">Lag max ('+lagUnit.label+'s)<input type="number" id="regr-lmax" value="0" step="1" style="width:100%;margin-top:4px;padding:4px;background:#0a1828;color:#cfe3f2;border:1px solid rgba(120,170,205,0.3);border-radius:4px;"></label>'+
+        '<label style="flex:1;">Step<input type="number" id="regr-lstep" value="1" min="1" style="width:100%;margin-top:4px;padding:4px;background:#0a1828;color:#cfe3f2;border:1px solid rgba(120,170,205,0.3);border-radius:4px;"></label>'+
+      '</div>'+
+      '<div style="font-size:9px;color:#7a93a8;margin-bottom:10px;">Detected target spacing: <b style="color:#eaf3fb">'+_cadenceLabel(sks)+'</b> — lag steps above are in <b style="color:#eaf3fb">'+lagUnit.label.toUpperCase()+'S</b>. Positive lag = predictors LEAD the target by that many '+lagUnit.label+'s (e.g. ENSO 2 months ahead of rainfall). Leave min=max=0 for a single simultaneous fit (fast). A wider sweep re-runs the full per-cell fit once per lag step — each step costs as much as one regression, so a dozen steps takes roughly a dozen times as long; max 15 steps.</div>'+
+      '<label style="display:block;margin:0 0 6px;font-size:10px;cursor:pointer;color:#9fc4dd;">'+
+        '<input type="checkbox" id="regr-std" checked style="margin-right:7px;accent-color:#7fd0ff;"> Standardise predictors (β becomes "per 1σ of the predictor")</label>'+
+      '<label style="display:block;margin:0 0 12px;font-size:10px;cursor:pointer;color:#9fc4dd;">'+
+        '<input type="checkbox" id="regr-sig" style="margin-right:7px;accent-color:#7fd0ff;"> Mask insignificant cells on β/t maps (p ≥ 0.05 → transparent)</label>'+
+      '<div style="display:flex;gap:8px;justify-content:flex-end;">'+
+        '<button type="button" id="regr-cancel" style="padding:6px 12px;border-radius:5px;border:1px solid rgba(120,170,205,0.3);background:transparent;color:#9fb6c9;cursor:pointer;">Cancel</button>'+
+        '<button type="button" id="regr-run" style="padding:6px 14px;border-radius:5px;border:none;background:#7fd0ff;color:#050d16;font-weight:600;cursor:pointer;">Run regression</button></div>';
+    dlg.appendChild(box);
+    document.body.appendChild(dlg);
+    const close=()=>dlg.remove();
+    box.querySelector('#regr-cancel').addEventListener('click',close);
+    // Close only when BOTH the press and the release land on the bare
+    // backdrop — a plain 'click' check alone also fires when a drag that
+    // starts on a text field inside the dialog (e.g. selecting/highlighting
+    // a lag number by dragging) happens to release outside that field,
+    // since the resulting click's target is wherever the mouse came up,
+    // not where the drag began.
+    let _backdropDown=false;
+    dlg.addEventListener('mousedown',e=>{ _backdropDown=(e.target===dlg); });
+    dlg.addEventListener('click',e=>{ if(e.target===dlg&&_backdropDown) close(); });
+    const predsWrap=box.querySelector('#regr-preds');
+    const MAX_PRED=6;
+    function addPredRow(srcId,presetIdx){
+      if(predsWrap.children.length>=MAX_PRED) return;
+      const row=document.createElement('div');
+      row.className='regr-pred-row';
+      row.style.cssText='display:flex;gap:6px;align-items:center;';
+      row.innerHTML='<select class="regr-src" style="flex:1.2;padding:4px;background:#0a1828;color:#cfe3f2;border:1px solid rgba(120,170,205,0.3);border-radius:4px;">'+srcHtml+'</select>'+
+        '<select class="regr-region" style="flex:1.5;padding:4px;background:#0a1828;color:#cfe3f2;border:1px solid rgba(120,170,205,0.3);border-radius:4px;">'+presetHtml+'</select>'+
+        '<button type="button" class="regr-rm" style="flex-shrink:0;width:22px;height:22px;border-radius:4px;border:1px solid rgba(255,120,120,0.4);background:transparent;color:#ff9d9d;cursor:pointer;">×</button>';
+      if(srcId) row.querySelector('.regr-src').value=srcId;
+      if(presetIdx!=null) row.querySelector('.regr-region').value=String(presetIdx);
+      row.querySelector('.regr-rm').addEventListener('click',()=>{
+        if(predsWrap.children.length>1) row.remove();
+      });
+      predsWrap.appendChild(row);
+    }
+    const oniIdx=REGION_PRESETS.findIndex(p=>p.name.indexOf('ONI')===0);
+    const naoIdx=REGION_PRESETS.findIndex(p=>p.name.indexOf('NAO')===0);
+    addPredRow(ov.id,oniIdx>=0?oniIdx:0);
+    addPredRow(ov.id,naoIdx>=0?naoIdx:0);
+    box.querySelector('#regr-add').addEventListener('click',()=>addPredRow(ov.id,0));
+    predsWrap.addEventListener('change',e=>{
+      if(e.target.classList.contains('regr-region')) _flashPresetRegion(REGION_PRESETS[+e.target.value]);
+    });
+    box.querySelector('#regr-run').addEventListener('click',async()=>{
+      const rows=[...predsWrap.querySelectorAll('.regr-pred-row')];
+      const predictors=rows.map(row=>{
+        const srcId=row.querySelector('.regr-src').value;
+        const presetIdx=+row.querySelector('.regr-region').value;
+        const srcOv=overlays.find(o=>o.id===srcId);
+        const boxSpec=_resolvePresetBox(REGION_PRESETS[presetIdx]);
+        return srcOv&&boxSpec?{srcOv,boxSpec}:null;
+      }).filter(Boolean);
+      if(predictors.length<1){ alert('Add at least one predictor.'); return; }
+      const lminRaw=Math.round(+(box.querySelector('#regr-lmin')?.value||0));
+      const lmaxRaw=Math.round(+(box.querySelector('#regr-lmax')?.value||0));
+      const lstep=Math.max(1,Math.round(+(box.querySelector('#regr-lstep')?.value||1)));
+      const lmin=Math.min(lminRaw,lmaxRaw),lmax=Math.max(lminRaw,lmaxRaw);
+      const lagsNative=[]; for(let l=lmin;l<=lmax;l+=lstep) lagsNative.push(l);
+      if(!lagsNative.length) lagsNative.push(0);
+      if(lagsNative.length>15){ alert('That is '+lagsNative.length+' lag steps — narrow the range or increase the step (max 15).'); return; }
+      // Sweep values are entered in the target's native cadence (lagUnit)
+      // but _fitRegressionSlice shifts against real sortKey DAYS — convert
+      // once here, and keep the native value+unit around just for labels.
+      const lags=lagsNative.map(l=>Math.round(l*lagUnit.days));
+      const lagLabels=lagsNative.map(l=>'Lag '+(l>0?'+':'')+l+lagUnitAbbrev);
+      const standardize=!!box.querySelector('#regr-std')?.checked;
+      const sig=!!box.querySelector('#regr-sig')?.checked;
+      close();
+      await _computeRegressionMap(ov,predictors,{lags,lagLabels,standardize,sig});
+    });
   }
 
   function _createDerivedOverlay(terms,formula){
@@ -2411,7 +3998,9 @@ window.GlobeNC = function(api) {
       registerOverlayFrames(ov);
 
       const nFiles=ov.readers.length,nF=ov.frames.length;
-      setStatus('\u2713 '+ov.name+(nFiles>1?' +'+( nFiles-1)+' more':'')+' \u00b7 '+nF+' frame'+(nF>1?'s':''));
+      // Filename is already shown right above by .nc-cname \u2014 repeating it
+      // here just made this line overflow and wrap mid-word in the header.
+      setStatus('\u2713 '+nF+' frame'+(nF>1?'s':'')+(nFiles>1?' \u00b7 '+nFiles+' files':''));
       _hintRegion(null);
       openOvBody(ov);
     }catch(err){
@@ -2481,15 +4070,37 @@ window.GlobeNC = function(api) {
     const isProjected=(f.grid.proj&&f.grid.proj!=='latlon'&&!isCurv);
     const MAXDIM=isProjected||isCurv?420:1024;
     const cg=f.grid.curvGrid;
-    const srcRows=cg?cg.nRow:(f.grid.lats?f.grid.lats.length:0);
-    const srcCols=cg?cg.nCol:(f.grid.lons?f.grid.lons.length:0);
-    const factor=isProjected?1:Math.max(1,Math.ceil(Math.max(srcRows||1,srcCols||1)/MAXDIM));
+    // For projected (Lambert/polar-stereo/etc.) grids, grid.lats/lons are
+    // FLAT per-point arrays (length Nx*Ny) — the true row/col counts live
+    // in dimMap (populated by discoverGrid from the parser's own Nx/Ny),
+    // NOT in lats.length (which would just be the total point count).
+    const srcRows=cg?cg.nRow:(isProjected&&f.grid.latV?(f.grid.dimMap[f.grid.latV]||0):(f.grid.lats?f.grid.lats.length:0));
+    const srcCols=cg?cg.nCol:(isProjected&&f.grid.lonV?(f.grid.dimMap[f.grid.lonV]||0):(f.grid.lons?f.grid.lons.length:0));
+    // Projected grids used to always decode/render at full native
+    // resolution (factor pinned to 1) because decimating a flat per-point
+    // coordinate array needs special handling that wasn't wired up — for a
+    // 1300x900 polar-stereo grid or a ~1800x1900 Lambert grid that's over a
+    // million points individually forward-projected (each a few trig calls)
+    // on EVERY render. That's what made large regional GRIB2 overlays
+    // (HRRR-AK, GEFS, NAEFS, AQM, GLWU...) freeze the tab. Cap them exactly
+    // like lat/lon and curvilinear grids already are.
+    const factor=Math.max(1,Math.ceil(Math.max(srcRows||1,srcCols||1)/MAXDIM));
     const act=extractSlice(f.reader,f.grid,f.varName,f.localT,factor,ov.selLevIdx??f.grid.defaultLevI??0);
     if(!act) return null;
     let lats=f.grid.lats, lons=f.grid.lons;
     if(isCurv&&cg&&f.grid.latV&&f.grid.lonV){
       const cc=loadDecimatedCoords(f.reader,f.grid.latV,f.grid.lonV,cg.nRow,cg.nCol,factor);
       if(cc){lats=cc.lats;lons=cc.lons;}
+    } else if(isProjected&&factor>1&&lats&&lons&&lats.length===srcRows*srcCols){
+      const sl=new Float32Array(act.nLat*act.nLon), so=new Float32Array(act.nLat*act.nLon);
+      for(let i=0;i<act.nLat;i++){
+        const si=Math.min(srcRows-1,i*factor);
+        for(let j=0;j<act.nLon;j++){
+          const sj=Math.min(srcCols-1,j*factor), k=si*srcCols+sj;
+          sl[i*act.nLon+j]=lats[k]; so[i*act.nLon+j]=lons[k];
+        }
+      }
+      lats=sl; lons=so;
     } else if(!isProjected&&factor>1){
       const gLat=srcRows, gLon=srcCols;
       const sl=new Float32Array(act.nLat), so=new Float32Array(act.nLon);
@@ -2529,9 +4140,13 @@ window.GlobeNC = function(api) {
     const f=frames[Math.max(0,Math.min(t,frames.length-1))];
     if(!f) return null;
     const isProjected=(f.grid.proj&&f.grid.proj!=='latlon');
-    const MAXDIM=1024;
-    const gLat=f.grid.lats?f.grid.lats.length:0, gLon=f.grid.lons?f.grid.lons.length:0;
-    const factor=isProjected?1:Math.max(1,Math.ceil(Math.max(gLat,gLon)/MAXDIM));
+    const MAXDIM=isProjected?420:1024;
+    // Same distinction as _decodeFrame: for projected grids lats/lons are
+    // flat per-point arrays, so their true row/col counts come from dimMap
+    // (Ny/Nx), not from lats.length (the total point count).
+    const gLat=isProjected&&f.grid.latV?(f.grid.dimMap[f.grid.latV]||0):(f.grid.lats?f.grid.lats.length:0);
+    const gLon=isProjected&&f.grid.lonV?(f.grid.dimMap[f.grid.lonV]||0):(f.grid.lons?f.grid.lons.length:0);
+    const factor=Math.max(1,Math.ceil(Math.max(gLat,gLon)/MAXDIM));
     let act;
     if(levSpec==='mean'||levSpec==='sum'){
       // Vertical aggregation across ALL levels — enables thickness-style
@@ -2561,7 +4176,17 @@ window.GlobeNC = function(api) {
     }
     if(!act) return null;
     let lats=f.grid.lats, lons=f.grid.lons;
-    if(!isProjected&&factor>1){
+    if(isProjected&&factor>1&&lats&&lons&&lats.length===gLat*gLon){
+      const sl=new Float32Array(act.nLat*act.nLon), so=new Float32Array(act.nLat*act.nLon);
+      for(let i=0;i<act.nLat;i++){
+        const si=Math.min(gLat-1,i*factor);
+        for(let j=0;j<act.nLon;j++){
+          const sj=Math.min(gLon-1,j*factor), k=si*gLon+sj;
+          sl[i*act.nLon+j]=lats[k]; so[i*act.nLon+j]=lons[k];
+        }
+      }
+      lats=sl; lons=so;
+    } else if(!isProjected&&factor>1){
       const sl=new Float32Array(act.nLat), so=new Float32Array(act.nLon);
       for(let i=0;i<sl.length;i++) sl[i]=lats[Math.min(gLat-1,i*factor)];
       for(let j=0;j<so.length;j++) so[j]=lons[Math.min(gLon-1,j*factor)];
@@ -2703,6 +4328,59 @@ window.GlobeNC = function(api) {
       ov._fcache.set(cacheKey,d);
       return d;
     }
+    if(ov._corr){
+      const cr=ov._corr;
+      const slices=cr.frames;
+      const si=Math.max(0,Math.min(slices.length-1,t|0));
+      const sl=slices[si];
+      const cacheKey='C|'+si;
+      if(ov._fcache&&ov._fcache.has(cacheKey)) return ov._fcache.get(cacheKey);
+      const d={activeSlice:{data:sl.data,nLat:cr.nLat,nLon:cr.nLon,
+                 units:'r (Pearson) — '+(sl.matchedN??sl.n)+' matched frames'+(sl.stride>1?' (stride '+sl.stride+')':'')},
+               renderSlice:{data:sl.data,nLat:cr.nLat,nLon:cr.nLon,lats:cr.lats,lons:cr.lons}};
+      if(!ov._fcache) ov._fcache=new Map();
+      ov._fcache.set(cacheKey,d);
+      return d;
+    }
+    if(ov._composite){
+      const cp=ov._composite;
+      const slices=cp.frames;
+      const si=Math.max(0,Math.min(slices.length-1,t|0));
+      const sl=slices[si];
+      const cacheKey='M|'+si;
+      if(ov._fcache&&ov._fcache.has(cacheKey)) return ov._fcache.get(cacheKey);
+      const d={activeSlice:{data:sl.data,nLat:cp.nLat,nLon:cp.nLon,units:sl.units||sl.label},
+               renderSlice:{data:sl.data,nLat:cp.nLat,nLon:cp.nLon,lats:cp.lats,lons:cp.lons}};
+      if(!ov._fcache) ov._fcache=new Map();
+      ov._fcache.set(cacheKey,d);
+      return d;
+    }
+    if(ov._eof){
+      const ef=ov._eof;
+      const slices=ef.frames;
+      const si=Math.max(0,Math.min(slices.length-1,t|0));
+      const sl=slices[si];
+      const cacheKey='E|'+si;
+      if(ov._fcache&&ov._fcache.has(cacheKey)) return ov._fcache.get(cacheKey);
+      const d={activeSlice:{data:sl.data,nLat:ef.nLat,nLon:ef.nLon,units:sl.units||sl.label},
+               renderSlice:{data:sl.data,nLat:ef.nLat,nLon:ef.nLon,lats:ef.lats,lons:ef.lons}};
+      if(!ov._fcache) ov._fcache=new Map();
+      ov._fcache.set(cacheKey,d);
+      return d;
+    }
+    if(ov._regress){
+      const rg=ov._regress;
+      const stat=rg.stats.find(s=>s.key===ov.selVar)||rg.stats[0];
+      const li=Math.max(0,Math.min(rg.lags.length-1,t|0));
+      const cacheKey='RG|'+stat.key+'|'+li;
+      if(ov._fcache&&ov._fcache.has(cacheKey)) return ov._fcache.get(cacheKey);
+      const data=stat.dataPerLag[li], units=stat.unitsPerLag[li]||stat.label;
+      const d={activeSlice:{data,nLat:rg.nLat,nLon:rg.nLon,units},
+               renderSlice:{data,nLat:rg.nLat,nLon:rg.nLon,lats:rg.lats,lons:rg.lons}};
+      if(!ov._fcache) ov._fcache=new Map();
+      ov._fcache.set(cacheKey,d);
+      return d;
+    }
     if(ov._derived){
       // Derived layers compute on demand; the cache key captures every
       // input that affects the result — each term's binding plus, for
@@ -2743,9 +4421,16 @@ window.GlobeNC = function(api) {
   function rebuildSlice(ov){
     // Derived layers own no frames — they compute from their sources, so
     // skip the frame-count guard and always attempt a derived slice.
-    if(!ov._derived && !ov._trend && (!ov.frames.length||ov.selTime>=ov.frames.length)){ov.activeSlice=null;ov.renderSlice=null;return;}
-    if(ov._derived){
-      ov.cachedMin=null; ov.cachedMax=null; // recompute range each rebuild (sources may have changed)
+    if(!ov._derived && !ov._trend && !ov._corr && !ov._composite && !ov._eof && !ov._regress && (!ov.frames.length||ov.selTime>=ov.frames.length)){ov.activeSlice=null;ov.renderSlice=null;return;}
+    if(ov._derived || ov._composite || ov._corr || ov._trend || ov._eof || ov._regress){
+      // Each "frame" of these virtual overlays can carry a completely
+      // different natural value range — composite's raw-units hi/lo
+      // composites vs. its small delta diff frame, correlation's r per
+      // lag, trend's slope per date-range window. A range cached from
+      // one frame is meaningless (or actively clips/washes out) applied
+      // to another, so recompute fresh on every frame switch instead of
+      // reusing whatever was cached when the overlay was first built.
+      ov.cachedMin=null; ov.cachedMax=null;
     }
     const hit=_cacheGet(ov,ov.selTime);
     if(hit){
@@ -3077,9 +4762,13 @@ window.GlobeNC = function(api) {
     gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
     gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
     gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
-    // composite onto 2D canvas
+    // composite onto 2D canvas — globalAlpha scoped to just this draw (reset
+    // right after) so opacity dims the data image only; contours, drawn
+    // into this same 2D context afterward by the caller, are unaffected.
     ov.ctx.clearRect(0,0,W,H);
+    ov.ctx.globalAlpha=Math.max(0,Math.min(1,ov.selOpacity??1));
     ov.ctx.drawImage(ov._glCanvas,0,0);
+    ov.ctx.globalAlpha=1;
     return true;
   }
 
@@ -3525,6 +5214,9 @@ fn sampleTex(uv2:vec2f)->f32{
     if(!ov._buf||ov._buf.width!==W||ov._buf.height!==H) ov._buf=ov.ctx.createImageData(W,H);
     else ov._buf.data.fill(0);
     const px=ov._buf.data, range=(mx-mn)||1;
+    // Baked into the data's own alpha, not canvas-wide CSS opacity — see
+    // doRender's opacity comment.
+    const alpha=Math.round(255*Math.max(0,Math.min(1,ov.selOpacity??1)));
     const fallback=Math.max(1,Math.ceil(Math.min(W,H)/500));
     const block=_curvilinearBlock(rs,proj,dpr,fallback);
     // A bare proj([lon,lat]) call (unlike d3.geoPath, used for coastlines
@@ -3556,7 +5248,7 @@ fn sampleTex(uv2:vec2f)->f32{
       const t=Math.max(0,Math.min(1,(v-mn)/range)), ci=Math.round(t*255)*3;
       for(let yy=Math.max(0,y-block);yy<=Math.min(H-1,y+block);yy++)
         for(let xx=Math.max(0,x-block);xx<=Math.min(W-1,x+block);xx++){
-          const q=(yy*W+xx)*4; px[q]=cmap[ci]; px[q+1]=cmap[ci+1]; px[q+2]=cmap[ci+2]; px[q+3]=255;
+          const q=(yy*W+xx)*4; px[q]=cmap[ci]; px[q+1]=cmap[ci+1]; px[q+2]=cmap[ci+2]; px[q+3]=alpha;
         }
     }
     ov.ctx.putImageData(ov._buf,0,0);
@@ -3569,7 +5261,19 @@ fn sampleTex(uv2:vec2f)->f32{
     ov.ctx.clearRect(0,0,W,H);
     _updateLandFill();
     if(!ov.enabled) return;
-    ov.canvas.style.opacity=String(ov.selOpacity);
+    // Opacity used to be a single CSS style.opacity on this whole canvas —
+    // but contours are drawn into this SAME canvas/context, after the data,
+    // for every render path (CPU raster, WebGL2's drawImage compositing,
+    // and the contour+legend layer WebGPU draws on top of its own data
+    // canvas). A canvas-wide CSS opacity dims everything painted on it
+    // equally, so turning the data down also turned contour lines down by
+    // the same amount — contours should stay legible even at low data
+    // opacity. Left at 1 here; each render path below bakes ov.selOpacity
+    // into the DATA specifically (per-pixel alpha for CPU/curvilinear, a
+    // scoped ctx.globalAlpha around just the WebGL2 image composite, or —
+    // for WebGPU — the existing shader-side alphaV, already independent of
+    // this canvas), so contours drawn afterward are unaffected.
+    ov.canvas.style.opacity='1';
     const _fx=(ov.selSaturate!==1||ov.selBright!==1||ov.selContrast!==1)
       ? 'saturate('+ov.selSaturate+') brightness('+ov.selBright+') contrast('+ov.selContrast+')' : '';
     ov.canvas.style.filter=_fx;
@@ -3587,7 +5291,11 @@ fn sampleTex(uv2:vec2f)->f32{
     const rot=proj.rotate();
     const sc=proj.scale();
     const cx=tr[0]*dpr, cy=tr[1]*dpr, R=sc*dpr;
-    const cmap=CMAPS[ov.selCmap]||CMAPS.viridis, alpha=255;
+    const cmap=CMAPS[ov.selCmap]||CMAPS.viridis;
+    // Baked into the DATA's own alpha channel now (see doRender's opacity
+    // comment above) — was a flat 255 relying on the canvas-wide CSS
+    // opacity to dim it, which also dimmed contours drawn afterward.
+    const alpha=255*Math.max(0,Math.min(1,ov.selOpacity??1));
     const mn=ov.vminOvr??ov.cachedMin??0, mx=ov.vmaxOvr??ov.cachedMax??1, range=(mx-mn)||1;
     const R2=R*R;
     const drawContours=()=>{
@@ -3652,7 +5360,6 @@ fn sampleTex(uv2:vec2f)->f32{
       }
     }catch(e){
       console.warn('[globe-nc] WebGL render failed, using CPU:',e.message);
-      ov.canvas.style.opacity=String(ov.selOpacity);
       ov.canvas.style.filter=_fx;
       ov.ctx.clearRect(0,0,W,H);
     }
@@ -3825,10 +5532,12 @@ fn sampleTex(uv2:vec2f)->f32{
     region: NC_ICON_SVG_OPEN+'<rect x="3" y="5" width="14" height="14" rx="1" stroke-dasharray="3 2.6"/><line x1="19.5" y1="2" x2="19.5" y2="7.5"/><line x1="16.75" y1="4.75" x2="22.25" y2="4.75"/></svg>',
     preload: NC_ICON_SVG_OPEN+'<path d="M6.5 13.7a3.5 3.5 0 0 1 .5-6.9 4.6 4.6 0 0 1 8.7 1.6 3 3 0 0 1-.6 5.3"/><line x1="11" y1="9" x2="11" y2="15"/><polyline points="8.5 12.5 11 15 13.5 12.5"/><rect x="5" y="18.3" width="12" height="2" rx="0.5"/><rect x="7" y="21.3" width="8" height="1.4" rx="0.5"/></svg>',
     trend: NC_ICON_SVG_OPEN+'<line x1="3" y1="21" x2="3" y2="3"/><line x1="3" y1="21" x2="21" y2="21"/><polyline points="5 16 10 11 14 14 20 6"/><polyline points="15 6 20 6 20 11"/></svg>',
+    correlate: NC_ICON_SVG_OPEN+'<circle cx="12" cy="12" r="2"/><circle cx="12" cy="12" r="8" stroke-dasharray="2.5 2.5"/><line x1="12" y1="1.5" x2="12" y2="5" stroke-dasharray="2 2"/><line x1="12" y1="19" x2="12" y2="22.5" stroke-dasharray="2 2"/><line x1="1.5" y1="12" x2="5" y2="12" stroke-dasharray="2 2"/><line x1="19" y1="12" x2="22.5" y2="12" stroke-dasharray="2 2"/></svg>',
     animate: NC_ICON_SVG_OPEN+'<rect x="3" y="5" width="18" height="14" rx="2"/><polygon points="10 9 16 12 10 15" fill="currentColor" stroke="none"/><line x1="3" y1="8.5" x2="6" y2="8.5"/><line x1="3" y1="15.5" x2="6" y2="15.5"/><line x1="18" y1="8.5" x2="21" y2="8.5"/><line x1="18" y1="15.5" x2="21" y2="15.5"/></svg>',
     pause: NC_ICON_SVG_OPEN+'<rect x="3" y="5" width="18" height="14" rx="2"/><line x1="10" y1="9" x2="10" y2="15"/><line x1="14" y1="9" x2="14" y2="15"/></svg>',
     download: NC_ICON_SVG_OPEN+'<line x1="12" y1="3" x2="12" y2="15"/><polyline points="7 10 12 15 17 10"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>',
-    trash: NC_ICON_SVG_OPEN+'<line x1="4" y1="7" x2="20" y2="7"/><path d="M9 7V4.5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1V7"/><path d="M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>'
+    trash: NC_ICON_SVG_OPEN+'<line x1="4" y1="7" x2="20" y2="7"/><path d="M9 7V4.5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1V7"/><path d="M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>',
+    contour: NC_ICON_SVG_OPEN+'<path d="M2 8.5c3-4 5-4 8 0s5 4 8 0"/><path d="M2 13c3-4 5-4 8 0s5 4 8 0" opacity="0.55"/><path d="M2 17.5c3-4 5-4 8 0s5 4 8 0" opacity="0.3"/></svg>'
   };
   function buildCard(ov){
     const list=document.getElementById('nc-overlay-list');
@@ -3841,23 +5550,31 @@ fn sampleTex(uv2:vec2f)->f32{
       <span class="nc-cname nc-empty">empty — drop a .nc file</span>
       <span class="nc-st2"></span>
     </div>
+    <div class="nc-head-actions">
+      <button class="nc-swatch nc-hbtn" title="Colours &amp; style — quick access"><span class="nc-swatch-chip"></span></button>
+      <button class="nc-eye nc-hbtn" title="Toggle visibility">${NC_ICONS.eye}</button>
+      <button class="nc-rm nc-hbtn" title="Remove layer">${NC_ICONS.trash}</button>
+    </div>
   </div>
   <div class="nc-ctools">
-    <button class="nc-eye nc-tbtn2" title="Toggle visibility">${NC_ICONS.eye}</button>
     <button class="nc-drop-btn nc-tbtn2" title="Load file">${NC_ICONS.addLayer}</button>
+    <button class="nc-ctr-btn nc-tbtn2" title="Contour lines">${NC_ICONS.contour}</button>
     <button class="nc-plot nc-tbtn2" title="2-D plot">${NC_ICONS.plot}</button>
     <button class="nc-region nc-tbtn2" title="Region extract">${NC_ICONS.region}</button>
-    <button class="nc-pre nc-tbtn2" title="Preload frames">${NC_ICONS.preload}</button>
     <button class="nc-trend nc-tbtn2" title="Trend analysis">${NC_ICONS.trend}</button>
+    <button class="nc-corr nc-tbtn2" title="Teleconnection tools (correlation map / composite analysis)">${NC_ICONS.correlate}</button>
+    <button class="nc-pre nc-tbtn2" title="Preload frames">${NC_ICONS.preload}</button>
     <button class="nc-anim nc-tbtn2" title="Animate">${NC_ICONS.animate}</button>
     <button class="nc-csv nc-tbtn2" title="Export CSV">${NC_ICONS.download}</button>
-    <button class="nc-rm nc-tbtn2" title="Remove" style="color:var(--warm)">${NC_ICONS.trash}</button>
   </div>
 </div>
 <div class="nc-cb" style="display:none">
-  <!-- File series list -->
+  <!-- File series list — collapses to just the add-file control for the
+       common single-file case, since the filename/frame count are already
+       shown in the card header; the full per-file breakdown only earns its
+       space once a series actually has more than one file. -->
   <div class="nc-series-wrap">
-    <div class="nc-series-label">Time-series files <span class="nc-fc">0 file(s) · 0 frames</span></div>
+    <div class="nc-series-label"><span class="nc-series-label-txt">Files</span><span class="nc-fc">0 file(s) · 0 frames</span></div>
     <div class="nc-file-list"></div>
     <button class="btn nc-add-file" style="width:100%;margin-top:6px;font-size:12px;padding:6px 10px">＋ Add more files to this series</button>
   </div>
@@ -3893,35 +5610,23 @@ fn sampleTex(uv2:vec2f)->f32{
         <button class="nc-tn nc-tb">▶</button>
       </div>
     </div>
-    <div class="nc-style-head nc-style-toggle">▾ Appearance</div>
-    <div class="nc-style-block">
-    <label class="nl">Colour map<select class="nc-cm nc-sel">${CMAP_KEYS.map(k=>`<option>${k}</option>`).join('')}</select></label>
-    <div class="nc-cp"></div>
-    <label class="nl">Opacity
-      <div class="nc-sr"><input type="range" class="nc-op month-slider" min="0" max="100" value="65"><span class="nc-ov">65%</span></div>
-    </label>
-    <label class="nl">Brightness
-      <div class="nc-sr"><input type="range" class="nc-bright month-slider" min="40" max="180" value="100"><span class="nc-brightv">100%</span></div>
-    </label>
-    <label class="nl">Contrast
-      <div class="nc-sr"><input type="range" class="nc-contrast month-slider" min="40" max="200" value="100"><span class="nc-contrastv">100%</span></div>
-    </label>
-    <label class="nl">Saturation
-      <div class="nc-sr"><input type="range" class="nc-sat month-slider" min="0" max="250" value="100"><span class="nc-satv">100%</span></div>
-    </label>
-    <button class="nc-fx-reset" style="width:100%;margin:2px 0 4px;font-size:9.5px;padding:4px 6px;background:rgba(127,208,255,0.08);border:1px solid rgba(127,208,255,0.25);border-radius:5px;color:#9fc4dd;cursor:pointer">↺ Reset appearance</button>
-    <label class="nl" style="margin-top:2px">
-      <div style="display:flex;align-items:center;gap:7px;padding:3px 0">
-        <input type="checkbox" class="nc-ctr" style="accent-color:#7fd0ff;flex-shrink:0">
-        <span style="font-size:10px;color:var(--ink-faint)">Contour lines</span>
-      </div>
-      <div class="nc-ctr-sl-wrap" style="display:none;align-items:center;gap:7px;margin-top:2px;padding:0 0 2px 22px">
+    <div class="nc-op-row">
+      <span class="nc-op-lab">Opacity</span>
+      <input type="range" class="nc-op month-slider" min="0" max="100" value="65">
+      <span class="nc-ov">65%</span>
+    </div>
+    <!-- Contour on/off now lives as an icon toggle in the tools row above
+         (.nc-ctr-btn) — this checkbox stays in the DOM purely as the
+         existing state/wiring target, but is visually hidden. -->
+    <input type="checkbox" class="nc-ctr" style="display:none">
+    <div class="nc-ctr-wrap" style="display:none">
+      <div class="nc-ctr-sl-wrap">
         <span style="font-size:9px;color:var(--ink-faint);flex-shrink:0">Intvl</span>
         <input type="range" class="nc-ctr-sl month-slider" min="0.01" max="100" step="0.01" value="1" style="flex:1">
         <input type="number" class="nc-ctr-step nc-ni" placeholder="auto" step="any" min="0" style="width:54px;font-size:10px;flex-shrink:0">
         <span class="nc-ctr-step-u" style="font-size:9px;color:var(--ink-faint);flex-shrink:0"></span>
       </div>
-      <div class="nc-ctr-style-wrap" style="display:none;margin-top:4px;padding:0 0 2px 22px">
+      <div class="nc-ctr-style-wrap">
         <label class="nl" style="margin:0">Line style<select class="nc-ctr-style nc-sel" style="font-size:10px">
           <option value="synoptic">Synoptic (amber)</option>
           <option value="white">White</option>
@@ -3929,7 +5634,25 @@ fn sampleTex(uv2:vec2f)->f32{
           <option value="dark">Dark</option>
         </select></label>
       </div>
-      <div class="nc-ctr-lvln" style="display:none;margin-top:2px;padding:0 0 2px 22px;font-size:9px;color:var(--ink-faint)"></div>
+      <div class="nc-ctr-lvln"></div>
+    </div>
+    <div class="nc-leg" title="Colour scale — click to edit colours & style">
+      <canvas class="nc-lc" width="220" height="14" style="border-radius:3px"></canvas>
+      <div class="nc-ll"></div><div class="nc-lu"></div>
+    </div>
+    <div class="nc-style-head nc-style-toggle">▸ Colours &amp; style</div>
+    <div class="nc-style-block" style="display:none">
+    <label class="nl">Colour map<select class="nc-cm nc-sel">${CMAP_KEYS.map(k=>`<option>${k}</option>`).join('')}</select></label>
+    <div class="nc-cp"></div>
+    <div class="nc-fx-grid">
+    <label class="nl nc-fx-cell">Brightness
+      <div class="nc-sr"><input type="range" class="nc-bright month-slider" min="40" max="180" value="100"><span class="nc-brightv">100%</span></div>
+    </label>
+    <label class="nl nc-fx-cell">Contrast
+      <div class="nc-sr"><input type="range" class="nc-contrast month-slider" min="40" max="200" value="100"><span class="nc-contrastv">100%</span></div>
+    </label>
+    <label class="nl nc-fx-cell">Saturation
+      <div class="nc-sr"><input type="range" class="nc-sat month-slider" min="0" max="250" value="100"><span class="nc-satv">100%</span></div>
     </label>
     </div>
     <div class="nc-rr">
@@ -3938,9 +5661,7 @@ fn sampleTex(uv2:vec2f)->f32{
       <input type="number" class="nc-rn nc-ni" placeholder="min" step="any" disabled>
       <input type="number" class="nc-rx nc-ni" placeholder="max" step="any" disabled>
     </div>
-    <div class="nc-leg">
-      <canvas class="nc-lc" width="220" height="14" style="border-radius:3px"></canvas>
-      <div class="nc-ll"></div><div class="nc-lu"></div>
+    <button class="nc-fx-reset" style="width:100%;margin:4px 0 2px;font-size:9.5px;padding:4px 6px;background:rgba(127,208,255,0.08);border:1px solid rgba(127,208,255,0.25);border-radius:5px;color:#9fc4dd;cursor:pointer">↺ Reset appearance</button>
     </div>
   </div>
 </div>`;
@@ -3955,7 +5676,23 @@ fn sampleTex(uv2:vec2f)->f32{
       const b=q('.nc-cb');b.style.display=b.style.display==='none'?'':'none';
     });
     q('.nc-plot').addEventListener('click',()=>quickPlot(ov));
-    q('.nc-region').addEventListener('click',function(e){e.stopPropagation();regionMenu(ov,this);});
+    q('.nc-region').addEventListener('click',function(e){
+      e.stopPropagation();
+      // An EOF mode's spatial pattern has no sub-region to pick — the one
+      // interesting time series IS the whole mode's PC score, so Region
+      // extract jumps straight to that instead of a sub-region picker with
+      // nothing meaningful to select. Regression outputs (β/R²/t/p maps)
+      // stay on the normal region-mean flow below — averaging a coefficient
+      // map over a sub-box is a perfectly real, useful operation.
+      if(ov._eof){
+        const ef=ov._eof, sl=ef.frames[ov.selTime];
+        if(!sl||!sl.pc){alert('No PC series on this frame.');return;}
+        _openTimeseriesWin({...ov,activeSlice:{units:'PC score (dimensionless)'}},ef.pcLabels,Array.from(sl.pc),
+          ef.regionName,sl.label+' PC score');
+        return;
+      }
+      regionMenu(ov,this);
+    });
     q('.nc-trend')?.addEventListener('click',function(e){e.stopPropagation();
       // Derived layers are fully supported now: _cacheGet(ov,t) computes
       // the derived field at every virtual timestep, so the OLS fit
@@ -3965,6 +5702,7 @@ fn sampleTex(uv2:vec2f)->f32{
       if(ov._trend){alert('Trend maps can’t be fitted to a trend layer — run the fit on its source layer with a different window instead.');return;}
       _openTrendDialog(ov);
     });
+    q('.nc-corr')?.addEventListener('click',function(e){e.stopPropagation();teleMenu(ov,this);});
     q('.nc-pre').addEventListener('click',async function(){
       if(!ov.frames||ov.frames.length<2){alert('Only one frame loaded.');return;}
       if(this._busy)return; this._busy=true;
@@ -4029,7 +5767,19 @@ fn sampleTex(uv2:vec2f)->f32{
       if(ov.frames.length&&!confirm('Remove this overlay and all its loaded files?'))return;
       removeOverlay(ov);
     });
-    q('.nc-var').addEventListener('change',e=>selectVar(ov,e.target.value));
+    q('.nc-var').addEventListener('change',e=>{
+      // Regression's "variables" are statistic maps (β/R²/t/p) computed
+      // once up front, not file variables to re-decode — switching one
+      // just repoints which precomputed array is shown; the lag axis
+      // (ov.frames/selTime) is untouched, same as changing colormap.
+      if(ov._regress){
+        ov.selVar=e.target.value; ov.cachedMin=null; ov.cachedMax=null;
+        if(ov._fcache) ov._fcache.clear();
+        rebuildSlice(ov); schedRender(ov);
+        return;
+      }
+      selectVar(ov,e.target.value);
+    });
     q('.nc-send-var')?.addEventListener('click',function(e){
       e.stopPropagation();
       if(overlays.length>=MAX){alert('Max '+MAX+' overlays.');return;}
@@ -4080,9 +5830,28 @@ fn sampleTex(uv2:vec2f)->f32{
         e.stopPropagation();
         const open=styleBlock.style.display==='none';
         styleBlock.style.display=open?'':'none';
-        styleToggle.textContent=(open?'▾':'▸')+' Appearance';
+        styleToggle.textContent=(open?'▾':'▸')+' Colours & style';
+      });
+      // The always-visible colour legend doubles as the entry point to the
+      // collapsed style section — clicking the scale is the natural "I want
+      // to change these colours" gesture (same idea as NASA Worldview's
+      // clickable palette bar).
+      q('.nc-leg')?.addEventListener('click',e=>{e.stopPropagation();styleToggle.click();});
+      // Header quick-access swatch — one click from the collapsed card
+      // straight into a palette grid, no need to open the body first and
+      // hunt for the (easy-to-miss) "Colours & style" toggle manually.
+      q('.nc-swatch')?.addEventListener('click',e=>{
+        e.stopPropagation();
+        openCmapSwatchMenu(ov,e.currentTarget);
       });
     }
+    const ctrCb=q('.nc-ctr'), ctrBtn=q('.nc-ctr-btn');
+    ctrBtn?.addEventListener('click',e=>{
+      e.stopPropagation();
+      openOvBody(ov);
+      ctrCb.checked=!ctrCb.checked;
+      ctrCb.dispatchEvent(new Event('change'));
+    });
     q('.nc-op').value=Math.round(ov.selOpacity*100);
     q('.nc-op').addEventListener('input',e=>{ov.selOpacity=e.target.value/100;q('.nc-ov').textContent=e.target.value+'%';schedRender(ov);});
     const wireFx=(cls,valCls,prop)=>{
@@ -4107,11 +5876,9 @@ fn sampleTex(uv2:vec2f)->f32{
     });
     q('.nc-ctr').addEventListener('change',e=>{
       ov.showContours=e.target.checked;
-      const on=e.target.checked?'flex':'';
-      const sw=q('.nc-ctr-sl-wrap'), st=q('.nc-ctr-style-wrap'), lv=q('.nc-ctr-lvln');
-      if(sw) sw.style.display=on;
-      if(st) st.style.display=e.target.checked?'':'none';
-      if(lv) lv.style.display=e.target.checked?'':'none';
+      const wrap=q('.nc-ctr-wrap');
+      if(wrap) wrap.style.display=e.target.checked?'':'none';
+      ctrBtn?.classList.toggle('on',e.target.checked);
       _updateLandFill();
       schedRender(ov);
     });
@@ -4274,8 +6041,9 @@ fn sampleTex(uv2:vec2f)->f32{
   }
   function openOvBody(ov){
     const b=ov.cardEl?.querySelector('.nc-cb');if(b)b.style.display='';
-    const sb=ov.cardEl?.querySelector('.nc-style-block');
-    if(sb) sb.style.display='';
+    // Style section intentionally stays collapsed on load — opacity, the
+    // contour toggle and the colour legend cover the common cases, and the
+    // legend/▸ header opens the full colour & style controls on demand.
   }
   function setOvStatus(ov,msg,err){
     const el=ov.cardEl?.querySelector('.nc-st2');if(!el)return;
@@ -4290,7 +6058,11 @@ fn sampleTex(uv2:vec2f)->f32{
     const sel=ov.cardEl?.querySelector('.nc-var');if(!sel)return;
     sel.innerHTML=ov.varOptions.map(o=>`<option value="${o.name}">${o.label}</option>`).join('');
     if(ov.selVar) sel.value=ov.selVar;
-    const _sb=ov.cardEl?.querySelector('.nc-send-var');if(_sb)_sb.style.display=ov.varOptions.length>1?'':'none';
+    // "Send variable to new overlay" re-decodes from ov.readers — nonsense
+    // for a virtual overlay's precomputed stat/mode variables, which have
+    // no file reader behind them at all.
+    const _isVirtual=ov._trend||ov._corr||ov._composite||ov._eof||ov._regress||ov._derived;
+    const _sb=ov.cardEl?.querySelector('.nc-send-var');if(_sb)_sb.style.display=(ov.varOptions.length>1&&!_isVirtual)?'':'none';
     ov.cardEl.querySelector('.nc-ctrls').style.display='';
     ov.cardEl.querySelector('.nc-cname').textContent=ov.name;
     ov.cardEl.querySelector('.nc-cname').classList.remove('nc-empty');
@@ -4331,6 +6103,11 @@ fn sampleTex(uv2:vec2f)->f32{
     syncTimeUI(ov);
     const fc=c.querySelector('.nc-fc');
     if(fc) fc.textContent=ov.readers.length+' file(s) \u00b7 '+ov.frames.length+' frame'+(ov.frames.length!==1?'s':'');
+    // The per-file breakdown (label, count) only adds information beyond
+    // the card header once a series actually spans more than one file \u2014
+    // for the common single-file case it just repeats the header verbatim.
+    const seriesWrap=c.querySelector('.nc-series-wrap');
+    if(seriesWrap) seriesWrap.classList.toggle('nc-series-multi',ov.readers.length>1);
     const fl=c.querySelector('.nc-file-list');
     if(fl){
       fl.innerHTML='';
@@ -4372,14 +6149,79 @@ fn sampleTex(uv2:vec2f)->f32{
     c.querySelector('.nc-rn').placeholder=fmt(ov.cachedMin);
     c.querySelector('.nc-rx').placeholder=fmt(ov.cachedMax);
   }
+  // Quick-access colour swatch: a compact grid of every palette as a small
+  // gradient block, so a colour change is one click from the collapsed
+  // card instead of expanding the body and scrolling to the full style
+  // section. "More style options…" at the bottom still reaches that full
+  // section (opacity/contrast/range etc.) for anything beyond the palette.
+  function openCmapSwatchMenu(ov,anchor){
+    document.querySelectorAll('.nc-cmap-menu').forEach(m=>m.remove());
+    const r=anchor.getBoundingClientRect();
+    const m=document.createElement('div');
+    m.className='nc-cmap-menu';
+    const menuW=196;
+    const spaceBelow=window.innerHeight-r.bottom-8, spaceAbove=r.top-8;
+    const openUp=spaceBelow<230&&spaceAbove>spaceBelow;
+    const topCss=openUp?'bottom:'+(window.innerHeight-r.top+4)+'px;':'top:'+(r.bottom+4)+'px;';
+    m.style.cssText='position:fixed;z-index:400;left:'+Math.max(8,Math.min(window.innerWidth-menuW-8,r.left-80))+'px;'+topCss+
+      'background:rgba(6,17,28,0.97);border:1px solid rgba(127,208,255,0.4);border-radius:8px;'+
+      'padding:8px;font-family:IBM Plex Mono,monospace;color:#cfe3f2;width:'+menuW+'px;'+
+      'box-shadow:0 10px 30px rgba(0,0,0,0.5);';
+    let html='<div style="color:#7fa0b8;font-size:9px;letter-spacing:0.08em;margin-bottom:6px;">COLOUR MAP</div>'+
+      '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px;">';
+    CMAP_KEYS.forEach(key=>{
+      const lutArr=CMAPS[key];
+      const stops=[];
+      for(let i=0;i<=4;i++){const ci=Math.round(i/4*255)*3;stops.push('rgb('+lutArr[ci]+','+lutArr[ci+1]+','+lutArr[ci+2]+')');}
+      const on=key===ov.selCmap;
+      html+='<div class="nc-cmap-opt" data-k="'+key+'" title="'+key+'" style="height:20px;border-radius:4px;cursor:pointer;'+
+        'background:linear-gradient(90deg,'+stops.join(',')+');'+
+        'box-shadow:0 0 0 '+(on?'2px #ffd27f':'1px rgba(255,255,255,0.15)')+' inset;"></div>';
+    });
+    html+='</div>'+
+      '<div class="nc-cmap-more" style="margin-top:8px;padding:6px;text-align:center;cursor:pointer;border-radius:5px;color:#7fd0ff;border-top:1px solid rgba(127,208,255,0.15);font-size:9.5px;">⚙ More style options…</div>';
+    m.innerHTML=html;
+    m.querySelectorAll('.nc-cmap-opt').forEach(el=>{
+      el.addEventListener('mouseenter',()=>el.style.transform='scale(1.1)');
+      el.addEventListener('mouseleave',()=>el.style.transform='');
+      el.addEventListener('click',()=>{
+        ov.selCmap=el.dataset.k;
+        const cmSel=ov.cardEl?.querySelector('.nc-cm'); if(cmSel) cmSel.value=el.dataset.k;
+        updateCmapPrev(ov); schedRender(ov);
+        m.remove();
+      });
+    });
+    m.querySelector('.nc-cmap-more').addEventListener('click',()=>{
+      m.remove();
+      openOvBody(ov);
+      const styleToggle=ov.cardEl?.querySelector('.nc-style-toggle'), styleBlock=ov.cardEl?.querySelector('.nc-style-block');
+      if(styleToggle&&styleBlock){
+        if(styleBlock.style.display==='none') styleToggle.click();
+        requestAnimationFrame(()=>styleBlock.scrollIntoView({block:'center',behavior:'smooth'}));
+      }
+    });
+    document.body.appendChild(m);
+    setTimeout(()=>document.addEventListener('click',function h(e){if(!m.contains(e.target)){m.remove();document.removeEventListener('click',h);}}),0);
+  }
   function updateCmapPrev(ov){
-    const prev=ov.cardEl?.querySelector('.nc-cp');if(!prev)return;
     const lut=CMAPS[ov.selCmap]||CMAPS.viridis;
-    const cv=document.createElement('canvas');cv.width=220;cv.height=10;
-    const x=cv.getContext('2d'),id=x.createImageData(220,10);
-    for(let i=0;i<220;i++){const ci=Math.round(i/219*255)*3;
-      for(let j=0;j<10;j++){const idx=(j*220+i)*4;id.data[idx]=lut[ci];id.data[idx+1]=lut[ci+1];id.data[idx+2]=lut[ci+2];id.data[idx+3]=255;}}
-    x.putImageData(id,0,0);prev.innerHTML='';prev.appendChild(cv);
+    const prev=ov.cardEl?.querySelector('.nc-cp');
+    if(prev){
+      const cv=document.createElement('canvas');cv.width=220;cv.height=10;
+      const x=cv.getContext('2d'),id=x.createImageData(220,10);
+      for(let i=0;i<220;i++){const ci=Math.round(i/219*255)*3;
+        for(let j=0;j<10;j++){const idx=(j*220+i)*4;id.data[idx]=lut[ci];id.data[idx+1]=lut[ci+1];id.data[idx+2]=lut[ci+2];id.data[idx+3]=255;}}
+      x.putImageData(id,0,0);prev.innerHTML='';prev.appendChild(cv);
+    }
+    // Header quick-access swatch — a lightweight CSS gradient (not a canvas)
+    // so the current colormap stays visible even while the card body, and
+    // therefore the legend/style block, are collapsed.
+    const chip=ov.cardEl?.querySelector('.nc-swatch-chip');
+    if(chip){
+      const stops=[];
+      for(let i=0;i<=6;i++){const ci=Math.round(i/6*255)*3;stops.push('rgb('+lut[ci]+','+lut[ci+1]+','+lut[ci+2]+')');}
+      chip.style.background='linear-gradient(90deg,'+stops.join(',')+')';
+    }
   }
   function renumberCards(){
     overlays.forEach((ov,i)=>{const el=ov.cardEl?.querySelector('.nc-cnum');if(el)el.textContent=String(i+1).padStart(2,'0');});
@@ -4614,9 +6456,10 @@ fn sampleTex(uv2:vec2f)->f32{
        ['countryW','Border width boost',0,1,gcfg.countryW],['countryBright','Border brightness',0,1,gcfg.countryBright],
        ['ctrW','Contour width boost',0,1.2,gcfg.ctrW],['ctrBright','Contour brightness boost',0,1,gcfg.ctrBright],
        ['nameBright','Label brightness',0,1,gcfg.nameBright],['nameSize','Label size boost (px)',8,12,gcfg.nameSize]]
-      // Step coarsened 40→15 divisions per feedback that the boost sliders
-      // were too fine-grained to land on a value deliberately by drag.
-      .map(([k,l,a,b,v])=>'<label>'+l+'<input data-gk="'+k+'" type="range" min="'+a+'" max="'+b+'" step="'+((b-a)/15)+'" value="'+v+'"></label>').join('')+
+      // Step coarsened 40→15→8 divisions: even at 15 divisions each single
+      // notch (e.g. ~0.067 of a 0-1 brightness boost) was too small a change
+      // to read as a visible difference against the geography/data underneath.
+      .map(([k,l,a,b,v])=>'<label>'+l+'<input data-gk="'+k+'" type="range" min="'+a+'" max="'+b+'" step="'+((b-a)/8)+'" value="'+v+'"></label>').join('')+
       '</div>';
     stylePane.appendChild(geoSect);
     const flowSect=document.createElement('div');
@@ -4669,15 +6512,14 @@ fn sampleTex(uv2:vec2f)->f32{
     collapse.addEventListener('click',()=>{
       setCollapsed(!ctrl.classList.contains('gp-collapsed'));
     });
-    let hideT=null;
-    ctrl.addEventListener('mouseleave',()=>{hideT=setTimeout(()=>{if(!ctrl.matches(':hover')){setCollapsed(true);}},2200);});
-    ctrl.addEventListener('mouseenter',()=>{clearTimeout(hideT);});
-    // The auto-collapse above relies on mouseleave/mouseenter, which never
-    // fire on a touchscreen — on a phone the panel would otherwise stay
-    // open at its normal max-height (a large fraction of a phone's
-    // viewport height) with no way for it to close itself. Start
-    // collapsed on narrow viewports instead, so the globe is what a phone
-    // visitor actually sees first; the rail is one tap away to expand.
+    // Deliberately no auto-collapse-on-mouseleave: the panel used to
+    // vanish to its icon rail ~2s after the cursor moved to the globe to
+    // click something, which reads as broken rather than "smart" — you
+    // move to interact with your own data and the controls disappear out
+    // from under you. Reference apps (Windy, NASA Worldview) keep the
+    // panel open until the user explicitly collapses it; do the same here.
+    // Narrow/mobile viewports still start collapsed, since there's no
+    // hover state on a touchscreen to reveal it again if it opened full.
     if(window.matchMedia('(max-width:640px)').matches) setCollapsed(true);
     reorgWorkspacePanel();
   }
@@ -4733,23 +6575,23 @@ fn sampleTex(uv2:vec2f)->f32{
 <div id="nc-body">
   <div id="nc-overlay-list"></div>
   <button class="btn nc-add-btn" id="nc-add" style="width:100%;margin-top:8px">＋ Add overlay</button>
-  <button class="btn" id="nc-derive" style="width:100%;margin-top:4px;font-size:10.5px">➗ Derived layer (A op B)</button>
-<button class="btn" id="nc-nomads" style="width:100%;margin-top:4px;font-size:10.5px">🌐 Load data (NOMADS direct)</button>
+  <button class="btn" id="nc-derive" style="width:100%;margin-top:4px;margin-bottom:16px;font-size:10.5px">➗ Derived layer (A op B)</button>
 </div>`;
     ctrl.appendChild(sec);
     const sysStore=document.createElement('div');
     sysStore.id='gp-io-store';
     sysStore.innerHTML=`
-<button class="btn" id="nc-png" style="width:100%;margin-top:6px">📷 Export view as PNG</button>
-<button class="btn" id="nc-measure" style="width:100%;margin-top:6px">📏 Measure distance</button>
-<button class="btn" id="nc-url" style="width:100%;margin-top:6px">🌐 Load from URL (.nc / .grib2)</button>
+<button class="btn" id="nc-nomads" style="width:100%;margin-top:6px">🌐 Load weather/ocean data (NOMADS)</button>
+<button class="btn" id="nc-url" style="width:100%;margin-top:6px">🔗 Load from URL (.nc / .grib2)</button>
 <button class="btn" id="nc-batch" style="width:100%;margin-top:4px;font-size:10.5px">📅 Load date range from NOMADS…</button>
 <div style="display:flex;gap:6px;margin-top:4px;align-items:center">
   <button id="nc-proxy" style="flex:1;font-size:11px;opacity:0.7">⚙️ Set CORS proxy URL</button>
   <label style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--ink-faint);white-space:nowrap;cursor:pointer" title="Force fetches through proxy">
     <input type="checkbox" id="nc-proxy-force" style="accent-color:#7fd0ff">force
   </label>
-</div>`;
+</div>
+<button class="btn" id="nc-measure" style="width:100%;margin-top:10px">📏 Measure distance</button>
+<button class="btn" id="nc-png" style="width:100%;margin-top:6px">📷 Export view as PNG</button>`;
     ctrl.appendChild(sysStore);
     const perfStore=document.createElement('div');
     perfStore.id='gp-perf-store';
@@ -4994,6 +6836,28 @@ fn sampleTex(uv2:vec2f)->f32{
     }
     if(btn)btn.textContent='⬇';
     _downloadCSV(parts,(ov.name||'overlay').replace(/[^\w.-]/g,'_')+'_all_frames.csv');
+  }
+  function teleMenu(ov,anchor){
+    document.querySelectorAll('.nc-csv-menu').forEach(m=>m.remove());
+    if(!ov.frames||ov.frames.length<3){alert('Load at least 3 time frames first.');return;}
+    const r=anchor.getBoundingClientRect();
+    const m=document.createElement('div');
+    m.className='nc-csv-menu';
+    m.style.cssText='position:fixed;z-index:400;left:'+Math.max(8,r.left-170)+'px;top:'+(r.bottom+4)+'px;'+
+      'background:rgba(6,17,28,0.97);border:1px solid rgba(127,208,255,0.4);border-radius:8px;'+
+      'padding:5px;font-family:IBM Plex Mono,monospace;font-size:10px;color:#cfe3f2;width:210px;';
+    m.innerHTML=
+      '<div class="m1" style="padding:6px 10px;cursor:pointer;border-radius:5px;">🔗 Correlation map…</div>'+
+      '<div class="m2" style="padding:6px 10px;cursor:pointer;border-radius:5px;">🧮 Composite analysis…</div>'+
+      '<div class="m3" style="padding:6px 10px;cursor:pointer;border-radius:5px;">📊 EOF / PCA…</div>'+
+      '<div class="m4" style="padding:6px 10px;cursor:pointer;border-radius:5px;">📈 Multiple regression…</div>';
+    m.querySelectorAll('div').forEach(d=>{d.addEventListener('mouseenter',()=>d.style.background='rgba(127,208,255,0.12)');d.addEventListener('mouseleave',()=>d.style.background='');});
+    m.querySelector('.m1').addEventListener('click',()=>{m.remove();startCorrPick(ov);});
+    m.querySelector('.m2').addEventListener('click',()=>{m.remove();_openCompositeDialog(ov);});
+    m.querySelector('.m3').addEventListener('click',()=>{m.remove();_openEofDialog(ov);});
+    m.querySelector('.m4').addEventListener('click',()=>{m.remove();_openRegressionDialog(ov);});
+    setTimeout(()=>document.addEventListener('click',function h(e){if(!m.contains(e.target)){m.remove();document.removeEventListener('click',h);}}),0);
+    document.body.appendChild(m);
   }
   function exportCSVMenu(ov,anchor){
     document.querySelectorAll('.nc-csv-menu').forEach(m=>m.remove());
@@ -5981,6 +7845,29 @@ fn sampleTex(uv2:vec2f)->f32{
     {group:'Atlantic',name:'TNA — Trop. N Atlantic',lon0:-55,lon1:-15,lat0:5,lat1:25},
     {group:'Atlantic',name:'TSA — Trop. S Atlantic',lon0:-30,lon1:10,lat0:-20,lat1:0},
     {group:'Atlantic',name:'N Atlantic subpolar',lon0:-60,lon1:-10,lat0:45,lat1:65},
+    // Indices below reuse the exact same box-mean / box-diff machinery as
+    // everything above — they're just well-known named combinations of it.
+    // ONI and AMO are plain box means (same math as a Niño box); NAO and
+    // SOI are literally the station-pressure-difference definition, just
+    // with each "station" widened to a small box so it lands on real grid
+    // cells; AO and SAM use the standard simplified zonal-mean-SLP proxy
+    // (Arctic/Antarctic band minus the surrounding mid-latitude band) in
+    // place of the official EOF-based index, which this app has no way to
+    // compute. QBO is a plain equatorial zonal-wind band mean — it only
+    // makes sense against a loaded U-wind file with the right pressure
+    // level already selected (30/50 hPa), which isn't something a preset
+    // can enforce. None of these replace the official published index
+    // (NOAA/CPC apply detrending, fixed base periods, or full EOF
+    // decomposition); they're the same-shaped raw proxy computed from
+    // whatever's currently loaded, which is what correlation/composite
+    // analysis actually needs.
+    {group:'Climate Indices',name:'ONI (≈ Niño 3.4 box)',lon0:-170,lon1:-120,lat0:-5,lat1:5},
+    {group:'Climate Indices',name:'AMO — N Atlantic SST (0–60°N)',lon0:-80,lon1:0,lat0:0,lat1:60},
+    {group:'Climate Indices',name:'NAO (Azores − Iceland, proxy)',diff:[{lon0:-27.7,lon1:-23.7,lat0:35.7,lat1:39.7},{lon0:-24.7,lon1:-20.7,lat0:63.1,lat1:67.1}]},
+    {group:'Climate Indices',name:'SOI (Tahiti − Darwin, proxy)',diff:[{lon0:-151.6,lon1:-147.6,lat0:-19.65,lat1:-15.65},{lon0:128.9,lon1:132.9,lat0:-14.4,lat1:-10.4}]},
+    {group:'Climate Indices',name:'AO (zonal SLP proxy)',diff:[{lon0:-180,lon1:180,lat0:35,lat1:45},{lon0:-180,lon1:180,lat0:60,lat1:70}]},
+    {group:'Climate Indices',name:'SAM (zonal SLP proxy)',diff:[{lon0:-180,lon1:180,lat0:-50,lat1:-40},{lon0:-180,lon1:180,lat0:-70,lat1:-60}]},
+    {group:'Climate Indices',name:'QBO (equatorial U-wind, needs right level loaded)',lon0:-180,lon1:180,lat0:-5,lat1:5},
     {group:'Polar/Global',name:'Arctic',lon0:-180,lon1:180,lat0:66,lat1:90},
     {group:'Polar/Global',name:'Antarctic',lon0:-180,lon1:180,lat0:-90,lat1:-66},
     {group:'Polar/Global',name:'Southern Ocean',lon0:-180,lon1:180,lat0:-65,lat1:-45},
@@ -6058,6 +7945,32 @@ fn sampleTex(uv2:vec2f)->f32{
     if(!f) f=feats.find(ft=>_names(ft.properties).some(n=>n.includes(raw)||raw.includes(n)));
     return f||null;
   }
+  // A REGION_PRESETS entry picked from a dropdown LIST only carries a
+  // `country:` name string, not the resolved polygon — unlike the free-text
+  // "Country / region…" search path, which always looks the name up and
+  // attaches `clipFeature` before use. Left alone, the same "Brazil" preset
+  // meant two different regions depending on which UI path picked it: the
+  // list gave you its raw bounding rectangle (ocean margin on both coasts
+  // included), the search gave you the actual border-clipped polygon.
+  // Every run-time consumer of a preset (composite/EOF/regression) should
+  // route through here so list selection and search always agree.
+  function _resolvePresetBox(p){
+    if(!p||!p.country||p.clipFeature) return p;
+    const feat=_findCountryFeature(p.country);
+    return feat?{...p,clipFeature:feat}:p;
+  }
+  // Brief on-globe visual confirmation of whatever region a dropdown just
+  // selected — presets otherwise gave zero feedback until you clicked
+  // Compute/Run, unlike the box-pick and country-search flows which already
+  // flash via _showRegionBox/_showRegionPolygon.
+  function _flashPresetRegion(p){
+    if(!p) return;
+    const rp=_resolvePresetBox(p);
+    if(rp.diff) _showRegionBox(rp.diff[0].lon0,rp.diff[0].lon1,rp.diff[0].lat0,rp.diff[0].lat1,false);
+    else if(rp.clipFeature) _showRegionPolygon(rp.clipFeature);
+    else _showRegionBox(rp.lon0,rp.lon1,rp.lat0,rp.lat1,!!(rp.wrap||rp.lon0>rp.lon1));
+    setTimeout(_hideRegionBox,2500);
+  }
   function regionMenu(ov,anchor){
     document.querySelectorAll('.nc-csv-menu').forEach(m=>m.remove());
     if(!ov.frames||!ov.frames.length){alert('Load data first.');return;}
@@ -6099,16 +8012,18 @@ fn sampleTex(uv2:vec2f)->f32{
           const cn=(prompt('Country or region name:\n(e.g. Brazil, India, Arctic)\nCountries use their bounding box on the data grid.')||'').trim();
           if(!cn)return;
           // Try an exact country polygon first (border-accurate, any of the
-          // ~180 countries in the atlas) before falling back to the curated
-          // rectangular index/region presets (oceans, hemispheres, etc.).
+          // ~180 countries in the atlas — the SAME atlas the preset list
+          // above resolves `country:` entries against, so list and search
+          // always agree) before falling back to a custom-loaded boundary
+          // layer, then the curated rectangular index/region presets.
+          const feat=_findCountryFeature(cn);
+          if(feat){ _countryTimeseries(ov,feat,feat.properties.name); return; }
           const userFeat=_findUserGeoFeature(cn);
           if(userFeat){
             const p=userFeat.properties||{};
             const lbl=(p.name||p.NAME||p.Name||cn)+(p.admin?' ('+p.admin+')':'');
             _countryTimeseries(ov,userFeat,lbl); return;
           }
-          const feat=_findCountryFeature(cn);
-          if(feat){ _countryTimeseries(ov,feat,feat.properties.name); return; }
           const m=REGION_PRESETS.find(p=>p.name.toLowerCase().includes(cn.toLowerCase()));
           if(m){if(m.diff){_showRegionBox(m.diff[0].lon0,m.diff[0].lon1,m.diff[0].lat0,m.diff[0].lat1,false);_diffTimeseries(ov,m);}else{const wr=!!(m.wrap||m.lon0>m.lon1);_showRegionBox(m.lon0,m.lon1,m.lat0,m.lat1,wr);_regionTimeseries(ov,[m.lon0,m.lat0],[m.lon1,m.lat1],{wrap:wr,name:m.name});}}
           else alert('"'+cn+'" not found. Try any country name (e.g. Peru, Vietnam, Germany), or: '+REGION_PRESETS.filter(p=>p.group==='Countries').map(p=>p.name).join(', '));
@@ -6465,7 +8380,7 @@ fn sampleTex(uv2:vec2f)->f32{
       (opts&&opts.name)?opts.name:
       (lon0.toFixed(1)+'–'+lon1.toFixed(1)+'°E, '+lat0.toFixed(1)+'–'+lat1.toFixed(1)+'°N'));
   }
-  function _openTimeseriesWin(ov,labels,ys,boxLabel){
+  function _openTimeseriesWin(ov,labels,ys,boxLabel,kindLabel){
     const units=(ov.activeSlice&&ov.activeSlice.units)||'';
     const nWin=document.querySelectorAll('.nc-plot-win').length;
     const wrap=document.createElement('div');
@@ -6477,7 +8392,7 @@ fn sampleTex(uv2:vec2f)->f32{
     wrap._userW=620; wrap._userH=300;
     wrap.innerHTML='<div class="pw-head" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;cursor:move;'+
       'font-family:IBM Plex Mono,monospace;font-size:10.5px;color:#9fb6c9;">'+
-      '<span style="min-width:0;overflow-wrap:break-word;margin-right:8px;">'+(ov.name||'overlay')+' — region mean · '+boxLabel+'</span>'+
+      '<span style="min-width:0;overflow-wrap:break-word;margin-right:8px;">'+(ov.name||'overlay')+' — '+(kindLabel||'region mean')+' · '+boxLabel+'</span>'+
       '<div class="pw-head-btns" style="flex-shrink:0;">'+
       '<button type="button" class="pw-csv" title="Export series CSV" style="background:none;border:1px solid rgba(127,208,255,0.35);color:#7fd0ff;cursor:pointer;font-size:11px;font-family:IBM Plex Mono,monospace;padding:1px 7px;border-radius:4px;">⬇ CSV</button>'+
       '<button type="button" class="pw-expand" style="background:none;border:1px solid rgba(127,208,255,0.35);color:#cfe3f2;cursor:pointer;font-size:11px;font-family:IBM Plex Mono,monospace;padding:1px 7px;border-radius:4px;" title="Expand / restore">⤢</button>'+
