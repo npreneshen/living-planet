@@ -23,7 +23,7 @@ This functions as a geospatial data exploration environment:
 
 [**Download Living Planet** (single HTML file, ~8 MB)](https://github.com/npreneshen/living-planet/releases/download/v1.1.0/living.planet.html)
 
-**[Try it in your browser →](https://living-planet.pages.dev)**
+**[Try it in your browser →](http://earth.metiscore.space/)** : **http://earth.metiscore.space/**
 > Works best on a modern desktop or laptop browser (Chrome, Edge, Firefox, Safari 16+). Runs on most mobiles too — particle rendering scales itself down automatically on touch/lower-end devices.
 
 ![Living Planet — GFS surface data loaded over Africa with analysis panel open](screenshot.png)
